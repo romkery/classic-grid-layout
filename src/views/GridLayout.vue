@@ -1,41 +1,38 @@
 <template>
   <div class="product-details-view">
     <div v-show="isDeletedItem" class="transition-box" @click="undoItem">UNDO</div>
-    <el-button type="primary" @click="createNewWidget('green', [
-      addNewProperty('border', 'Новый бордюр', 'slider', 10, 100, 4, 20, '#fc0303'),
-      addNewProperty('borderRadius', 'Бордюр скруглился', 'slider', 10, 100, 1, 20)
-    ])">add new widget
-    </el-button>
+    <!--        <el-button type="primary" @click="createNewWidget('green', [-->
+    <!--          addNewProperty('border', 'Рамка', 'slider', 10, 100, 4, 20, '#fc0303'),-->
+    <!--          addNewProperty('borderRadius', 'Скругление углов', 'slider', 10, 100, 1, 20)-->
+    <!--        ])">add new widget-->
+    <!--        </el-button>-->
     <ElRow>
       <ElCol>
-        <el-drawer
-          :size="'20%'"
-          :visible.sync="isEdit"
-          :close-on-press-escape="true"
-          :with-header="false"
-          @close="changeEvent(layout)">
-          <div class="drawer-content">
-            <useForm v-model="this.layout[itemId].props" v-if="isEdit"/>
+        <div class="pop-up-edit-mode" v-if="isEdit">
+          <el-drawer
+            :size="'20%'"
+            :visible.sync="isEdit"
+            :close-on-press-escape="true"
+            :with-header="false"
+            @close="changeEvent(layout)"
+          >
+            <div class="drawer-content">
+              <useForm v-model="item.props"/>
+            </div>
+          </el-drawer>
+          <div class="product-edit-mode">
+            <component
+              :is="selectedDragItem.c"
+              v-model="selectedDragItem.props"
+            />
           </div>
-        </el-drawer>
-        <div class="product-edit-mode" v-if="isEdit">
-          <component
-            :is="selectedItem.c"
-            v-model="selectedItem.props"
-            :isEdit.sync="isEdit"
-            :itemId.sync="itemId"
-            class="product-eit-widget"
-          />
         </div>
-        <div @drag="drag(yellowValue)" @dragend="dragend" class="droppable-element" draggable="true"
-             unselectable="on"
-        >
-          <Yellow @yellowValue="yellowValue = $event"/>
-        </div>
-        <div @drag="drag(pinkValue)" @dragend="dragend" class="droppable-element" draggable="true"
-             unselectable="on"
-        >
-          <Pink @pinkValue="pinkValue = $event"/>
+        <div class="outer-widgets">
+          <div v-for="widget in outerWidgets"
+               @drag="drag($event)"
+               @dragend="dragend" class="droppable-element" draggable="true">
+            <component :is="widget"/>
+          </div>
         </div>
         <div id="content">
           <grid-layout ref="gridlayout"
@@ -48,41 +45,42 @@
                        :responsive="true"
                        :rowHeight='1'
                        :margin="[10, 10]"
-                       @click="changeEvent(layout)">
-            <div @mouseup="seyHello(selectedItemDrag)">
-              <grid-item v-for="item in layout"
-                         :static="item.static"
-                         :key="item.i"
-                         :x="item.x"
-                         :y="item.y"
-                         :w="item.w"
-                         :h="item.h"
-                         :i="item.i"
-                         :class="'custom_grid_'+ item.i"
-                         @moved="changeEvent(layout)"
-                         @resized="changeEvent(layout)"
-                         @move="setItemDrag(item)"
-              >
+                       @click="changeEvent(layout)"
+          >
+            <grid-item
+              v-for="item in layout"
+              :static="item.static"
+              :key="item.i"
+              :x="item.x"
+              :y="item.y"
+              :w="item.w"
+              :h="item.h"
+              :i="item.i"
+              :class="'custom_grid_'+ item.i"
+              @moved="changeEvent(layout)"
+              @resized="changeEvent(layout)"
+            >
+              <div style="height: inherit" class="item_container"
+                   @mouseenter="setDragItem(item)" @mouseup="dragOutside(selectedDragItem)">
                 <div class="pin-icon-container">
                   <span/>
                   <div>
-                    <i class="el-icon-setting" @click="setEditMode(item.i, item)"></i>
+                    <i class="el-icon-setting" @click="setEditMode(item.i)"></i>
                     <i class="el-icon-star-off" v-if="!item.static"
                        @click="() => {item.static = true; changeEvent(layout)}"></i>
                     <i class="el-icon-star-on" v-if="item.static"
                        @click="() => {item.static = false; changeEvent(layout)}"></i>
                   </div>
                 </div>
-                <component :itemStyling="item.i"
-                           :is="item.c"
-                           v-model="item.props"
-                           :isEdit.sync="isEdit"
-                           :itemId.sync="itemId"
-                           :selectedItem.sync="selectedItem"
-                           :item="item"
+                <component
+                  :is="item.c"
+                  v-model="item.props"
+                  :class="'grid_item_component_'+ item.i"
+                  :item="item"
+                  :loading="true"
                 />
-              </grid-item>
-            </div>
+              </div>
+            </grid-item>
           </grid-layout>
         </div>
       </ElCol>
@@ -124,37 +122,32 @@ let itemDragPos = {"x": null, "y": null, "w": 1, "h": 1, "i": null};
 })
 export default class Layout extends LayoutStorage {
 
-  protected setEditMode(itemId: number, selectedItem: any) {
-    this.isEdit = !this.isEdit
-    this.itemId = itemId
-    this.selectedItem = selectedItem
-  }
-
+  protected isDeletedItem = false
   protected selectedDragItem: any = {}
-  protected selectedItemDrag: any = {}
+  protected deletedItem: any = {}
+  protected widgetValue: any = {}
+  protected isDrag: boolean = false
+
+  protected setEditMode(itemId: number): void {
+    this.isEdit = !this.isEdit
+    this.item = this.layout.find(n => n.i === itemId)
+  }
 
   protected setDragItem(val: any): void {
     this.selectedDragItem = val
   }
 
-  protected setItemDrag(val: any): void {
-    this.selectedItemDrag = val
-    console.log(this.selectedItemDrag)
-  }
-
-  protected isDeletedItem = false
-
-  protected undoItem() {
+  protected undoItem(): void {
     this.isDeletedItem = false
-    if (this.deletedItem !== null) {
-      this.layout.push(this.deletedItem)
-    }
+    this.layout.push(this.deletedItem)
     this.saveLayoutChanges(this.layout)
   }
 
-  protected deletedItem = null
+  protected changeEvent(layout: any): void {
+    this.saveLayoutChanges(layout)
+  }
 
-  protected seyHello(val) {
+  protected dragOutside(val: any): void {
     let parentRect = document.getElementById('content').getBoundingClientRect();
     let mouseInGrid = false;
     if (((itemMouseXY.x > parentRect.left) && (itemMouseXY.x < parentRect.right)) && ((itemMouseXY.y > parentRect.top) && (itemMouseXY.y < parentRect.bottom))) {
@@ -162,30 +155,18 @@ export default class Layout extends LayoutStorage {
     }
     if (mouseInGrid === false) {
       this.isDeletedItem = true
-      console.log('mouse in grid')
-      console.log(val)
+      this.deletedItem = val
       const index = this.layout.findIndex(n => n.i === val.i);
       if (index !== -1) {
         this.layout.splice(index, 1);
         this.saveLayoutChanges(this.layout)
       }
-      this.deletedItem = val
-
     }
-  }
-
-  protected yellowValue: any = {}
-
-  protected pinkValue: any = {}
-
-  protected isHover: boolean = false
-
-  protected changeEvent(layout: any) {
-    this.saveLayoutChanges(layout)
   }
 
   created() {
     this.getLayout()
+    setTimeout(() => this.loading = false, 2000)
   }
 
   mounted() {
@@ -201,8 +182,8 @@ export default class Layout extends LayoutStorage {
     }
   }
 
-  protected drag(e) {
-    this.setDragItem(e)
+  protected drag(event) {
+    this.setDragItem(event.target.children[0].__vue__.myOwnProperty)
     let parentRect = document.getElementById('content').getBoundingClientRect();
     let mouseInGrid = false;
     if (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right)) && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom))) {
@@ -249,7 +230,7 @@ export default class Layout extends LayoutStorage {
     if (mouseInGrid === true) {
       this.$refs.gridlayout.dragEvent('dragend', 'drop', DragPos.x, DragPos.y, 1, 1);
       this.layout = this.layout.filter(obj => obj.i !== 'drop');
-      let NewKey = this.layout.findIndex(n => n.i === DragPos.i) && DragPos.i + 1
+      let newKey = this.layout.reduce((acc, curr) => acc.i > curr.i ? acc : curr)
 
       // UNCOMMENT below if you want to add a grid-item
       this.layout.push({
@@ -257,7 +238,7 @@ export default class Layout extends LayoutStorage {
         y: DragPos.y,
         w: 2,
         h: 50,
-        i: NewKey,
+        i: newKey.i + 1,
         c: this.selectedDragItem.c,
         props: this.selectedDragItem.props
       });
@@ -275,6 +256,11 @@ export default class Layout extends LayoutStorage {
 </script>
 
 <style scoped lang="scss">
+
+.outer-widgets {
+  display: flex;
+  flex-direction: row;
+}
 
 .transition-box {
   position: fixed;
@@ -308,9 +294,10 @@ export default class Layout extends LayoutStorage {
 .droppable-element {
   width: 150px;
   text-align: center;
-  background: #fdd;
+  background: #aeffd7;
   border: 1px solid black;
-  margin: 10px 0;
+  border-radius: 10px;
+  margin: 0 20px;
   padding: 10px;
 }
 
@@ -337,16 +324,6 @@ export default class Layout extends LayoutStorage {
   left: calc(50% - (300px));
   z-index: 20000;
 }
-
-.product-eit-widget {
-  //transition: 1;
-  position: relative !important;
-  left: 0 !important;
-  top: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-}
-
 
 .product-details-view {
   max-width: 100%;

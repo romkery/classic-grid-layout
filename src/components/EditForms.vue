@@ -2,13 +2,17 @@
   <div class="block">
     <span class="demonstration"></span>
     <div v-for="item in this.value">
-      {{ item.title }} - {{ item.slider.value }}
-      <el-slider v-model="item.slider.value"
+      {{ item.title }} - {{ item.params.value }}
+      <el-slider v-if="item.el === 'slider'"
+                 v-model="item.params.value"
                  :format-tooltip="formatTooltip"
-                 :max="item.slider.max"
-                 :min="item.slider.min"
-                 :step="item.slider.step">
-      </el-slider>
+                 :max="item.params.max"
+                 :min="item.params.min"
+                 :step="item.params.step"
+      />
+      <el-color-picker v-if="item.el === 'colorPicker'"
+                       v-model="item.params.color"
+                       :style="{top: '12px'}"/>
     </div>
     <!--    <div>borderColor - -->
     <!--      <el-color-picker style="top:8px" size="mini" v-model="value.border.color"></el-color-picker>-->

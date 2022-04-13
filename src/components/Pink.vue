@@ -11,7 +11,6 @@
 
 import Component from 'vue-class-component';
 import useForm from '@/components/EditForms.vue';
-import {Prop} from 'vue-property-decorator';
 import Vue from 'vue';
 import LayoutStorage from '@/helpers/LayoutStorage';
 
@@ -25,23 +24,12 @@ export default class Pink extends Vue {
 
   protected store = new LayoutStorage()
 
-  @Prop({}) protected value!: any
-
   protected style: any
 
   protected myOwnProperty = this.store.createNewWidget('Green', [
-    this.store.addNewProperty('border', 'Новый бордюр', 'slider', 10, 100, 4, 20, '#ff5297'),
-    this.store.addNewProperty('borderRadius', 'Бордюр скруглился', 'slider', 10, 100, 1, 20)
+    this.store.addNewProperty('border', 'Рамка', 'slider', 10, 100, 4, 20, '#ff5297'),
+    this.store.addNewProperty('borderRadius', 'Скругление углов', 'slider', 10, 100, 1, 20)
   ])
-
-  protected setMyProperty() {
-    this.$emit('pinkValue', this.myOwnProperty)
-    // this.value = this.myOwnProperty
-  }
-
-  created() {
-    this.setMyProperty()
-  }
 
 }
 
