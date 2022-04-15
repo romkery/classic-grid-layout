@@ -1,28 +1,21 @@
 <template>
   <div class="block">
     <span class="demonstration"></span>
-    <div v-for="item in this.value">
-      {{ item.title }} - {{ item.params.value }}
-      <el-slider v-if="item.el === 'slider'"
-                 v-model="item.params.value"
+    <div v-for="prop in this.value">
+      {{ prop.title }} - {{ prop.params.value }}
+      <el-slider v-if="prop.el === 'slider'"
+                 v-model="prop.params.value"
                  :format-tooltip="formatTooltip"
-                 :max="item.params.max"
-                 :min="item.params.min"
-                 :step="item.params.step"
+                 :max="prop.params.max"
+                 :min="prop.params.min"
+                 :step="prop.params.step"
+                 :disabled="item.props.loading"
       />
-      <el-color-picker v-if="item.el === 'colorPicker'"
-                       v-model="item.params.color"
-                       :style="{top: '12px'}"/>
+      <el-color-picker v-if="prop.el === 'colorPicker'"
+                       v-model="prop.params.color"
+                       :style="{top: '12px'}"
+                       :disabled="item.props.loading"/>
     </div>
-    <!--    <div>borderColor - -->
-    <!--      <el-color-picker style="top:8px" size="mini" v-model="value.border.color"></el-color-picker>-->
-    <!--    </div>-->
-    <!--    <div>static - -->
-    <!--      <el-switch v-model="value.static"></el-switch>-->
-    <!--    </div>-->
-    <!--    <div>color - -->
-    <!--      <el-color-picker style="top:8px" size="mini" v-model="value.background"></el-color-picker>-->
-    <!--    </div>-->
   </div>
 </template>
 
@@ -38,15 +31,11 @@ export default class useForm extends Vue {
 
   @Prop() value!: any
 
-  protected propsKeys: any
-
+  @Prop() item!: any
+  
   protected formatTooltip(val: number) {
     return val;
   }
-
-  created() {
-  }
-
 }
 
 </script>

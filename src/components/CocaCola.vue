@@ -1,7 +1,16 @@
 <template>
-  <div class="widget" :style="this.store.getStyles(this.value)">
-    <img src="https://democrats.org/wp-content/uploads/2019/08/TeamBlue_gradient.png?w=300" alt="cola">
+  <span>
+   <DefaultSkeleton :value='value'
+                    :item="item"
+                    v-if="value.preview === 'skeleton' &
+                          value.loading"/>
+  <div class="widget"
+       :style="this.store.getStyles(this.value.styleProps)"
+       v-if="!value.loading">
+    <img src="https://democrats.org/wp-content/uploads/2019/08/TeamBlue_gradient.png?w=300"
+         alt="cola">
   </div>
+  </span>
 </template>
 
 
@@ -12,11 +21,13 @@ import useForm from '@/components/EditForms.vue';
 import {Prop} from 'vue-property-decorator';
 import Vue from 'vue';
 import LayoutStorage from '@/helpers/LayoutStorage';
+import DefaultSkeleton from '@/components/mixins/DefaultSkeleton.vue';
 
 
 @Component({
   components: {
-    useForm
+    useForm,
+    DefaultSkeleton
   }
 })
 export default class CocaCola extends Vue {
@@ -24,10 +35,7 @@ export default class CocaCola extends Vue {
   protected store = new LayoutStorage()
 
   @Prop({}) protected value!: any
-
-  created() {
-
-  }
+  @Prop({}) protected item!: any
 
 }
 
@@ -38,11 +46,7 @@ export default class CocaCola extends Vue {
 
 .widget {
   background: white;
-  height: calc(100% - 20px);
-  /*display: flex;*/
-  /*flex-direction: column;*/
-  /*right: 10px;*/
-  /*bottom: 10px;*/
+  height: calc(100% - 26px);
   padding: 10px;
 }
 

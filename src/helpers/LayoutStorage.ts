@@ -4,8 +4,6 @@ export default class LayoutStorage extends Vue {
 
     public isEdit: boolean = false;
 
-    public loading: boolean = true
-
     public item: any = {}
 
     public outerWidgets = ['Pink', 'Yellow']
@@ -15,70 +13,161 @@ export default class LayoutStorage extends Vue {
     public defaultLayout: Array<ILayoutItem> =
         [
             {
-                "x": 0, "y": 1, "w": 3, "h": 50, "i": 0, c: 'CocaCola', preview: 'default', static: false,
-                props:
-                    [
-                        {
+                "x": 0, "y": 1, "w": 3, "h": 50, "i": 0, c: 'CocaCola', static: false, props: {
+                    preview: 'skeleton', loading: false,
+                    styleProps:
+                        [
+                            {
+                                name: 'border',
+                                title: 'Рамка',
+                                el: 'slider',
+                                params: {
+                                    min: 0,
+                                    max: 50,
+                                    value: 10,
+                                    color: '#21B1EC',
+                                    valueParams: 'px solid '
+                                }
+                            },
+                            {
+                                name: 'borderRadius',
+                                title: 'Скругление углов',
+                                el: 'slider',
+                                params: {
+                                    min: 0,
+                                    max: 50,
+                                    value: 10,
+                                    valueParams: 'px'
+                                }
+                            },
+                            {
+                                name: 'background',
+                                title: 'Фон',
+                                el: 'colorPicker',
+                                params: {
+                                    color: '#000000'
+                                }
+                            }]
+
+                }
+            },
+            {
+                "x": 2, "y": 1, "w": 2, "h": 50, "i": 1, c: 'Orange', static: false, props: {
+                    preview: 'skeleton', loading: true,
+                    styleProps:
+                        [{
                             name: 'border',
                             title: 'Рамка',
                             el: 'slider',
                             params: {
                                 min: 0,
-                                max: 50,
+                                max: 100,
                                 value: 10,
-                                color: '#21B1EC',
+                                color: '#e3812b',
                                 valueParams: 'px solid '
                             }
                         },
-                        {
-                            name: 'borderRadius',
-                            title: 'Скругление углов',
+                            {
+                                name: 'background',
+                                title: 'Фон',
+                                el: 'colorPicker',
+                                params: {
+                                    color: '#f4ff9c'
+                                }
+                            }
+                        ]
+                }
+            },
+            {
+                "x": 4, "y": 1, "w": 2, "h": 50, "i": 2, c: 'Green', static: false, props: {
+                    preview: 'skeleton', loading: false, styleProps:
+                        [
+                            {
+                                name: 'border',
+                                title: 'Рамка',
+                                el: 'slider',
+                                params: {
+                                    min: 0,
+                                    max: 50,
+                                    value: 20,
+                                    color: '#31e862',
+                                    valueParams: 'px solid '
+                                }
+                            },
+                            {
+                                name: 'borderRadius',
+                                title: 'Скругление углов',
+                                el: 'slider',
+                                params: {
+                                    min: 0,
+                                    max: 50,
+                                    value: 10,
+                                    valueParams: 'px'
+                                }
+                            }]
+                }
+            },
+            {
+                "x": 6, "y": 1, "w": 2, "h": 50, "i": 3, c: 'Orange', static: false, props: {
+                    preview: 'skeleton', loading: true,
+                    styleProps:
+                        [{
+                            name: 'border',
+                            title: 'Рамка',
                             el: 'slider',
                             params: {
                                 min: 0,
-                                max: 50,
+                                max: 100,
                                 value: 10,
-                                valueParams: 'px'
+                                color: '#e3812b',
+                                valueParams: 'px solid '
                             }
                         },
-                        {
-                            name: 'background',
-                            title: 'Фон',
-                            el: 'colorPicker',
-                            params: {
-                                color: '#000000'
-                            }
-                        }]
+                            {
+                                name: 'background',
+                                title: 'Фон',
+                                el: 'colorPicker',
+                                params: {
+                                    color: '#5df854'
+                                }
+                            }]
 
+                }
             },
             {
-                "x": 2, "y": 1, "w": 2, "h": 50, "i": 1, c: 'Orange', preview: 'default', static: false,
-                props:
-                    [{
-                        name: 'border',
-                        title: 'Рамка',
-                        el: 'slider',
-                        params: {
-                            min: 0,
-                            max: 100,
-                            value: 10,
-                            color: '#e3812b',
-                            valueParams: 'px solid '
-                        }
-                    },
-                        {
-                            name: 'background',
-                            title: 'Фон',
-                            el: 'colorPicker',
-                            params: {
-                                color: '#f4ff9c'
+                "x": 8, "y": 1, "w": 2, "h": 50, "i": 4, c: 'CocaCola', static: false, props: {
+                    preview: 'skeleton', loading: false, styleProps:
+                        [
+                            {
+                                name: 'border',
+                                title: 'Рамка',
+                                el: 'slider',
+                                params: {
+                                    min: 0,
+                                    max: 50,
+                                    value: 2,
+                                    color: '#21B1EC',
+                                    valueParams: 'px solid '
+                                }
+                            },
+                            {
+                                name: 'borderRadius',
+                                title: 'Скругление углов',
+                                el: 'slider',
+                                params: {
+                                    min: 0,
+                                    max: 50,
+                                    value: 10,
+                                    valueParams: 'px'
+                                }
                             }
-                        }
-                    ]
+                        ],
+                }
             },
             {
-                "x": 4, "y": 1, "w": 2, "h": 50, "i": 2, c: 'Green', preview: 'default', static: false, props:
-                    [
+                "x": 10, "y": 1, "w": 2, "h": 50, "i": 5, c: 'Green', static: false, props: {
+                    preview: 'skeleton', loading: true, styleProps: [
+
                         {
                             name: 'border',
                             title: 'Рамка',
@@ -86,111 +175,32 @@ export default class LayoutStorage extends Vue {
                             params: {
                                 min: 0,
                                 max: 50,
-                                value: 20,
+                                value: 10,
                                 color: '#31e862',
                                 valueParams: 'px solid '
                             }
                         },
                         {
                             name: 'borderRadius',
-                            title: 'Скругление углов',
-                            el: 'slider',
-                            params: {
-                                min: 0,
-                                max: 50,
-                                value: 10,
-                                valueParams: 'px'
-                            }
-                        }]
-            },
-            {
-                "x": 6, "y": 1, "w": 2, "h": 50, "i": 3, c: 'Orange', preview: 'default', static: false,
-                props:
-                    [{
-                        name: 'border',
-                        title: 'Рамка',
-                        el: 'slider',
-                        params: {
-                            min: 0,
-                            max: 100,
-                            value: 10,
-                            color: '#e3812b',
-                            valueParams: 'px solid '
-                        }
-                    },
-                        {
-                            name: 'background',
-                            title: 'Фон',
-                            el: 'colorPicker',
-                            params: {
-                                color: '#5df854'
-                            }
-                        }]
-
-            },
-            {
-                "x": 8, "y": 1, "w": 2, "h": 50, "i": 4, c: 'CocaCola', preview: 'default', static: false, props:
-                    [
-                        {
-                            name: 'border',
                             title: 'Рамка',
                             el: 'slider',
                             params: {
                                 min: 0,
                                 max: 50,
-                                value: 2,
-                                color: '#21B1EC',
-                                valueParams: 'px solid '
-                            }
-                        },
-                        {
-                            name: 'borderRadius',
-                            title: 'Скругление углов',
-                            el: 'slider',
-                            params: {
-                                min: 0,
-                                max: 50,
                                 value: 10,
                                 valueParams: 'px'
                             }
+                        },
+                        {
+                            name: 'background',
+                            title: 'Фон',
+                            el: 'colorPicker',
+                            params: {
+                                color: '#deafaf'
+                            }
                         }
-                    ],
-            },
-            {
-                "x": 10, "y": 1, "w": 2, "h": 50, "i": 5, c: 'Green', preview: 'default', static: false, props: [
-
-                    {
-                        name: 'border',
-                        title: 'Рамка',
-                        el: 'slider',
-                        params: {
-                            min: 0,
-                            max: 50,
-                            value: 10,
-                            color: '#31e862',
-                            valueParams: 'px solid '
-                        }
-                    },
-                    {
-                        name: 'borderRadius',
-                        title: 'Рамка',
-                        el: 'slider',
-                        params: {
-                            min: 0,
-                            max: 50,
-                            value: 10,
-                            valueParams: 'px'
-                        }
-                    },
-                    {
-                        name: 'background',
-                        title: 'Фон',
-                        el: 'colorPicker',
-                        params: {
-                            color: '#deafaf'
-                        }
-                    }
-                ]
+                    ]
+                }
             }]
 
     public getLayout(): void {
@@ -207,30 +217,18 @@ export default class LayoutStorage extends Vue {
         localStorage.setItem('layout', JSON.stringify(layout))
     }
 
-    public setItemChanges(i: number, value: number): void {
-        console.log('function запустилась', this.layout)
-        // this.layout[i].props = value
-    }
-
-    public getIsEdit(): boolean {
-        return this.isEdit
-    }
-
     public setLayout(value: ILayoutItem): void {
         this.layout.push(value)
     }
 
-    public createNewWidget(c: string, prop: any): any {
+    public createNewWidget(c: string, preview: string, prop: any): any {
         return {
-            // "x": 0, "y": 0, "w": 2, "h": 50, "i": this.layout.length + 1,
-            c: c, static: false, props: prop
+            c: c, static: false, props: {
+                preview: preview,
+                loading: false,
+                styleProps: prop
+            }
         }
-    }
-
-    public getStyles(itemProps: any) {
-        let styles: any = {}
-        itemProps.map((item: any) => styles[item.name] = `${item.params.value ? item.params.value : ''}${item.params.valueParams ? item.params.valueParams : ''} ${item.params.color ? item.params.color : ''}`)
-        return styles
     }
 
     public addNewProperty(name: string, title: string, el: string, min: number, max: number, step: number, value: number, color?: string, valueParams?: string,): any {
@@ -250,6 +248,12 @@ export default class LayoutStorage extends Vue {
         }
     }
 
+    public getStyles(itemProps: any): void {
+        let styles: any = {}
+        itemProps.map((item: any) => styles[item.name] = `${item.params.value ? item.params.value : ''}${item.params.valueParams ? item.params.valueParams : ''} ${item.params.color ? item.params.color : ''}`)
+        return styles
+    }
+
 
 }
 
@@ -261,13 +265,12 @@ interface ILayoutItem {
     i?: number;
     c: string;
     static?: boolean
-    props: Array<StyleType>
-    preview: string
+    props: PropsType
 }
 
 type StyleType = {
     name: string
-    title?: string
+    title: string
     el: string,
     params?: {
         min?: number
@@ -279,5 +282,11 @@ type StyleType = {
     }
     color?: string
     switch?: boolean
+}
+
+type PropsType = {
+    loading: boolean
+    styleProps: Array<StyleType>
+    preview: string
 }
 
