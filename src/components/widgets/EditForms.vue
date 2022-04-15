@@ -1,6 +1,5 @@
 <template>
-  <div class="block">
-    <span class="demonstration"></span>
+  <div class="edit-forms">
     <div v-for="prop in this.value">
       {{ prop.title }} - {{ prop.params.value }}
       <el-slider v-if="prop.el === 'slider'"
@@ -21,7 +20,6 @@
 
 
 <script lang="ts">
-
 import Component from 'vue-class-component';
 import Vue from 'vue';
 import {Prop} from 'vue-property-decorator';
@@ -30,9 +28,8 @@ import {Prop} from 'vue-property-decorator';
 export default class useForm extends Vue {
 
   @Prop() value!: any
-
   @Prop() item!: any
-  
+
   protected formatTooltip(val: number) {
     return val;
   }
@@ -40,6 +37,11 @@ export default class useForm extends Vue {
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
+.edit-forms {
+
+}
+
 @import url("//unpkg.com/element-ui@2.15.7/lib/theme-chalk/index.css");
 </style>

@@ -20,7 +20,7 @@ const router = new VueRouter({
             // route level code-splitting
             // this generates a separate chunk (About.[hash].js) for this route
             // which is lazy-loaded when the route is visited.
-            component: () => import('../components/Yellow.vue')
+            component: () => import('../components/widgets/Yellow.vue')
             // () => import('../views/AboutView.vue')
         },
         {

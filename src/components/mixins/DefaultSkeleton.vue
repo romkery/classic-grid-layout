@@ -1,10 +1,10 @@
 <template>
-  <div class="widget">
+  <div class="widget-skeleton">
     <el-skeleton animated :count=1>
       <template slot="template">
         <div class="item-skeleton"
              :style="getSkeletonItemStyle()">
-          <div class="widget-img">
+          <div class="widget-skeleton-img">
             <el-skeleton-item variant="image"
                               :style="getSkeletonImgStyle()"/>
           </div>
@@ -69,7 +69,7 @@ export default class DefaultSkeleton extends Vue {
 
 <style lang="scss" scoped>
 
-.widget {
+.widget-skeleton {
   height: calc(100% - 26px);
   border: 1px solid black;
   border-radius: 10px;

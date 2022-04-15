@@ -253,8 +253,6 @@ export default class LayoutStorage extends Vue {
         itemProps.map((item: any) => styles[item.name] = `${item.params.value ? item.params.value : ''}${item.params.valueParams ? item.params.valueParams : ''} ${item.params.color ? item.params.color : ''}`)
         return styles
     }
-
-
 }
 
 interface ILayoutItem {

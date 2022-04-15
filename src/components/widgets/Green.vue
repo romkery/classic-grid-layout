@@ -17,7 +17,7 @@
 <script lang="ts">
 
 import Component from 'vue-class-component';
-import useForm from '@/components/EditForms.vue';
+import useForm from '@/components/widgets/EditForms.vue';
 import {Prop} from 'vue-property-decorator';
 import Vue from 'vue';
 import LayoutStorage from '@/helpers/LayoutStorage';

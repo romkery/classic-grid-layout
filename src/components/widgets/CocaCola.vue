@@ -1,15 +1,15 @@
 <template>
   <span>
-   <DefaultSkeleton :value='value'
-                    :item="item"
-                    v-if="value.preview === 'skeleton' &
+    <DefaultSkeleton :value='value'
+                     :item="item"
+                     v-if="value.preview === 'skeleton' &
                           value.loading"/>
-  <div class="widget"
-       :style="this.store.getStyles(this.value.styleProps)"
-       v-if="!value.loading">
-    <img src="https://democrats.org/wp-content/uploads/2019/08/TeamBlue_gradient.png?w=300"
-         alt="cola">
-  </div>
+    <div class="widget"
+         :style="this.store.getStyles(this.value.styleProps)"
+         v-if="!value.loading">
+      <img src="https://democrats.org/wp-content/uploads/2019/08/TeamBlue_gradient.png?w=300"
+           alt="cola">
+    </div>
   </span>
 </template>
 
@@ -17,7 +17,7 @@
 <script lang="ts">
 
 import Component from 'vue-class-component';
-import useForm from '@/components/EditForms.vue';
+import useForm from '@/components/widgets/EditForms.vue';
 import {Prop} from 'vue-property-decorator';
 import Vue from 'vue';
 import LayoutStorage from '@/helpers/LayoutStorage';
