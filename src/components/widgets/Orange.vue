@@ -1,8 +1,6 @@
 <template>
   <span>
-    <DefaultSkeleton :value='value'
-                     :item="item"
-                     v-if="value.preview === 'skeleton' & value.loading"/>
+    <DefaultSkeleton v-if="value.preview === 'skeleton' & value.loading"/>
     <div class="widget"
          :style="this.store.getStyles(this.value.styleProps)"
          v-if="!value.loading">
@@ -43,14 +41,15 @@ export default class Orange extends Vue {
 </script>
 
 
-<style scoped>
+<style lang="scss" scoped>
+@import './../../styles/variables.scss';
 
 h1 {
 }
 
 .widget {
   background: white;
-  height: calc(100% - 26px);
+  height: $grid-content-height;
   padding: 10px;
 }
 

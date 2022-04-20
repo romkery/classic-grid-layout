@@ -1,8 +1,6 @@
 <template>
   <span>
-    <DefaultSkeleton :value='myOwnProperty.props'
-                     :item="myOwnProperty"
-                     v-if="myOwnProperty.props.preview === 'skeleton' &
+    <DefaultSkeleton v-if="myOwnProperty.props.preview === 'skeleton' &
                          myOwnProperty.props.loading"/>
     <div class="widget"
          v-if="!myOwnProperty.props.loading"
@@ -49,11 +47,12 @@ export default class Pink extends Vue {
 </script>
 
 
-<style scoped>
+<style lang="scss" scoped>
+@import './../../styles/variables.scss';
 
 .widget {
   background: white;
-  height: calc(100% - 26px);
+  height: $grid-content-height;
   /*display: flex;*/
   /*flex-direction: column;*/
   /*right: 10px;*/

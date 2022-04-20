@@ -39,9 +39,4 @@ export default class useForm extends Vue {
 
 <style lang="scss" scoped>
 
-.edit-forms {
-
-}
-
-@import url("//unpkg.com/element-ui@2.15.7/lib/theme-chalk/index.css");
 </style>
