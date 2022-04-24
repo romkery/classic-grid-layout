@@ -1,6 +1,7 @@
 <template>
   <div class="edit-forms">
-    <div v-for="(prop, index) in this.model.props.styleProps" :key="index">
+    <div v-for="(prop, index) in this.model.props.styleProps"
+         :key="index">
       {{ prop.title }} - {{ prop.value }}
       <el-slider v-if="prop.el === 'slider'"
                  :max="prop.params.max"
@@ -26,24 +27,23 @@
 import Component from 'vue-class-component';
 import Vue from 'vue';
 import {Prop} from 'vue-property-decorator';
-import LayoutStorage, {ILayoutItem} from '@/helpers/LayoutStorage';
+import LayoutStorage, {LayoutItemType, LayoutType} from '@/helpers/LayoutStorage';
 
 @Component
 export default class EditForms extends Vue {
 
-  @Prop() model!: ILayoutItem
-  @Prop() layout!: any
+  @Prop() model: LayoutItemType = {}
+  @Prop() layout: LayoutType = []
 
   protected store = new LayoutStorage()
-  protected selectedItem = {}
+  protected selectedItem!: LayoutItemType | undefined
 
-  protected formatTooltip(val: number
-  ) {
+  protected formatTooltip(val: number) {
     return val;
   }
 
   created() {
-    this.selectedItem = this.layout.find((el: any) => el.i === this.model.i)
+    this.selectedItem = this.layout.find((el: LayoutItemType) => el.i === this.model.i)
   }
 }
 

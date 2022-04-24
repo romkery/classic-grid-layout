@@ -1,7 +1,6 @@
 <template>
   <span>
-    <DefaultSkeleton v-if="myOwnProperty.props.preview === 'skeleton' &
-                         myOwnProperty.props.loading"/>
+    <DefaultSkeleton v-if="myOwnProperty.props.preview === 'skeleton' & myOwnProperty.props.loading"/>
     <div class="widget"
          v-if="!myOwnProperty.props.loading"
          :style="styles()">
@@ -18,7 +17,6 @@ import Component from 'vue-class-component';
 import Vue from 'vue';
 import LayoutStorage from '@/helpers/LayoutStorage';
 import DefaultSkeleton from '@/components/mixins/DefaultSkeleton.vue';
-import {Prop} from 'vue-property-decorator';
 
 
 @Component({
@@ -28,17 +26,13 @@ import {Prop} from 'vue-property-decorator';
 })
 export default class Pink extends Vue {
 
-  @Prop() protected value!: any
-
-  @Prop() protected model!: any
-
   protected store = new LayoutStorage()
 
   protected styles() {
     return {
-      border: `${this.myOwnProperty.props.styleProps.border?.value}px solid ${this.myOwnProperty.props.styleProps.border?.color}`,
-      borderRadius: `${this.myOwnProperty.props.styleProps.borderRadius?.value}px`,
-      background: this.myOwnProperty.props.styleProps.background?.color
+      border: `${this.myOwnProperty.props?.styleProps.border?.value}px solid ${this.myOwnProperty.props?.styleProps.border?.color}`,
+      borderRadius: `${this.myOwnProperty.props?.styleProps.borderRadius?.value}px`,
+      background: this.myOwnProperty.props?.styleProps.background?.color
     }
   }
 
@@ -74,10 +68,6 @@ export default class Pink extends Vue {
 .widget {
   background: white;
   height: $grid-content-height;
-  /*display: flex;*/
-  /*flex-direction: column;*/
-  /*right: 10px;*/
-  /*bottom: 10px;*/
   padding: 10px;
 }
 

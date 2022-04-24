@@ -1,29 +1,29 @@
 <template>
   <div style="height: inherit"
        class="widget-content"
-       @mouseenter="setDragItem(item)"
+       @mouseenter="setDragItem(model)"
        @mouseup="dragOutside(selectedDragItem)"
   >
     <div class="pin-icon-container">
       <div>
         <i class="el-icon-loading"
            @click="() =>
-           {item.props.loading = ! item.props.loading; changeEvent(layout)}"
+           {model.props.loading = ! model.props.loading; changeEvent(layout)}"
         />
         <i class="el-icon-setting"
-           @click="setEditMode(item.i)"
+           @click="setEditMode(model.i)"
         />
-        <i class="el-icon-star-off" v-if="!item.static"
-           @click="() => {item.static = true; changeEvent(layout)}"
+        <i class="el-icon-star-off" v-if="!model.static"
+           @click="() => {model.static = true; changeEvent(layout)}"
         />
-        <i class="el-icon-star-on" v-if="item.static"
-           @click="() => {item.static = false; changeEvent(layout)}"/>
+        <i class="el-icon-star-on" v-if="model.static"
+           @click="() => {model.static = false; changeEvent(layout)}"/>
       </div>
     </div>
     <component
-      :is="item.c"
-      :model="item"
-      :class="'grid-item-content'+ item.i"
+      :is="model.c"
+      :model="model"
+      :class="'grid-model-content'+ model.i"
     />
   </div>
 </template>
@@ -38,6 +38,7 @@ import Pink from '@/components/widgets/Pink.vue';
 import Orange from '@/components/widgets/Orange.vue';
 import Green from '@/components/widgets/Green.vue';
 import CocaCola from '@/components/widgets/CocaCola.vue';
+import {LayoutItemType, LayoutType} from '@/helpers/LayoutStorage';
 
 @Component({
   components: {
@@ -50,13 +51,13 @@ import CocaCola from '@/components/widgets/CocaCola.vue';
 })
 export default class GridItemContent extends Vue {
 
-  @Prop({}) protected item!: any
+  @Prop({}) protected model!: LayoutItemType
   @Prop({}) protected dragOutside!: any
   @Prop({}) protected setDragItem!: any
   @Prop({}) protected setEditMode!: any
   @Prop({}) protected changeEvent!: any
-  @Prop({}) protected selectedDragItem!: any
-  @Prop({}) protected layout!: any
+  @Prop({}) protected selectedDragItem!: LayoutItemType
+  @Prop({}) protected layout!: LayoutType
 
 }
 

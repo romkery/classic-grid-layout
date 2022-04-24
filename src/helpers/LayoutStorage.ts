@@ -4,10 +4,10 @@ export default class LayoutStorage extends Vue {
 
     public gridItemSize = {w: 2, h: 50}
     public isEdit: boolean = false;
-    public item: any = {}
+    public item: LayoutItemType | Object = {}
     public outerWidgets = ['Pink', 'Yellow']
-    public layout: Array<ILayoutItem> = []
-    public defaultLayout: Array<ILayoutItem> =
+    public layout: LayoutType = []
+    public defaultLayout: LayoutItemType[] =
         [
             {
                 "x": 0, "y": 1, "w": 3, "h": 50, "i": 10, c: 'CocaCola', static: false, props: {
@@ -194,30 +194,30 @@ export default class LayoutStorage extends Vue {
         if (!localStorage.getItem('layout')) {
             this.defaultLayout.forEach(el => this.setLayout(el))
         } else {
-            const data: Array<ILayoutItem> = JSON.parse(<string>localStorage.getItem('layout'))
-            data.forEach((el) => this.setLayout(el))
+            const data: LayoutType = JSON.parse(<string>localStorage.getItem('layout'))
+            data.forEach((el): void => this.setLayout(el))
         }
         this.saveLayoutChanges(this.layout)
     }
 
-    public saveLayoutChanges(layout: any): void {
+    public saveLayoutChanges(layout: LayoutType): void {
         localStorage.setItem('layout', JSON.stringify(layout))
     }
 
-    public setLayout(value: ILayoutItem): void {
+    public setLayout(value: LayoutItemType): void {
         this.layout.push(value)
     }
 
-    public createNewWidget(c: string, preview: string, propsArray: propsArray[]): any {
+    public createNewWidget(c: string, preview: string, propsArray: NewWidgetPropsType[]): LayoutItemType {
 
-        let propsObject: any = {}
+        let propsObject: StyleType = {}
 
         propsArray.map((el) => {
             propsObject[el.name] = {
                 name: el.name,
                 title: el.title,
                 el: el.el,
-                color: el.color ? el.color : null,
+                color: el.color ? el.color : undefined,
                 value: el.value ? el.value : 0,
                 params: {
                     min: el.min ? el.min : 0,
@@ -238,23 +238,31 @@ export default class LayoutStorage extends Vue {
         }
     }
 
-    public setStyleValues(value: number, prop: any, selectedItem: any, param: any) {
+    public setStyleValues(value: number, prop: any, selectedItem: LayoutItemType, param: 'color' | 'value') {
 
-        const foundProp = selectedItem.props.styleProps[prop.name]
+        const foundProp: any = selectedItem.props?.styleProps[prop.name]
         foundProp && (foundProp[param] = value);
     }
 
 }
 
-export interface ILayoutItem {
+export type LayoutType = LayoutItemType[]
+
+export type LayoutItemType = {
     x?: number;
     y?: number;
     w?: number;
     h?: number;
     i?: number;
-    c: string;
+    c?: string;
     static?: boolean
-    props: PropsType
+    props?: PropsType
+}
+
+export type PropsType = {
+    loading: boolean
+    styleProps: StyleType
+    preview: string
 }
 
 export type StyleType = {
@@ -272,13 +280,7 @@ export type StyleType = {
     }
 }
 
-export type PropsType = {
-    loading: boolean
-    styleProps: StyleType
-    preview: string
-}
-
-export type propsArray = {
+export type NewWidgetPropsType = {
     name: string,
     title: string,
     el: string,

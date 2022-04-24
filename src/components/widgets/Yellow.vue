@@ -1,7 +1,6 @@
 <template>
   <span>
-    <DefaultSkeleton v-if="myOwnProperty.props.preview === 'skeleton' &
-                            myOwnProperty.props.loading"/>
+    <DefaultSkeleton v-if="myOwnProperty.props.preview === 'skeleton' & myOwnProperty.props.loading"/>
     <div class="widget"
          v-if="!myOwnProperty.props.loading"
          :style="styles()">
@@ -16,7 +15,7 @@
 
 import Component from 'vue-class-component';
 import Vue from 'vue';
-import LayoutStorage, {ILayoutItem} from '@/helpers/LayoutStorage';
+import LayoutStorage, {LayoutItemType} from '@/helpers/LayoutStorage';
 import DefaultSkeleton from '@/components/mixins/DefaultSkeleton.vue';
 
 
@@ -31,13 +30,13 @@ export default class Yellow extends Vue {
 
   protected styles() {
     return {
-      border: `${this.myOwnProperty.props.styleProps.border?.value}px solid ${this.myOwnProperty.props.styleProps.border?.color}`,
-      borderRadius: `${this.myOwnProperty.props.styleProps.borderRadius?.value}px`,
-      background: this.myOwnProperty.props.styleProps.background?.color
+      border: `${this.myOwnProperty.props?.styleProps.border?.value}px solid ${this.myOwnProperty.props?.styleProps.border?.color}`,
+      borderRadius: `${this.myOwnProperty.props?.styleProps.borderRadius?.value}px`,
+      background: this.myOwnProperty.props?.styleProps.background?.color
     }
   }
 
-  protected myOwnProperty: ILayoutItem = this.store.createNewWidget('Green', 'skeleton',
+  protected myOwnProperty: LayoutItemType = this.store.createNewWidget('Green', 'skeleton',
     [
       {
         name: 'border',
@@ -47,7 +46,7 @@ export default class Yellow extends Vue {
         max: 100,
         step: 4,
         value: 20,
-        color: '#ff7d7d'
+        color: '#ff7d7d',
       },
       {
         name: 'borderRadius',

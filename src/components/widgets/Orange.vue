@@ -17,7 +17,7 @@
 import Component from 'vue-class-component';
 import {Prop} from 'vue-property-decorator';
 import Vue from 'vue';
-import LayoutStorage, {ILayoutItem} from '@/helpers/LayoutStorage';
+import LayoutStorage, {LayoutItemType} from '@/helpers/LayoutStorage';
 import DefaultSkeleton from '@/components/mixins/DefaultSkeleton.vue';
 
 
@@ -30,13 +30,13 @@ export default class Orange extends Vue {
 
   protected store = new LayoutStorage()
 
-  @Prop({}) protected model!: ILayoutItem
+  @Prop({}) protected model!: LayoutItemType
 
   protected styles() {
     return {
-      border: `${this.model.props.styleProps.border?.value}px solid ${this.model?.props.styleProps.border.color}`,
-      borderRadius: `${this.model.props.styleProps.borderRadius?.value}px`,
-      background: this.model.props.styleProps.background?.color
+      border: `${this.model.props?.styleProps.border?.value}px solid ${this.model.props?.styleProps.border?.color}`,
+      borderRadius: `${this.model.props?.styleProps.borderRadius?.value}px`,
+      background: this.model.props?.styleProps.background?.color
     }
   }
 

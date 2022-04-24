@@ -32,6 +32,7 @@ import Green from '@/components/widgets/Green.vue';
 import Yellow from '@/components/widgets/Yellow.vue';
 import Pink from '@/components/widgets/Pink.vue';
 import EditForms from '@/components/widgets/EditForms.vue';
+import {LayoutItemType, LayoutType} from '@/helpers/LayoutStorage';
 
 
 @Component({
@@ -46,11 +47,11 @@ import EditForms from '@/components/widgets/EditForms.vue';
 })
 export default class EditPopUp extends Vue {
 
-  @Prop({}) protected model!: any
-  @Prop({}) protected selectedDragItem!: any
+  @Prop({}) protected model!: LayoutItemType
+  @Prop({}) protected selectedDragItem!: LayoutItemType
   @Prop({}) protected changeEvent!: any
-  @Prop({}) protected layout!: any
-  @Prop({}) protected isEdit!: any
+  @Prop({}) protected layout!: LayoutType
+  @Prop({}) protected isEdit!: boolean
 
   protected innerIsEdit: boolean = false
 

@@ -41,7 +41,7 @@
           <GridItemContent
             :selected-drag-item="selectedDragItem"
             :change-event="changeEvent"
-            :item="item"
+            :model="item"
             :drag-outside="dragOutside"
             :set-drag-item="setDragItem"
             :set-edit-mode="setEditMode"
@@ -56,7 +56,7 @@
 // @ts-ignore
 import {GridItem, GridLayout} from "vue-grid-layout"
 import Component from 'vue-class-component';
-import LayoutStorage from '@/helpers/LayoutStorage';
+import LayoutStorage, {LayoutItemType, LayoutType} from '@/helpers/LayoutStorage';
 import EditPopUp from '@/components/EditPopUp.vue';
 import WidgetList from '@/components/WidgetList.vue';
 import GridItemContent from '@/components/GridItemContent.vue';
@@ -76,7 +76,7 @@ let itemMouseXY = {"x": null, "y": null};
 })
 export default class Layout extends LayoutStorage {
 
-  protected selectedDragItem: any = {}
+  protected selectedDragItem: LayoutItemType = {}
 
   protected setEditMode(itemId: number): void {
     this.isEdit = !this.isEdit
@@ -87,11 +87,11 @@ export default class Layout extends LayoutStorage {
     this.selectedDragItem = val
   }
 
-  protected changeEvent(layout: any): void {
+  protected changeEvent(layout: LayoutType): void {
     this.saveLayoutChanges(layout)
   }
 
-  protected dragOutside(val: any): void {
+  protected dragOutside(val: LayoutItemType): void {
     let parentRect = document.getElementById('content').getBoundingClientRect();
     let mouseInGrid = false;
     if (((itemMouseXY.x > parentRect.left) && (itemMouseXY.x < parentRect.right)) && ((itemMouseXY.y > parentRect.top) && (itemMouseXY.y < parentRect.bottom))) {
