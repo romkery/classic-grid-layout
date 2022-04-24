@@ -36,7 +36,7 @@ export default class Yellow extends Vue {
     }
   }
 
-  protected myOwnProperty: LayoutItemType = this.store.createNewWidget('Green', 'skeleton',
+  protected myOwnProperty: LayoutItemType = this.store.createNewWidget('Orange', 'skeleton',
     [
       {
         name: 'border',

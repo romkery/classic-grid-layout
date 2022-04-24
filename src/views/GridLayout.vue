@@ -99,10 +99,8 @@ export default class Layout extends LayoutStorage {
     }
     if (mouseInGrid === false) {
       const index = this.layout.findIndex(n => n.i === val.i);
-      if (index !== -1) {
-        this.layout.splice(index, 1);
-        this.saveLayoutChanges(this.layout)
-      }
+      this.layout.splice(index, 1);
+      this.saveLayoutChanges(this.layout)
     }
   }
 
@@ -147,13 +145,14 @@ export default class Layout extends LayoutStorage {
         this.$refs.gridlayout.$children[this.layout.length].$refs.item.style.display = "none";
       } catch {
       }
+
       let el = this.$refs.gridlayout.$children[index];
       el.dragging = {"top": mouseXY.y - parentRect.top, "left": mouseXY.x - parentRect.left};
       let new_pos = el.calcXY(mouseXY.y - parentRect.top, mouseXY.x - parentRect.left);
 
       if (mouseInGrid === true) {
         this.$refs.gridlayout.dragEvent('dragstart', 'drop', new_pos.x, new_pos.y, this.gridItemSize.h, this.gridItemSize.w);
-        DragPos.i = index;
+        DragPos.i = index; //idk for what it is
         DragPos.x = this.layout[index].x;
         DragPos.y = this.layout[index].y;
       }
@@ -185,7 +184,8 @@ export default class Layout extends LayoutStorage {
         static: this.selectedDragItem.static,
         props: this.selectedDragItem.props
       });
-      this.$refs.gridlayout.dragEvent('dragend', DragPos.i, DragPos.x, DragPos.y, this.gridItemSize.h, this.gridItemSize.w);
+
+      this.$refs.gridlayout.dragEvent('dragend', newKey.i + 1, DragPos.x, DragPos.y, this.gridItemSize.h, this.gridItemSize.w);
       try {
         this.$refs.gridlayout.$children[this.layout.length].$refs.item.style.display = "block";
       } catch {

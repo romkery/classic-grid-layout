@@ -10,7 +10,7 @@ export default class LayoutStorage extends Vue {
     public defaultLayout: LayoutItemType[] =
         [
             {
-                "x": 0, "y": 1, "w": 3, "h": 50, "i": 10, c: 'CocaCola', static: false, props: {
+                "x": 0, "y": 1, "w": 3, "h": 50, "i": 0, c: 'CocaCola', static: false, props: {
                     preview: 'skeleton', loading: false,
                     styleProps: {
                         border: {
