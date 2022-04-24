@@ -22,8 +22,7 @@
     </div>
     <component
       :is="item.c"
-      v-model="item.props"
-      :item="item"
+      :model="item"
       :class="'grid-item-content'+ item.i"
     />
   </div>

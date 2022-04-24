@@ -1,26 +1,29 @@
 <template>
   <div class="layout">
-    <EditPopUp :item="item"
-               :selected-drag-item="selectedDragItem"
-               :change-event="changeEvent"
-               :layout="this.layout"
-               :is-edit.sync="isEdit"
+    <EditPopUp
+      :model="item"
+      :selected-drag-item="selectedDragItem"
+      :change-event="changeEvent"
+      :layout="this.layout"
+      :is-edit.sync="isEdit"
     />
-    <widget-list :drag="drag"
-                 :dragend="dragend"
+    <widget-list
+      :drag="drag"
+      :dragend="dragend"
     />
     <div id="content">
-      <grid-layout ref="gridlayout"
-                   class='customization-on'
-                   :layout.sync="layout"
-                   :isDraggable="!isEdit"
-                   :verticalCompact="true"
-                   :isResizable="true"
-                   :useCssTransforms="false"
-                   :responsive="true"
-                   :rowHeight='1'
-                   :margin="[10, 10]"
-                   @click="changeEvent(layout)"
+      <grid-layout
+        ref="gridlayout"
+        class='customization-on'
+        :layout.sync="layout"
+        :isDraggable="!isEdit"
+        :verticalCompact="true"
+        :isResizable="true"
+        :useCssTransforms="false"
+        :responsive="true"
+        :rowHeight='1'
+        :margin="[10, 10]"
+        @click="changeEvent(layout)"
       >
         <grid-item
           v-for="item in layout"
@@ -54,7 +57,6 @@
 import {GridItem, GridLayout} from "vue-grid-layout"
 import Component from 'vue-class-component';
 import LayoutStorage from '@/helpers/LayoutStorage';
-import useForm from '@/components/widgets/EditForms.vue';
 import EditPopUp from '@/components/EditPopUp.vue';
 import WidgetList from '@/components/WidgetList.vue';
 import GridItemContent from '@/components/GridItemContent.vue';
@@ -67,7 +69,6 @@ let itemMouseXY = {"x": null, "y": null};
   components: {
     GridLayout,
     GridItem,
-    useForm,
     EditPopUp,
     WidgetList,
     GridItemContent
@@ -151,7 +152,7 @@ export default class Layout extends LayoutStorage {
       let new_pos = el.calcXY(mouseXY.y - parentRect.top, mouseXY.x - parentRect.left);
 
       if (mouseInGrid === true) {
-        this.$refs.gridlayout.dragEvent('dragstart', 'drop', new_pos.x, new_pos.y, 50, 2);
+        this.$refs.gridlayout.dragEvent('dragstart', 'drop', new_pos.x, new_pos.y, this.gridItemSize.h, this.gridItemSize.w);
         DragPos.i = index;
         DragPos.x = this.layout[index].x;
         DragPos.y = this.layout[index].y;
@@ -184,13 +185,13 @@ export default class Layout extends LayoutStorage {
         static: this.selectedDragItem.static,
         props: this.selectedDragItem.props
       });
-      this.saveLayoutChanges(this.layout)
-      this.$refs.gridlayout.dragEvent('dragend', DragPos.i, DragPos.x, DragPos.y, 50, 2);
+      this.$refs.gridlayout.dragEvent('dragend', DragPos.i, DragPos.x, DragPos.y, this.gridItemSize.h, this.gridItemSize.w);
       try {
         this.$refs.gridlayout.$children[this.layout.length].$refs.item.style.display = "block";
       } catch {
       }
     }
+    this.saveLayoutChanges(this.layout)
   }
 
 }

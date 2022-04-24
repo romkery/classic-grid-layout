@@ -2,204 +2,191 @@ import Vue from 'vue';
 
 export default class LayoutStorage extends Vue {
 
+    public gridItemSize = {w: 2, h: 50}
     public isEdit: boolean = false;
-
     public item: any = {}
-
     public outerWidgets = ['Pink', 'Yellow']
-
     public layout: Array<ILayoutItem> = []
-
     public defaultLayout: Array<ILayoutItem> =
         [
             {
-                "x": 0, "y": 1, "w": 3, "h": 50, "i": 0, c: 'CocaCola', static: false, props: {
+                "x": 0, "y": 1, "w": 3, "h": 50, "i": 10, c: 'CocaCola', static: false, props: {
                     preview: 'skeleton', loading: false,
-                    styleProps:
-                        [
-                            {
-                                name: 'border',
-                                title: 'Рамка',
-                                el: 'slider',
-                                params: {
-                                    min: 0,
-                                    max: 50,
-                                    value: 10,
-                                    color: '#21B1EC',
-                                    valueParams: 'px solid '
-                                }
-                            },
-                            {
-                                name: 'borderRadius',
-                                title: 'Скругление углов',
-                                el: 'slider',
-                                params: {
-                                    min: 0,
-                                    max: 50,
-                                    value: 10,
-                                    valueParams: 'px'
-                                }
-                            },
-                            {
-                                name: 'background',
-                                title: 'Фон',
-                                el: 'colorPicker',
-                                params: {
-                                    color: '#000000'
-                                }
-                            }]
-
+                    styleProps: {
+                        border: {
+                            name: 'border',
+                            title: 'Рамка',
+                            el: 'slider',
+                            value: 10,
+                            color: '#21B1EC',
+                            params: {
+                                min: 0,
+                                max: 50,
+                            }
+                        },
+                        borderRadius: {
+                            name: 'borderRadius',
+                            title: 'Скругление углов',
+                            el: 'slider',
+                            value: 10,
+                            params: {
+                                min: 0,
+                                max: 50,
+                            }
+                        },
+                        background: {
+                            name: 'background',
+                            title: 'Фон',
+                            el: 'colorPicker',
+                            color: '#000000'
+                        }
+                    }
                 }
             },
             {
                 "x": 2, "y": 1, "w": 2, "h": 50, "i": 1, c: 'Orange', static: false, props: {
                     preview: 'skeleton', loading: true,
-                    styleProps:
-                        [{
+                    styleProps: {
+                        border: {
                             name: 'border',
                             title: 'Рамка',
                             el: 'slider',
+                            value: 10,
+                            color: '#21B1EC',
                             params: {
                                 min: 0,
-                                max: 100,
-                                value: 10,
-                                color: '#e3812b',
-                                valueParams: 'px solid '
+                                max: 50,
                             }
                         },
-                            {
-                                name: 'background',
-                                title: 'Фон',
-                                el: 'colorPicker',
-                                params: {
-                                    color: '#f4ff9c'
-                                }
+                        borderRadius: {
+                            name: 'borderRadius',
+                            title: 'Скругление углов',
+                            el: 'slider',
+                            value: 10,
+                            params: {
+                                min: 0,
+                                max: 50,
                             }
-                        ]
+                        },
+                        background: {
+                            name: 'background',
+                            title: 'Фон',
+                            el: 'colorPicker',
+                            color: '#000000'
+                        }
+                    }
                 }
             },
             {
                 "x": 4, "y": 1, "w": 2, "h": 50, "i": 2, c: 'Green', static: false, props: {
-                    preview: 'skeleton', loading: false, styleProps:
-                        [
-                            {
-                                name: 'border',
-                                title: 'Рамка',
-                                el: 'slider',
-                                params: {
-                                    min: 0,
-                                    max: 50,
-                                    value: 20,
-                                    color: '#31e862',
-                                    valueParams: 'px solid '
-                                }
-                            },
-                            {
-                                name: 'borderRadius',
-                                title: 'Скругление углов',
-                                el: 'slider',
-                                params: {
-                                    min: 0,
-                                    max: 50,
-                                    value: 10,
-                                    valueParams: 'px'
-                                }
-                            }]
+                    preview: 'skeleton', loading: false, styleProps: {
+                        border: {
+                            name: 'border',
+                            title: 'Рамка',
+                            el: 'slider',
+                            value: 20,
+                            color: '#31e862',
+                            params: {
+                                min: 0,
+                                max: 50,
+                            }
+                        },
+                        borderRadius: {
+                            name: 'borderRadius',
+                            title: 'Скругление углов',
+                            el: 'slider',
+                            value: 10,
+                            params: {
+                                min: 0,
+                                max: 50,
+                            }
+                        }
+                    }
                 }
             },
             {
                 "x": 6, "y": 1, "w": 2, "h": 50, "i": 3, c: 'Orange', static: false, props: {
                     preview: 'skeleton', loading: true,
-                    styleProps:
-                        [{
+                    styleProps: {
+                        border: {
                             name: 'border',
                             title: 'Рамка',
                             el: 'slider',
+                            value: 10,
+                            color: '#e3812b',
                             params: {
                                 min: 0,
                                 max: 100,
-                                value: 10,
-                                color: '#e3812b',
-                                valueParams: 'px solid '
                             }
                         },
-                            {
-                                name: 'background',
-                                title: 'Фон',
-                                el: 'colorPicker',
-                                params: {
-                                    color: '#5df854'
-                                }
-                            }]
-
+                        background: {
+                            name: 'background',
+                            title: 'Фон',
+                            el: 'colorPicker',
+                            color: '#5df854'
+                        }
+                    }
                 }
             },
             {
                 "x": 8, "y": 1, "w": 2, "h": 50, "i": 4, c: 'CocaCola', static: false, props: {
                     preview: 'skeleton', loading: false, styleProps:
-                        [
-                            {
+                        {
+                            border: {
                                 name: 'border',
                                 title: 'Рамка',
                                 el: 'slider',
+                                value: 2,
+                                color: '#21B1EC',
                                 params: {
                                     min: 0,
                                     max: 50,
-                                    value: 2,
-                                    color: '#21B1EC',
-                                    valueParams: 'px solid '
                                 }
                             },
-                            {
+                            borderRadius: {
                                 name: 'borderRadius',
                                 title: 'Скругление углов',
                                 el: 'slider',
+                                value: 10,
                                 params: {
                                     min: 0,
                                     max: 50,
-                                    value: 10,
-                                    valueParams: 'px'
                                 }
                             }
-                        ],
+                        },
                 }
             },
             {
                 "x": 10, "y": 1, "w": 2, "h": 50, "i": 5, c: 'Green', static: false, props: {
-                    preview: 'skeleton', loading: true, styleProps: [
-
-                        {
+                    preview: 'skeleton', loading: true, styleProps: {
+                        border: {
                             name: 'border',
                             title: 'Рамка',
                             el: 'slider',
+                            value: 10,
+                            color: '#31e862',
                             params: {
                                 min: 0,
                                 max: 50,
-                                value: 10,
-                                color: '#31e862',
-                                valueParams: 'px solid '
                             }
                         },
-                        {
+                        borderRadius: {
                             name: 'borderRadius',
                             title: 'Рамка',
                             el: 'slider',
+                            value: 10,
                             params: {
                                 min: 0,
                                 max: 50,
-                                value: 10,
-                                valueParams: 'px'
                             }
                         },
-                        {
+                        background: {
                             name: 'background',
                             title: 'Фон',
                             el: 'colorPicker',
-                            params: {
-                                color: '#deafaf'
-                            }
+                            color: '#deafaf'
                         }
-                    ]
+                    }
                 }
             }]
 
@@ -221,41 +208,45 @@ export default class LayoutStorage extends Vue {
         this.layout.push(value)
     }
 
-    public createNewWidget(c: string, preview: string, prop: any): any {
+    public createNewWidget(c: string, preview: string, propsArray: propsArray[]): any {
+
+        let propsObject: any = {}
+
+        propsArray.map((el) => {
+            propsObject[el.name] = {
+                name: el.name,
+                title: el.title,
+                el: el.el,
+                color: el.color ? el.color : null,
+                value: el.value ? el.value : 0,
+                params: {
+                    min: el.min ? el.min : 0,
+                    max: el.max ? el.max : 100,
+                    step: el.step ? el.step : 1,
+                }
+            }
+        })
+
         return {
-            c: c, static: false, props: {
+            c: c,
+            static: false,
+            props: {
                 preview: preview,
                 loading: false,
-                styleProps: prop
+                styleProps: propsObject
             }
         }
     }
 
-    public addNewProperty(name: string, title: string, el: string, min: number, max: number, step: number, value: number, color?: string, valueParams?: string,): any {
+    public setStyleValues(value: number, prop: any, selectedItem: any, param: any) {
 
-        return {
-            name: name,
-            title: title,
-            el: el,
-            params: {
-                min: min ? min : 0,
-                max: max ? max : 100,
-                step: step ? step : 1,
-                color: color ? color : null,
-                value: value ? value : 0,
-                valueParams: valueParams ? valueParams : name === 'borderRadius' ? 'px' : 'px solid'
-            }
-        }
+        const foundProp = selectedItem.props.styleProps[prop.name]
+        foundProp && (foundProp[param] = value);
     }
 
-    public getStyles(itemProps: any): void {
-        let styles: any = {}
-        itemProps.map((item: any) => styles[item.name] = `${item.params.value ? item.params.value : ''}${item.params.valueParams ? item.params.valueParams : ''} ${item.params.color ? item.params.color : ''}`)
-        return styles
-    }
 }
 
-interface ILayoutItem {
+export interface ILayoutItem {
     x?: number;
     y?: number;
     w?: number;
@@ -266,25 +257,35 @@ interface ILayoutItem {
     props: PropsType
 }
 
-type StyleType = {
-    name: string
-    title: string
-    el: string,
-    params?: {
-        min?: number
-        max?: number
-        step?: number
+export type StyleType = {
+    [key: string]: {
+        name: string
+        title: string
+        el: string,
         color?: string
         value?: number
-        valueParams?: string
+        params?: {
+            min?: number
+            max?: number
+            step?: number
+        }
     }
-    color?: string
-    switch?: boolean
 }
 
-type PropsType = {
+export type PropsType = {
     loading: boolean
-    styleProps: Array<StyleType>
+    styleProps: StyleType
     preview: string
+}
+
+export type propsArray = {
+    name: string,
+    title: string,
+    el: string,
+    min?: number,
+    max?: number,
+    step?: number,
+    value?: number,
+    color?: string
 }
 

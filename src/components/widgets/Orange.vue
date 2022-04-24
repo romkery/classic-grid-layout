@@ -1,9 +1,9 @@
 <template>
   <span>
-    <DefaultSkeleton v-if="value.preview === 'skeleton' & value.loading"/>
+    <DefaultSkeleton v-if="model.props.preview === 'skeleton' & model.props.loading"/>
     <div class="widget"
-         :style="this.store.getStyles(this.value.styleProps)"
-         v-if="!value.loading">
+         :style="styles()"
+         v-if="!model.props.loading">
       <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Orange_logo.svg/200px-Orange_logo.svg.png"
            alt="cola">
       <h2>Lorem Ipsum</h2>
@@ -15,16 +15,14 @@
 <script lang="ts">
 
 import Component from 'vue-class-component';
-import useForm from '@/components/widgets/EditForms.vue';
 import {Prop} from 'vue-property-decorator';
 import Vue from 'vue';
-import LayoutStorage from '@/helpers/LayoutStorage';
+import LayoutStorage, {ILayoutItem} from '@/helpers/LayoutStorage';
 import DefaultSkeleton from '@/components/mixins/DefaultSkeleton.vue';
 
 
 @Component({
   components: {
-    useForm,
     DefaultSkeleton
   }
 })
@@ -32,9 +30,15 @@ export default class Orange extends Vue {
 
   protected store = new LayoutStorage()
 
-  @Prop({}) protected value!: any
+  @Prop({}) protected model!: ILayoutItem
 
-  @Prop({}) protected item!: any
+  protected styles() {
+    return {
+      border: `${this.model.props.styleProps.border?.value}px solid ${this.model?.props.styleProps.border.color}`,
+      borderRadius: `${this.model.props.styleProps.borderRadius?.value}px`,
+      background: this.model.props.styleProps.background?.color
+    }
+  }
 
 }
 

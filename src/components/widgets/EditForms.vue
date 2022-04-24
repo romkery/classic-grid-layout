@@ -1,19 +1,22 @@
 <template>
   <div class="edit-forms">
-    <div v-for="prop in this.value">
-      {{ prop.title }} - {{ prop.params.value }}
+    <div v-for="(prop, index) in this.model.props.styleProps" :key="index">
+      {{ prop.title }} - {{ prop.value }}
       <el-slider v-if="prop.el === 'slider'"
-                 v-model="prop.params.value"
-                 :format-tooltip="formatTooltip"
                  :max="prop.params.max"
                  :min="prop.params.min"
                  :step="prop.params.step"
-                 :disabled="item.props.loading"
+                 :disabled="model.props.loading"
+                 :format-tooltip="formatTooltip"
+                 :value="prop.value"
+                 @input="store.setStyleValues($event, prop, selectedItem, 'value')"
       />
       <el-color-picker v-if="prop.el === 'colorPicker'"
-                       v-model="prop.params.color"
                        :style="{top: '12px'}"
-                       :disabled="item.props.loading"/>
+                       :disabled="model.props.loading"
+                       :value="prop.color"
+                       @input="store.setStyleValues($event, prop, selectedItem, 'color')"
+      />
     </div>
   </div>
 </template>
@@ -23,15 +26,24 @@
 import Component from 'vue-class-component';
 import Vue from 'vue';
 import {Prop} from 'vue-property-decorator';
+import LayoutStorage, {ILayoutItem} from '@/helpers/LayoutStorage';
 
 @Component
-export default class useForm extends Vue {
+export default class EditForms extends Vue {
 
-  @Prop() value!: any
-  @Prop() item!: any
+  @Prop() model!: ILayoutItem
+  @Prop() layout!: any
 
-  protected formatTooltip(val: number) {
+  protected store = new LayoutStorage()
+  protected selectedItem = {}
+
+  protected formatTooltip(val: number
+  ) {
     return val;
+  }
+
+  created() {
+    this.selectedItem = this.layout.find((el: any) => el.i === this.model.i)
   }
 }
 

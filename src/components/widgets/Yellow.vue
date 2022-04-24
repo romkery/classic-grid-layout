@@ -4,7 +4,7 @@
                             myOwnProperty.props.loading"/>
     <div class="widget"
          v-if="!myOwnProperty.props.loading"
-         :style="this.store.getStyles(this.myOwnProperty.props.styleProps)">
+         :style="styles()">
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Orange_logo.svg/200px-Orange_logo.svg.png"
          alt="cola">
     </div>
@@ -15,15 +15,13 @@
 <script lang="ts">
 
 import Component from 'vue-class-component';
-import useForm from '@/components/widgets/EditForms.vue';
 import Vue from 'vue';
-import LayoutStorage from '@/helpers/LayoutStorage';
+import LayoutStorage, {ILayoutItem} from '@/helpers/LayoutStorage';
 import DefaultSkeleton from '@/components/mixins/DefaultSkeleton.vue';
 
 
 @Component({
   components: {
-    useForm,
     DefaultSkeleton
   }
 })
@@ -31,13 +29,43 @@ export default class Yellow extends Vue {
 
   protected store = new LayoutStorage()
 
-  protected style: any
+  protected styles() {
+    return {
+      border: `${this.myOwnProperty.props.styleProps.border?.value}px solid ${this.myOwnProperty.props.styleProps.border?.color}`,
+      borderRadius: `${this.myOwnProperty.props.styleProps.borderRadius?.value}px`,
+      background: this.myOwnProperty.props.styleProps.background?.color
+    }
+  }
 
-  protected myOwnProperty = this.store.createNewWidget('Green', 'skeleton', [
-    this.store.addNewProperty('border', 'Рамка', 'slider', 10, 100, 4, 20, '#fc0303'),
-    this.store.addNewProperty('borderRadius', 'Скругление углов', 'slider', 10, 100, 1, 20)
-  ])
-
+  protected myOwnProperty: ILayoutItem = this.store.createNewWidget('Green', 'skeleton',
+    [
+      {
+        name: 'border',
+        title: 'Рамка',
+        el: 'slider',
+        min: 10,
+        max: 100,
+        step: 4,
+        value: 20,
+        color: '#ff7d7d'
+      },
+      {
+        name: 'borderRadius',
+        title: 'Скругление углов',
+        el: 'slider',
+        min: 10,
+        max: 100,
+        step: 1,
+        value: 20,
+      },
+      {
+        name: 'background',
+        title: 'Фон',
+        el: 'colorPicker',
+        color: '#a928e1',
+      }
+    ]
+  )
 }
 
 </script>

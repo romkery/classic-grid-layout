@@ -9,25 +9,21 @@
       @close="changeEvent(layout)"
     >
       <div class="pop-up-mode-content">
-        <useForm v-model="item.props.styleProps"
-                 :item="item"/>
+        <EditForms :model="model" :layout.sync="layout"/>
       </div>
     </el-drawer>
     <div class="pop-up-mode-item">
       <component
         :is="selectedDragItem.c"
-        v-model="selectedDragItem.props"
-        :item="item"
-      />
+        :itemProps="selectedDragItem.props"
+        :model="model"/>
     </div>
   </div>
 </template>
 
-
 <script lang="ts">
 
 import Component from 'vue-class-component';
-import useForm from '@/components/widgets/EditForms.vue';
 import {Prop, Watch} from 'vue-property-decorator';
 import Vue from 'vue';
 import CocaCola from '@/components/widgets/CocaCola.vue';
@@ -35,21 +31,22 @@ import Orange from '@/components/widgets/Orange.vue';
 import Green from '@/components/widgets/Green.vue';
 import Yellow from '@/components/widgets/Yellow.vue';
 import Pink from '@/components/widgets/Pink.vue';
+import EditForms from '@/components/widgets/EditForms.vue';
 
 
 @Component({
   components: {
-    useForm,
     CocaCola,
     Orange,
     Green,
     Yellow,
     Pink,
+    EditForms
   }
 })
 export default class EditPopUp extends Vue {
 
-  @Prop({}) protected item!: any
+  @Prop({}) protected model!: any
   @Prop({}) protected selectedDragItem!: any
   @Prop({}) protected changeEvent!: any
   @Prop({}) protected layout!: any
@@ -63,12 +60,8 @@ export default class EditPopUp extends Vue {
   }
 
   @Watch('innerIsEdit')
-  emitIsEdit() {
-    if (this.innerIsEdit) {
-      return
-    } else {
-      this.$emit('update:isEdit', false)
-    }
+  emitUpdateIsEdit() {
+    this.$emit('update:isEdit', this.innerIsEdit)
   }
 
 }

@@ -1,5 +1,6 @@
 <template>
   <div class="widgets-list">
+    Widgets:
     <div v-for="widget in this.store.outerWidgets"
          @drag="drag($event)"
          @dragend="dragend"
@@ -27,12 +28,11 @@ import LayoutStorage from '@/helpers/LayoutStorage';
   }
 })
 export default class WidgetList extends Vue {
-  protected store = new LayoutStorage()
 
-  @Prop({}) protected item!: any
   @Prop({}) protected dragend!: any
   @Prop({}) protected drag!: any
 
+  protected store = new LayoutStorage()
   protected innerIsEdit: boolean = false
 }
 
