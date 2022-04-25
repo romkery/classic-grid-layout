@@ -1,8 +1,10 @@
 <template>
   <div style="height: inherit"
        class="widget-content"
+       draggable="true"
        @mouseenter="setDragItem(model)"
-       @mouseup="dragOutside(selectedDragItem)"
+       @mousemove="dragOutside(selectedDragItem, 'check')"
+       @mouseup="dragOutside(selectedDragItem, 'delete')"
   >
     <div class="pin-icon-container">
       <div>

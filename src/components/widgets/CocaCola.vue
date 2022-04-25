@@ -1,5 +1,6 @@
 <template>
   <span>
+    <DeleteAlert v-if="model.props.isDeleteMode"/>
     <DefaultSkeleton v-if="model.props.preview === 'skeleton' & model.props.loading"/>
     <div class="widget"
          :style="styles()"
@@ -18,11 +19,13 @@ import {Prop} from 'vue-property-decorator';
 import Vue from 'vue';
 import LayoutStorage, {LayoutItemType} from '@/helpers/LayoutStorage';
 import DefaultSkeleton from '@/components/mixins/DefaultSkeleton.vue';
+import DeleteAlert from '@/components/mixins/DeleteAlert.vue';
 
 
 @Component({
   components: {
-    DefaultSkeleton
+    DefaultSkeleton,
+    DeleteAlert
   }
 })
 export default class CocaCola extends Vue {
@@ -30,7 +33,7 @@ export default class CocaCola extends Vue {
   protected store = new LayoutStorage()
 
   @Prop({}) protected model!: LayoutItemType
-  
+
   protected styles() {
     return {
       border: `${this.model.props?.styleProps.border?.value}px solid ${this.model.props?.styleProps.border.color}`,

@@ -1,6 +1,6 @@
 <template>
   <div class="edit-forms">
-    <div v-for="(prop, index) in this.model.props.styleProps"
+    <div v-for="(prop, index) in model.props.styleProps"
          :key="index">
       {{ prop.title }} - {{ prop.value }}
       <el-slider v-if="prop.el === 'slider'"
@@ -32,8 +32,8 @@ import LayoutStorage, {LayoutItemType, LayoutType} from '@/helpers/LayoutStorage
 @Component
 export default class EditForms extends Vue {
 
-  @Prop() model: LayoutItemType = {}
-  @Prop() layout: LayoutType = []
+  @Prop() model!: LayoutItemType
+  @Prop() layout!: LayoutType
 
   protected store = new LayoutStorage()
   protected selectedItem!: LayoutItemType | undefined

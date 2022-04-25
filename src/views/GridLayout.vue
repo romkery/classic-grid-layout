@@ -1,5 +1,19 @@
 <template>
   <div class="layout">
+    <el-drawer
+      :size="'20%'"
+      :visible.sync="isOpenTrash"
+      :close-on-press-escape="true"
+      :with-header="false"
+    >
+      <div v-for="item in this.deletedItemsList">
+        <component
+          :is="item.c"
+          :model="item"
+          :class="'grid-model-content'+ item.i"
+        />
+      </div>
+    </el-drawer>
     <EditPopUp
       :model="item"
       :selected-drag-item="selectedDragItem"
@@ -7,10 +21,15 @@
       :layout="this.layout"
       :is-edit.sync="isEdit"
     />
-    <widget-list
-      :drag="drag"
-      :dragend="dragend"
-    />
+    <div class="header">
+      <widget-list
+        :drag="drag"
+        :dragend="dragend"
+      />
+      <div id="trash">
+        <i class="el-icon-delete" @click="isOpenTrash = true"></i>
+      </div>
+    </div>
     <div id="content">
       <grid-layout
         ref="gridlayout"
@@ -60,6 +79,11 @@ import LayoutStorage, {LayoutItemType, LayoutType} from '@/helpers/LayoutStorage
 import EditPopUp from '@/components/EditPopUp.vue';
 import WidgetList from '@/components/WidgetList.vue';
 import GridItemContent from '@/components/GridItemContent.vue';
+import CocaCola from '@/components/widgets/CocaCola.vue';
+import Orange from '@/components/widgets/Orange.vue';
+import Green from '@/components/widgets/Green.vue';
+import Yellow from '@/components/widgets/Yellow.vue';
+import Pink from '@/components/widgets/Pink.vue';
 
 let mouseXY = {"x": null, "y": null};
 let DragPos = {"x": null, "y": null, "w": 1, "h": 1, "i": null};
@@ -71,7 +95,12 @@ let itemMouseXY = {"x": null, "y": null};
     GridItem,
     EditPopUp,
     WidgetList,
-    GridItemContent
+    GridItemContent,
+    CocaCola,
+    Orange,
+    Green,
+    Yellow,
+    Pink,
   }
 })
 export default class Layout extends LayoutStorage {
@@ -83,24 +112,46 @@ export default class Layout extends LayoutStorage {
     this.item = this.layout.find(n => n.i === itemId)
   }
 
+  protected setOpenTrash(state: boolean): void {
+    this.isOpenTrash = state
+  }
+
+  protected isOpenTrash = false
+
+  protected prevDeleteState = false
+
   protected setDragItem(val: any): void {
     this.selectedDragItem = val
+  }
+
+  protected setDeleteMode(val: any, state: any): void {
+    if (this.prevDeleteState != state) {
+      this.prevDeleteState = state
+      val.props.isDeleteMode = state
+    }
   }
 
   protected changeEvent(layout: LayoutType): void {
     this.saveLayoutChanges(layout)
   }
 
-  protected dragOutside(val: LayoutItemType): void {
-    let parentRect = document.getElementById('content').getBoundingClientRect();
+  protected dragOutside(val: LayoutItemType, state: 'check' | 'delete'): void {
+
+    let parentRect = document.getElementById('trash').getBoundingClientRect();
     let mouseInGrid = false;
+    this.setDeleteMode(this.selectedDragItem, false)
     if (((itemMouseXY.x > parentRect.left) && (itemMouseXY.x < parentRect.right)) && ((itemMouseXY.y > parentRect.top) && (itemMouseXY.y < parentRect.bottom))) {
       mouseInGrid = true;
     }
-    if (mouseInGrid === false) {
-      const index = this.layout.findIndex(n => n.i === val.i);
-      this.layout.splice(index, 1);
-      this.saveLayoutChanges(this.layout)
+
+    if (mouseInGrid === true) {
+      this.setDeleteMode(this.selectedDragItem, true)
+      if (state === 'delete') {
+        const index = this.layout.findIndex(n => n.i === val.i);
+        this.layout.splice(index, 1);
+        this.deletedItemsList.push(val)
+        this.saveLayoutChanges(this.layout)
+      }
     }
   }
 
@@ -129,6 +180,7 @@ export default class Layout extends LayoutStorage {
       mouseInGrid = true;
     }
     if (mouseInGrid === true && (this.layout.findIndex(item => item.i === 'drop')) === -1) {
+
       this.layout.push({
         x: (this.layout.length * 2) % (this.colNum || 12),
         y: this.layout.length + (this.colNum || 12), // puts it at the bottom
@@ -184,7 +236,6 @@ export default class Layout extends LayoutStorage {
         static: this.selectedDragItem.static,
         props: this.selectedDragItem.props
       });
-
       this.$refs.gridlayout.dragEvent('dragend', newKey.i + 1, DragPos.x, DragPos.y, this.gridItemSize.h, this.gridItemSize.w);
       try {
         this.$refs.gridlayout.$children[this.layout.length].$refs.item.style.display = "block";
@@ -198,11 +249,30 @@ export default class Layout extends LayoutStorage {
 
 </script>
 
-<style scoped lang="scss">
-
-</style>
-
 <style lang="scss">
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#trash {
+  width: 50px;
+  height: 50px;
+
+  i {
+    font-size: 50px;
+    color: #c0c0c0;
+    cursor: pointer;
+
+  }
+
+  :hover {
+    transition: 500ms;
+    color: dodgerblue;
+  }
+}
 
 .vue-grid-layout {
   margin-top: 20px;
@@ -248,6 +318,7 @@ export default class Layout extends LayoutStorage {
 }
 
 .vue-grid-item {
+
   .cssTransforms {
     transition-property: transform;
     left: 0;

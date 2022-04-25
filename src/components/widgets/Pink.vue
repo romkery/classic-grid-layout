@@ -1,5 +1,6 @@
 <template>
   <span>
+    <DeleteAlert v-if="myOwnProperty.props.isDeleteMode"/>
     <DefaultSkeleton v-if="myOwnProperty.props.preview === 'skeleton' & myOwnProperty.props.loading"/>
     <div class="widget"
          v-if="!myOwnProperty.props.loading"
@@ -17,11 +18,13 @@ import Component from 'vue-class-component';
 import Vue from 'vue';
 import LayoutStorage from '@/helpers/LayoutStorage';
 import DefaultSkeleton from '@/components/mixins/DefaultSkeleton.vue';
+import DeleteAlert from '@/components/mixins/DeleteAlert.vue';
 
 
 @Component({
   components: {
-    DefaultSkeleton
+    DefaultSkeleton,
+    DeleteAlert
   }
 })
 export default class Pink extends Vue {

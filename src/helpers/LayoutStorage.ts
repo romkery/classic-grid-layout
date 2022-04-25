@@ -7,11 +7,12 @@ export default class LayoutStorage extends Vue {
     public item: LayoutItemType | Object = {}
     public outerWidgets = ['Pink', 'Yellow']
     public layout: LayoutType = []
+    public deletedItemsList: LayoutType = []
     public defaultLayout: LayoutItemType[] =
         [
             {
                 "x": 0, "y": 1, "w": 3, "h": 50, "i": 0, c: 'CocaCola', static: false, props: {
-                    preview: 'skeleton', loading: false,
+                    preview: 'skeleton', loading: false, isDeleteMode: false,
                     styleProps: {
                         border: {
                             name: 'border',
@@ -45,7 +46,7 @@ export default class LayoutStorage extends Vue {
             },
             {
                 "x": 2, "y": 1, "w": 2, "h": 50, "i": 1, c: 'Orange', static: false, props: {
-                    preview: 'skeleton', loading: true,
+                    preview: 'skeleton', loading: true, isDeleteMode: false,
                     styleProps: {
                         border: {
                             name: 'border',
@@ -79,7 +80,7 @@ export default class LayoutStorage extends Vue {
             },
             {
                 "x": 4, "y": 1, "w": 2, "h": 50, "i": 2, c: 'Green', static: false, props: {
-                    preview: 'skeleton', loading: false, styleProps: {
+                    preview: 'skeleton', loading: false, isDeleteMode: false, styleProps: {
                         border: {
                             name: 'border',
                             title: 'Рамка',
@@ -106,7 +107,7 @@ export default class LayoutStorage extends Vue {
             },
             {
                 "x": 6, "y": 1, "w": 2, "h": 50, "i": 3, c: 'Orange', static: false, props: {
-                    preview: 'skeleton', loading: true,
+                    preview: 'skeleton', loading: true, isDeleteMode: false,
                     styleProps: {
                         border: {
                             name: 'border',
@@ -130,7 +131,7 @@ export default class LayoutStorage extends Vue {
             },
             {
                 "x": 8, "y": 1, "w": 2, "h": 50, "i": 4, c: 'CocaCola', static: false, props: {
-                    preview: 'skeleton', loading: false, styleProps:
+                    preview: 'skeleton', loading: false, isDeleteMode: false, styleProps:
                         {
                             border: {
                                 name: 'border',
@@ -158,7 +159,7 @@ export default class LayoutStorage extends Vue {
             },
             {
                 "x": 10, "y": 1, "w": 2, "h": 50, "i": 5, c: 'Green', static: false, props: {
-                    preview: 'skeleton', loading: true, styleProps: {
+                    preview: 'skeleton', loading: true, isDeleteMode: false, styleProps: {
                         border: {
                             name: 'border',
                             title: 'Рамка',
@@ -233,6 +234,7 @@ export default class LayoutStorage extends Vue {
             props: {
                 preview: preview,
                 loading: false,
+                isDeleteMode: false,
                 styleProps: propsObject
             }
         }
@@ -263,6 +265,7 @@ export type PropsType = {
     loading: boolean
     styleProps: StyleType
     preview: string
+    isDeleteMode?: boolean
 }
 
 export type StyleType = {

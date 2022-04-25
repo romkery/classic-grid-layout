@@ -1,9 +1,10 @@
 <template>
   <span>
+    <DeleteAlert v-if="model.props.isDeleteMode"/>
     <DefaultSkeleton v-if="model.props.preview === 'skeleton' & model.props.loading"/>
     <div class="widget"
          :style="styles()"
-         v-if="!model.props.loading">
+         v-if="!model.props.loading & !model.props.isDeleteMode">
     <img
       src="https://media.istockphoto.com/photos/green-apple-picture-id584226186?k=20&m=584226186&s=170667a&w=0&h=YaNNvCnxJR8-VVQX62PjEOxa2FhzY8whNfkrsr2FgUs="
       alt="cola">
@@ -19,10 +20,12 @@ import {Prop} from 'vue-property-decorator';
 import Vue from 'vue';
 import LayoutStorage, {LayoutItemType} from '@/helpers/LayoutStorage';
 import DefaultSkeleton from '@/components/mixins/DefaultSkeleton.vue';
+import DeleteAlert from '@/components/mixins/DeleteAlert.vue';
 
 
 @Component({
   components: {
+    DeleteAlert,
     DefaultSkeleton
   }
 })
@@ -59,5 +62,6 @@ img {
   height: 50%;
   object-fit: contain;
 }
+
 
 </style>
