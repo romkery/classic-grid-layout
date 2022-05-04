@@ -1,11 +1,11 @@
 <template>
   <span>
-    <DeleteAlert v-if="myOwnProperty.props.isDeleteMode"/>
-    <DefaultSkeleton v-if="myOwnProperty.props.preview === 'skeleton' & myOwnProperty.props.loading"/>
+    <DeleteAlert v-if="model?.props.isDeleteMode"/>
+    <DefaultSkeleton v-if="model?.props.preview === 'skeleton' & model?.props.loading"/>
     <div class="widget"
-         v-if="!myOwnProperty.props.loading"
+         v-if="!model?.props.loading"
          :style="styles()">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Orange_logo.svg/200px-Orange_logo.svg.png"
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLXuSFEShPYz9wzfOwIiuJaJ9JdGSmWFfn_YykysuXfQ&s"
          alt="cola">
     </div>
     </span>
@@ -19,6 +19,7 @@ import Vue from 'vue';
 import LayoutStorage, {LayoutItemType} from '@/helpers/LayoutStorage';
 import DefaultSkeleton from '@/components/mixins/DefaultSkeleton.vue';
 import DeleteAlert from '@/components/mixins/DeleteAlert.vue';
+import {Prop} from 'vue-property-decorator';
 
 
 @Component({
@@ -30,16 +31,17 @@ import DeleteAlert from '@/components/mixins/DeleteAlert.vue';
 export default class Yellow extends Vue {
 
   protected store = new LayoutStorage()
+  @Prop({}) protected model!: LayoutItemType
 
   protected styles() {
     return {
-      border: `${this.myOwnProperty.props?.styleProps.border?.value}px solid ${this.myOwnProperty.props?.styleProps.border?.color}`,
-      borderRadius: `${this.myOwnProperty.props?.styleProps.borderRadius?.value}px`,
-      background: this.myOwnProperty.props?.styleProps.background?.color
+      border: `${this.model?.props?.styleProps.border?.value}px solid ${this.model?.props?.styleProps.border?.color}`,
+      borderRadius: `${this.model?.props?.styleProps.borderRadius?.value}px`,
+      background: this.model?.props?.styleProps.background?.color
     }
   }
 
-  protected myOwnProperty: LayoutItemType = this.store.createNewWidget('Orange', 'skeleton',
+  protected myOwnProperty: LayoutItemType = this.store.createNewWidget('Yellow', 'skeleton',
     [
       {
         name: 'border',
@@ -64,7 +66,7 @@ export default class Yellow extends Vue {
         name: 'background',
         title: 'Фон',
         el: 'colorPicker',
-        color: '#a928e1',
+        color: '#ffe21c',
       }
     ]
   )
