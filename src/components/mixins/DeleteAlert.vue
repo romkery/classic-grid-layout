@@ -13,7 +13,6 @@ import Vue from 'vue';
 @Component
 export default class DeleteAlert extends Vue {
 
-
 }
 
 </script>

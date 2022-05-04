@@ -1,11 +1,12 @@
 <template>
   <div class="widgets-list">
     Widgets:
-    <div v-for="widget in this.store.outerWidgets"
+    <div v-for="(widget, index) in this.store.outerWidgets"
          @drag="drag($event)"
          @dragend="dragend"
          class="widgets-list-item-container"
-         draggable="true">
+         draggable="true"
+         :key='index'>
       <div>{{ widget }}</div>
       <component :is="widget" v-show="false"/>
     </div>

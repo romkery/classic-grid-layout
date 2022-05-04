@@ -63,6 +63,7 @@ export default class Pink extends Vue {
         step: 1,
         value: 20,
       }])
+
 }
 
 </script>
