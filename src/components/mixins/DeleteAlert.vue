@@ -46,7 +46,7 @@ export default class DeleteAlert extends Vue {
   }
   100% {
     opacity: 1;
-    color: dodgerblue;
+    color: #ff0626;
   }
 }
 

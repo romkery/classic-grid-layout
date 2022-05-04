@@ -147,10 +147,20 @@ export default class Layout extends LayoutStorage {
     if (mouseInGrid === true) {
       this.setDeleteMode(this.selectedDragItem, true)
       if (state === 'delete') {
-        const index = this.layout.findIndex(n => n.i === val.i);
-        this.layout.splice(index, 1);
-        this.deletedItemsList.push(val)
-        this.saveLayoutChanges(this.layout)
+        let query = document.querySelector<HTMLElement>(`.custom_grid_${val.i}`)
+        query!.style.cssText += `transition:0.2s;
+                                height: calc(${this.gridItemSize.h} * ${val.h}px)
+                                width: calc(${this.gridItemSize.w} * ${val.w}px)
+                                animation: show 0.3s;
+                                opacity: 0;
+                                transform: scale(0.1)
+                               `
+        setTimeout(() => {
+          const index = this.layout.findIndex(n => n.i === val.i);
+          this.layout.splice(index, 1);
+          this.deletedItemsList.push(val)
+          this.saveLayoutChanges(this.layout)
+        }, 300)
       }
     }
   }
@@ -172,8 +182,12 @@ export default class Layout extends LayoutStorage {
     }
   }
 
-  protected drag(event) {
-    this.setDragItem(event.target.children[1].__vue__.myOwnProperty)
+  drag(event) {
+
+    if (event.target.children[1].__vue__.myOwnProperty !== this.selectedDragItem) {
+      this.setDragItem(event.target.children[1].__vue__.myOwnProperty)
+    }
+
     let parentRect = document.getElementById('content').getBoundingClientRect();
     let mouseInGrid = false;
     if (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right)) && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom))) {
@@ -215,7 +229,9 @@ export default class Layout extends LayoutStorage {
     }
   }
 
-  protected dragend(e) {
+  protected
+
+  dragend(e) {
     let parentRect = document.getElementById('content').getBoundingClientRect();
     let mouseInGrid = false;
     if (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right)) && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom))) {
@@ -224,19 +240,19 @@ export default class Layout extends LayoutStorage {
     if (mouseInGrid === true) {
       this.$refs.gridlayout.dragEvent('dragend', 'drop', DragPos.x, DragPos.y, 1, 1);
       this.layout = this.layout.filter(obj => obj.i !== 'drop');
-      let newKey = this.layout.reduce((acc, curr) => acc.i > curr.i ? acc : curr)
+      let newKey = this.layout.length !== 0 ? this.layout.reduce((acc, curr) => acc.i > curr.i ? acc : curr).i + 1 : 0
 
       this.layout.push({
         x: DragPos.x,
         y: DragPos.y,
         w: 2,
         h: 50,
-        i: newKey.i + 1,
+        i: newKey,
         c: this.selectedDragItem.c,
         static: this.selectedDragItem.static,
         props: this.selectedDragItem.props
       });
-      this.$refs.gridlayout.dragEvent('dragend', newKey.i + 1, DragPos.x, DragPos.y, this.gridItemSize.h, this.gridItemSize.w);
+      this.$refs.gridlayout.dragEvent('dragend', newKey, DragPos.x, DragPos.y, this.gridItemSize.h, this.gridItemSize.w);
       try {
         this.$refs.gridlayout.$children[this.layout.length].$refs.item.style.display = "block";
       } catch {
@@ -276,6 +292,7 @@ export default class Layout extends LayoutStorage {
 
 .vue-grid-layout {
   margin-top: 20px;
+  min-height: 500px;
 }
 
 .vue-grid-item {
@@ -287,6 +304,15 @@ export default class Layout extends LayoutStorage {
   .el-card {
     height: calc(100% - 20px);
     overflow: hidden;
+  }
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
