@@ -19,13 +19,13 @@ import Component from 'vue-class-component';
 import {Prop} from 'vue-property-decorator';
 import Vue from 'vue';
 import Yellow from '@/components/widgets/Yellow.vue';
-import Pink from '@/components/widgets/Pink.vue';
+import Black from '@/components/widgets/Black.vue';
 import LayoutStorage from '@/helpers/LayoutStorage';
 
 @Component({
   components: {
     Yellow,
-    Pink,
+    Black,
   }
 })
 export default class WidgetList extends Vue {
@@ -34,7 +34,6 @@ export default class WidgetList extends Vue {
   @Prop({}) protected drag!: any
 
   protected store = new LayoutStorage()
-  protected innerIsEdit: boolean = false
 }
 
 </script>

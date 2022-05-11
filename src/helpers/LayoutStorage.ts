@@ -5,9 +5,10 @@ export default class LayoutStorage extends Vue {
     public gridItemSize = {w: 2, h: 50}
     public isEdit: boolean = false;
     public item: LayoutItemType | Object = {}
-    public outerWidgets = ['Pink', 'Yellow']
+    public outerWidgets = ['Black', 'Yellow']
     public layout: LayoutType = []
     public deletedItemsList: LayoutType = []
+    public selectedDragItem: LayoutItemType = {}
     public defaultLayout: LayoutItemType[] =
         [
             {

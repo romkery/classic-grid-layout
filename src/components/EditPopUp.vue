@@ -30,7 +30,7 @@ import CocaCola from '@/components/widgets/CocaCola.vue';
 import Orange from '@/components/widgets/Orange.vue';
 import Green from '@/components/widgets/Green.vue';
 import Yellow from '@/components/widgets/Yellow.vue';
-import Pink from '@/components/widgets/Pink.vue';
+import Pink from '@/components/widgets/Black.vue';
 import EditForms from '@/components/widgets/EditForms.vue';
 import {LayoutItemType, LayoutType} from '@/helpers/LayoutStorage';
 

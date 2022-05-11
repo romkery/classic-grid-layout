@@ -1,35 +1,13 @@
 <template>
   <div class="layout">
-    <el-drawer
-      :size="'20%'"
-      :visible.sync="isOpenTrash"
-      :close-on-press-escape="true"
-      :with-header="false"
-    >
-      <div v-for="item in this.deletedItemsList">
-        <component
-          :is="item.c"
-          :model="item"
-          :class="'grid-model-content'+ item.i"
-        />
-      </div>
-    </el-drawer>
-    <EditPopUp
+    <edit-pop-up
       :model="item"
       :selected-drag-item="selectedDragItem"
       :change-event="changeEvent"
       :layout="this.layout"
       :is-edit.sync="isEdit"
     />
-    <div class="header">
-      <widget-list
-        :drag="drag"
-        :dragend="dragend"
-      />
-      <div id="trash">
-        <i class="el-icon-delete" @click="isOpenTrash = true"></i>
-      </div>
-    </div>
+    <widget-header :drag="drag" :dragend="dragend"/>
     <div id="content">
       <grid-layout
         ref="gridlayout"
@@ -59,7 +37,7 @@
           @moved="changeEvent(layout)"
           @resized="changeEvent(layout)"
         >
-          <GridItemContent
+          <grid-item-content
             :selected-drag-item="selectedDragItem"
             :change-event="changeEvent"
             :model="item"
@@ -81,11 +59,7 @@ import LayoutStorage, {LayoutItemType, LayoutType} from '@/helpers/LayoutStorage
 import EditPopUp from '@/components/EditPopUp.vue';
 import WidgetList from '@/components/WidgetList.vue';
 import GridItemContent from '@/components/GridItemContent.vue';
-import CocaCola from '@/components/widgets/CocaCola.vue';
-import Orange from '@/components/widgets/Orange.vue';
-import Green from '@/components/widgets/Green.vue';
-import Yellow from '@/components/widgets/Yellow.vue';
-import Pink from '@/components/widgets/Pink.vue';
+import WidgetHeader from '@/components/WidgetHeader.vue';
 
 let mouseXY = {"x": null, "y": null};
 let DragPos = {"x": null, "y": null, "w": 1, "h": 1, "i": null};
@@ -98,35 +72,22 @@ let itemMouseXY = {"x": null, "y": null};
     EditPopUp,
     WidgetList,
     GridItemContent,
-    CocaCola,
-    Orange,
-    Green,
-    Yellow,
-    Pink,
+    WidgetHeader
   }
 })
 export default class Layout extends LayoutStorage {
-
-  protected selectedDragItem: LayoutItemType = {}
 
   protected setEditMode(itemId: number): void {
     this.isEdit = !this.isEdit
     this.item = this.layout.find(n => n.i === itemId)
   }
 
-  protected setOpenTrash(state: boolean): void {
-    this.isOpenTrash = state
-  }
-
-  protected isOpenTrash = false
-
-  protected setDragItem(val: any): void {
+  protected setDragItem(val: LayoutItemType): void {
     this.selectedDragItem = val
   }
 
-  protected setDeleteMode(state: any): void {
-    console.log(this.selectedDragItem.i)
-    this.layout.find(el => el.i === this.selectedDragItem.i).props.isDeleteMode = state
+  protected setDeleteMode(state: boolean): void {
+    this.selectedDragItem.props!.isDeleteMode = state
   }
 
   protected changeEvent(layout: LayoutType): void {
@@ -183,7 +144,7 @@ export default class Layout extends LayoutStorage {
   protected drag(event) {
 
     if (event.target.children[1].__vue__.myOwnProperty !== this.selectedDragItem) {
-      this.setDragItem(event.target.children[1].__vue__.myOwnProperty)
+      this.setDragItem(event.target.children[1].__vue__.ownProperty)
     }
 
     let parentRect = document.getElementById('content').getBoundingClientRect();
@@ -245,7 +206,6 @@ export default class Layout extends LayoutStorage {
         static: this.selectedDragItem.static,
         props: {...this.selectedDragItem.props},
       });
-      console.log(Object.assign({}, this.selectedDragItem.props),)
       this.saveLayoutChanges(this.layout)
       this.$refs.gridlayout.dragEvent('dragend', newKey + 1, DragPos.x, DragPos.y, this.gridItemSize.h, this.gridItemSize.w);
       try {
@@ -260,29 +220,6 @@ export default class Layout extends LayoutStorage {
 </script>
 
 <style lang="scss">
-
-.header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-#trash {
-  width: 50px;
-  height: 50px;
-
-  i {
-    font-size: 50px;
-    color: #c0c0c0;
-    cursor: pointer;
-
-  }
-
-  :hover {
-    transition: 500ms;
-    color: dodgerblue;
-  }
-}
 
 .vue-grid-layout {
   margin-top: 20px;
