@@ -26,13 +26,13 @@
 import Component from 'vue-class-component';
 import {Prop, Watch} from 'vue-property-decorator';
 import Vue from 'vue';
-import CocaCola from '@/components/widgets/CocaCola.vue';
-import Orange from '@/components/widgets/Orange.vue';
-import Green from '@/components/widgets/Green.vue';
-import Yellow from '@/components/widgets/Yellow.vue';
-import Pink from '@/components/widgets/Black.vue';
-import EditForms from '@/components/widgets/EditForms.vue';
-import {LayoutItemType, LayoutType} from '@/helpers/LayoutStorage';
+import CocaCola from '@/modules/components/widgets/CocaCola.vue';
+import Orange from '@/modules/components/widgets/Orange.vue';
+import Green from '@/modules/components/widgets/Green.vue';
+import Yellow from '@/modules/components/widgets/Yellow.vue';
+import Black from '@/modules/components/widgets/Black.vue';
+import EditForms from '@/modules/components/widgets/EditForms.vue';
+import {LayoutItemType, LayoutType} from '@/modules/helpers/LayoutStorage';
 
 
 @Component({
@@ -41,7 +41,7 @@ import {LayoutItemType, LayoutType} from '@/helpers/LayoutStorage';
     Orange,
     Green,
     Yellow,
-    Pink,
+    Black,
     EditForms
   }
 })

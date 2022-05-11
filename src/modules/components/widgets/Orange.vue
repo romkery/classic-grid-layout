@@ -18,9 +18,9 @@
 import Component from 'vue-class-component';
 import {Prop} from 'vue-property-decorator';
 import Vue from 'vue';
-import LayoutStorage, {LayoutItemType} from '@/helpers/LayoutStorage';
-import DefaultSkeleton from '@/components/mixins/DefaultSkeleton.vue';
-import DeleteAlert from '@/components/mixins/DeleteAlert.vue';
+import LayoutStorage, {LayoutItemType} from '@/modules/helpers/LayoutStorage';
+import DefaultSkeleton from '@/common/mixins/DefaultSkeleton.vue';
+import DeleteAlert from '@/common/mixins/DeleteAlert.vue';
 
 
 @Component({
@@ -49,7 +49,7 @@ export default class Orange extends Vue {
 
 
 <style lang="scss" scoped>
-@import './../../styles/variables.scss';
+@import '../../../styles/variables';
 
 h1 {
 }

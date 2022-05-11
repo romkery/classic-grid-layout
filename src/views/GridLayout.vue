@@ -55,11 +55,11 @@
 // @ts-ignore
 import {GridItem, GridLayout} from "vue-grid-layout"
 import Component from 'vue-class-component';
-import LayoutStorage, {LayoutItemType, LayoutType} from '@/helpers/LayoutStorage';
-import EditPopUp from '@/components/EditPopUp.vue';
-import WidgetList from '@/components/WidgetList.vue';
-import GridItemContent from '@/components/GridItemContent.vue';
-import WidgetHeader from '@/components/WidgetHeader.vue';
+import LayoutStorage, {LayoutItemType, LayoutType} from '@/modules/helpers/LayoutStorage';
+import EditPopUp from '@/modules/components/EditPopUp.vue';
+import WidgetList from '@/modules/components/WidgetList.vue';
+import GridItemContent from '@/modules/components/GridItemContent.vue';
+import WidgetHeader from '@/modules/components/WidgetHeader.vue';
 
 let mouseXY = {"x": null, "y": null};
 let DragPos = {"x": null, "y": null, "w": 1, "h": 1, "i": null};
@@ -73,9 +73,12 @@ let itemMouseXY = {"x": null, "y": null};
     WidgetList,
     GridItemContent,
     WidgetHeader
-  }
+  },
 })
 export default class Layout extends LayoutStorage {
+
+  // protected serviceInstance = Container.get(BaseApiService);
+  // public store: Store = useStore(this.$store);
 
   protected setEditMode(itemId: number): void {
     this.isEdit = !this.isEdit
@@ -96,6 +99,7 @@ export default class Layout extends LayoutStorage {
 
   created() {
     this.getLayout()
+    // this.serviceInstance.weatherService.hello()
   }
 
   mounted() {

@@ -27,7 +27,7 @@
 import Component from 'vue-class-component';
 import Vue from 'vue';
 import {Prop} from 'vue-property-decorator';
-import LayoutStorage, {LayoutItemType, LayoutType} from '@/helpers/LayoutStorage';
+import LayoutStorage, {LayoutItemType, LayoutType} from '@/modules/helpers/LayoutStorage';
 
 @Component
 export default class EditForms extends Vue {

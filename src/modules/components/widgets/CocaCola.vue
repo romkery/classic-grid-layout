@@ -4,10 +4,9 @@
     <DefaultSkeleton v-if="model.props.preview === 'skeleton' & model.props.loading"/>
     <div class="widget"
          :style="styles()"
-         v-if="!model.props.loading & !model.props.isDeleteMode">
-    <img
-      src="https://media.istockphoto.com/photos/green-apple-picture-id584226186?k=20&m=584226186&s=170667a&w=0&h=YaNNvCnxJR8-VVQX62PjEOxa2FhzY8whNfkrsr2FgUs="
-      alt="cola">
+         v-if="!model.props.loading">
+      <img src="https://democrats.org/wp-content/uploads/2019/08/TeamBlue_gradient.png?w=300"
+           alt="cola">
     </div>
   </span>
 </template>
@@ -18,18 +17,18 @@
 import Component from 'vue-class-component';
 import {Prop} from 'vue-property-decorator';
 import Vue from 'vue';
-import LayoutStorage, {LayoutItemType} from '@/helpers/LayoutStorage';
-import DefaultSkeleton from '@/components/mixins/DefaultSkeleton.vue';
-import DeleteAlert from '@/components/mixins/DeleteAlert.vue';
+import LayoutStorage, {LayoutItemType} from '@/modules/helpers/LayoutStorage';
+import DefaultSkeleton from '@/common/mixins/DefaultSkeleton.vue';
+import DeleteAlert from '@/common/mixins/DeleteAlert.vue';
 
 
 @Component({
   components: {
-    DeleteAlert,
-    DefaultSkeleton
+    DefaultSkeleton,
+    DeleteAlert
   }
 })
-export default class Green extends Vue {
+export default class CocaCola extends Vue {
 
   protected store = new LayoutStorage()
 
@@ -42,14 +41,13 @@ export default class Green extends Vue {
       background: this.model.props?.styleProps.background?.color
     }
   }
-
 }
 
 </script>
 
 
 <style lang="scss" scoped>
-@import './../../styles/variables.scss';
+@import '../../../styles/variables';
 
 .widget {
   background: white;
@@ -62,6 +60,5 @@ img {
   height: 50%;
   object-fit: contain;
 }
-
 
 </style>

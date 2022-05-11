@@ -18,9 +18,9 @@
 import Component from 'vue-class-component';
 import {Prop} from 'vue-property-decorator';
 import Vue from 'vue';
-import Yellow from '@/components/widgets/Yellow.vue';
-import Black from '@/components/widgets/Black.vue';
-import LayoutStorage from '@/helpers/LayoutStorage';
+import Yellow from '@/modules/components/widgets/Yellow.vue';
+import Black from '@/modules/components/widgets/Black.vue';
+import LayoutStorage from '@/modules/helpers/LayoutStorage';
 
 @Component({
   components: {

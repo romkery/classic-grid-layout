@@ -35,12 +35,12 @@
 import Component from 'vue-class-component';
 import {Prop} from 'vue-property-decorator';
 import Vue from 'vue';
-import Yellow from '@/components/widgets/Yellow.vue';
-import Black from '@/components/widgets/Black.vue';
-import Orange from '@/components/widgets/Orange.vue';
-import Green from '@/components/widgets/Green.vue';
-import CocaCola from '@/components/widgets/CocaCola.vue';
-import {LayoutItemType, LayoutType} from '@/helpers/LayoutStorage';
+import Yellow from '@/modules/components/widgets/Yellow.vue';
+import Black from '@/modules/components/widgets/Black.vue';
+import Orange from '@/modules/components/widgets/Orange.vue';
+import Green from '@/modules/components/widgets/Green.vue';
+import CocaCola from '@/modules/components/widgets/CocaCola.vue';
+import {LayoutItemType, LayoutType} from '@/modules/helpers/LayoutStorage';
 
 @Component({
   components: {
@@ -52,6 +52,7 @@ import {LayoutItemType, LayoutType} from '@/helpers/LayoutStorage';
   }
 })
 export default class GridItemContent extends Vue {
+
 
   @Prop({}) protected model!: LayoutItemType
   @Prop({}) protected dragOutside!: any
