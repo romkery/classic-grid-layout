@@ -10,6 +10,7 @@ export type LocationType = {
 }
 
 export type CurrentType = {
+    "cityName"?: string
     "last_updated_epoch": number
     "last_updated": string
     "temp_c": number

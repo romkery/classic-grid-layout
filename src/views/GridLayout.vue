@@ -149,7 +149,6 @@ export default class Layout extends LayoutStorage {
 
   protected drag(event) {
 
-    console.log(event.target.children[1].__vue__.ownProperty)
     if (event.target.children[1].__vue__.ownProperty !== this.selectedDragItem) {
       this.setDragItem(event.target.children[1].__vue__.ownProperty)
     }

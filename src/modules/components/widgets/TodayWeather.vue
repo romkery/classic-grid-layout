@@ -7,8 +7,8 @@
          :style="styles()">
      <div class="container">
        <h1>Today</h1>
-       <h1>In  {{ cityData?.city }}</h1>
-       <h2>Temperature {{ cityData?.data.temp_c }}</h2>
+              <h1>In {{ cityData?.cityName }}</h1>
+              <h2>Temperature {{ cityData?.temp_c }}</h2>
      </div>
     </div>
   </span>
@@ -41,7 +41,7 @@ export default class TodayWeather extends Vue {
 
   protected storage = new LayoutStorage()
   protected weatherModule?: WeatherModule = useModule(this.$store, ['weatherModule']);
-  protected cityData: any = null
+  protected cityData: any = {}
 
   protected styles() {
     return {
@@ -51,15 +51,14 @@ export default class TodayWeather extends Vue {
     }
   }
 
-  async mounted() {
+  async created() {
     if (this.model) {
 
       if (!this.model?.props?.city && this.changeEvent) {
         this.storage.setWidgetCity(this.weatherModule?.city!, this.model)
         this.changeEvent!(this.layout)
-      } else {
-        this.cityData = await this.weatherModule?.getCityCurrentWeather(this.model.props?.city!)
       }
+      this.cityData = await this.weatherModule?.getCity(this.model.props?.city!)
     }
   }
 

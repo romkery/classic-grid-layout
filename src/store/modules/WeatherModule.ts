@@ -12,49 +12,37 @@ export default class WeatherModule extends Vue {
     public city: string = 'Novosibirsk'
 
     @State()
-    public cityArray: Array<string> = []
+    public cache: any = {}
 
     @State()
-    public currentWeather: CurrentWeatherType[] = []
+    public currentWeather: CurrentType[] = []
 
     @Mutation()
-    public setCityCurrentWeather(cityObject: { city: string, data: CurrentType }) {
-        this.currentWeather.push(cityObject)
+    public setCityCurrentWeather(data: CurrentType) {
+        this.currentWeather.push(data)
     }
 
     public setCity(city: string) {
-        this.city = city
+        this.city = city[0].toUpperCase() + city.slice(1)
     }
-
-    // @Getter()
-    // public getWeather() {
-    //     return this.currentWeather
-    // }
 
     @Action()
+    public async getCity(city: string) {
+        city = city.toLowerCase()
+
+        if (!this.cache[city]) {
+            this.cache[city] = this.getCityCurrentWeather(city)
+        }
+        return (await this.cache[city]).data
+    }
+
     public async getCityCurrentWeather(city: string) {
 
-        if (this.cityArray.includes(city.toLowerCase())) {
+        const data = await this.serviceInstance.getCurrent(city)
+        data['cityName'] = city
+        this.setCityCurrentWeather(data)
 
-            return this.currentWeather.find(el => el.city === city)
-
-        } else {
-
-            const data = await this.serviceInstance.getCurrent(city)
-
-            this.cityArray.push(city.toLowerCase())
-
-            this.setCityCurrentWeather({city, data})
-
-            return this.currentWeather.find(el => el.city === city)
-
-        }
+        return {data}
     }
-}
-
-
-type CurrentWeatherType = {
-    city: string,
-    data: CurrentType
 }
 

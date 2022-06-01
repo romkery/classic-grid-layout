@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="search">
+      <div>{{ weatherModule.city }}</div>
       <el-input placeholder="Please input city"
                 v-model="input"
                 @keyup.enter.native="getCity"
@@ -49,6 +50,7 @@ export default class WidgetHeader extends Vue {
 
   protected getCity() {
     this.weatherModule.setCity(this.input)
+    this.input = ''
   }
 
 
