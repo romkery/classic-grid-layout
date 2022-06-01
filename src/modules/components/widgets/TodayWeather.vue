@@ -5,10 +5,13 @@
     <div class="widget"
          v-if="!model?.props.loading"
          :style="styles()">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLXuSFEShPYz9wzfOwIiuJaJ9JdGSmWFfn_YykysuXfQ&s"
-         alt="cola">
+     <div class="container">
+       <h1>Today</h1>
+       <h1>In  {{ cityData?.city }}</h1>
+       <h2>Temperature {{ cityData?.data.temp_c }}</h2>
+     </div>
     </div>
-    </span>
+  </span>
 </template>
 
 
@@ -16,10 +19,12 @@
 
 import Component from 'vue-class-component';
 import Vue from 'vue';
-import LayoutStorage, {LayoutItemType} from '@/modules/helpers/LayoutStorage';
+import LayoutStorage, {LayoutItemType, LayoutType} from '@/modules/helpers/LayoutStorage';
 import DefaultSkeleton from '@/common/mixins/DefaultSkeleton.vue';
 import DeleteAlert from '@/common/mixins/DeleteAlert.vue';
 import {Prop} from 'vue-property-decorator';
+import {useModule} from 'vuex-simple';
+import WeatherModule from '@/store/modules/WeatherModule';
 
 
 @Component({
@@ -28,10 +33,15 @@ import {Prop} from 'vue-property-decorator';
     DeleteAlert
   }
 })
-export default class Yellow extends Vue {
+export default class TodayWeather extends Vue {
 
-  protected store = new LayoutStorage()
   @Prop({}) protected model!: LayoutItemType
+  @Prop({}) protected layout!: LayoutType
+  @Prop({}) protected changeEvent!: any
+
+  protected storage = new LayoutStorage()
+  protected weatherModule?: WeatherModule = useModule(this.$store, ['weatherModule']);
+  protected cityData: any = null
 
   protected styles() {
     return {
@@ -41,37 +51,41 @@ export default class Yellow extends Vue {
     }
   }
 
-  protected ownProperty: LayoutItemType = this.store.createNewWidget(2, 50, 'Yellow', 'skeleton',
+  async mounted() {
+    if (this.model) {
+
+      if (!this.model?.props?.city && this.changeEvent) {
+        this.storage.setWidgetCity(this.weatherModule?.city!, this.model)
+        this.changeEvent!(this.layout)
+      } else {
+        this.cityData = await this.weatherModule?.getCityCurrentWeather(this.model.props?.city!)
+      }
+    }
+  }
+
+  protected ownProperty: LayoutItemType = this.storage.createNewWidget(2, 20, 'TodayWeather', 'skeleton',
     [
       {
         name: 'border',
         title: 'Рамка',
         el: 'slider',
-        min: 10,
-        max: 100,
-        step: 4,
-        value: 20,
-        color: '#ff7d7d',
+        min: 0,
+        max: 15,
+        step: 1,
+        value: 1,
+        color: '#3581e5'
       },
       {
         name: 'borderRadius',
         title: 'Скругление углов',
         el: 'slider',
-        min: 10,
-        max: 100,
+        min: 0,
+        max: 50,
         step: 1,
-        value: 20,
-      },
-      {
-        name: 'background',
-        title: 'Фон',
-        el: 'colorPicker',
-        color: '#ffe21c',
-      }
-    ]
-  )
-}
+        value: 15,
+      }], 2, 20)
 
+}
 
 </script>
 
@@ -80,9 +94,16 @@ export default class Yellow extends Vue {
 @import '../../../assets/styles/variables';
 
 .widget {
-  background: white;
+  background: #66b8fbad;
   height: $grid-content-height;
   padding: 10px;
+
+  .container {
+    h1 {
+      font-family: Circe-Light;
+      color: white;
+    }
+  }
 }
 
 img {

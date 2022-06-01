@@ -34,7 +34,7 @@ export default class DefaultSkeleton extends Vue {
 
 
 <style lang="scss" scoped>
-@import '../../styles/variables';
+@import '../../assets/styles/variables';
 
 .widget-skeleton {
   height: $grid-content-height;

@@ -5,7 +5,7 @@ export default class LayoutStorage extends Vue {
     public gridItemSize = {w: 2, h: 50}
     public isEdit: boolean = false;
     public item: LayoutItemType | Object = {}
-    public outerWidgets = ['Black', 'Yellow']
+    public outerWidgets = ['Black', 'Yellow', 'TodayWeather']
     public layout: LayoutType = []
     public deletedItemsList: LayoutType = []
     public selectedDragItem: LayoutItemType = {}
@@ -210,7 +210,7 @@ export default class LayoutStorage extends Vue {
         this.layout.push(value)
     }
 
-    public createNewWidget(c: string, preview: string, propsArray: NewWidgetPropsType[]): LayoutItemType {
+    public createNewWidget(w: number, h: number, c: string, preview: string, propsArray: NewWidgetPropsType[], maxW?: number, maxH?: number): LayoutItemType {
 
         let propsObject: StyleType = {}
 
@@ -230,9 +230,13 @@ export default class LayoutStorage extends Vue {
         })
 
         return {
+            w: w,
+            h: h,
             c: c,
             static: false,
             props: {
+                maxW: maxW,
+                maxH: maxH,
                 preview: preview,
                 loading: false,
                 isDeleteMode: false,
@@ -245,6 +249,14 @@ export default class LayoutStorage extends Vue {
 
         const foundProp: any = selectedItem.props?.styleProps[prop.name]
         foundProp && (foundProp[param] = value);
+    }
+
+    public setWidgetCity(city: string, selectedItem: LayoutItemType) {
+        if (selectedItem) {
+            if (!selectedItem.props!.city) {
+                selectedItem.props!.city = city
+            }
+        }
     }
 
 }
@@ -263,10 +275,13 @@ export type LayoutItemType = {
 }
 
 export type PropsType = {
+    maxW?: number
+    maxH?: number
     loading: boolean
     styleProps: StyleType
     preview: string
     isDeleteMode?: boolean
+    city?: string
 }
 
 export type StyleType = {

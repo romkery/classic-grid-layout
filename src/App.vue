@@ -9,7 +9,8 @@
 </template>
 
 <style>
-@import '@/assets/base.css';
+@import './assets/fonts/fonts.css';
+@import './assets/base.css';
 @import url("//unpkg.com/element-ui@2.15.7/lib/theme-chalk/index.css");
 
 .el-skeleton {
@@ -19,7 +20,7 @@
 #app {
   margin: 0 auto;
   padding: 2rem;
-
+  font-size: 100%;
   font-weight: normal;
 }
 

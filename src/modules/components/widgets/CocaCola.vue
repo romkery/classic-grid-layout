@@ -47,7 +47,7 @@ export default class CocaCola extends Vue {
 
 
 <style lang="scss" scoped>
-@import '../../../styles/variables';
+@import '../../../assets/styles/variables';
 
 .widget {
   background: white;

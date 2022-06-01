@@ -21,11 +21,13 @@ import Vue from 'vue';
 import Yellow from '@/modules/components/widgets/Yellow.vue';
 import Black from '@/modules/components/widgets/Black.vue';
 import LayoutStorage from '@/modules/helpers/LayoutStorage';
+import TodayWeather from '@/modules/components/widgets/TodayWeather.vue';
 
 @Component({
   components: {
     Yellow,
     Black,
+    TodayWeather
   }
 })
 export default class WidgetList extends Vue {

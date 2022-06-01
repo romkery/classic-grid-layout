@@ -29,7 +29,7 @@ import {Prop} from 'vue-property-decorator';
     DeleteAlert
   }
 })
-export default class Pink extends Vue {
+export default class Black extends Vue {
 
   protected store = new LayoutStorage()
   @Prop({}) protected model!: LayoutItemType
@@ -42,7 +42,7 @@ export default class Pink extends Vue {
     }
   }
 
-  protected ownProperty = this.store.createNewWidget('Black', 'skeleton',
+  protected ownProperty = this.store.createNewWidget(2, 50, 'Black', 'skeleton',
     [
       {
         name: 'border',
@@ -70,7 +70,7 @@ export default class Pink extends Vue {
 
 
 <style lang="scss" scoped>
-@import '../../../styles/variables';
+@import '../../../assets/styles/variables';
 
 .widget {
   background: white;

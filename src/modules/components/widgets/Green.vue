@@ -49,7 +49,7 @@ export default class Green extends Vue {
 
 
 <style lang="scss" scoped>
-@import '../../../styles/variables';
+@import '../../../assets/styles/variables';
 
 .widget {
   background: white;

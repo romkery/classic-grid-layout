@@ -26,6 +26,8 @@
       :is="model.c"
       :model="model"
       :class="'grid-model-content'+ model.i"
+      :layout="layout"
+      :change-event="changeEvent"
     />
   </div>
 </template>
@@ -41,6 +43,7 @@ import Orange from '@/modules/components/widgets/Orange.vue';
 import Green from '@/modules/components/widgets/Green.vue';
 import CocaCola from '@/modules/components/widgets/CocaCola.vue';
 import {LayoutItemType, LayoutType} from '@/modules/helpers/LayoutStorage';
+import TodayWeather from '@/modules/components/widgets/TodayWeather.vue';
 
 @Component({
   components: {
@@ -49,6 +52,7 @@ import {LayoutItemType, LayoutType} from '@/modules/helpers/LayoutStorage';
     Green,
     Yellow,
     Black,
+    TodayWeather
   }
 })
 export default class GridItemContent extends Vue {

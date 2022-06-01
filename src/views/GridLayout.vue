@@ -31,6 +31,8 @@
           :w="item.w"
           :h="item.h"
           :i="item.i"
+          :maxH="item.props?.maxH"
+          :maxW="item.props?.maxW"
           :minH="20"
           :minW="2"
           :class="'custom_grid_'+ item.i"
@@ -59,7 +61,9 @@ import LayoutStorage, {LayoutItemType, LayoutType} from '@/modules/helpers/Layou
 import EditPopUp from '@/modules/components/EditPopUp.vue';
 import WidgetList from '@/modules/components/WidgetList.vue';
 import GridItemContent from '@/modules/components/GridItemContent.vue';
-import WidgetHeader from '@/modules/components/WidgetHeader.vue';
+import WidgetHeader from '@/modules/components/Header.vue';
+import WeatherModule from '@/store/modules/WeatherModule';
+import {useModule} from 'vuex-simple';
 
 let mouseXY = {"x": null, "y": null};
 let DragPos = {"x": null, "y": null, "w": 1, "h": 1, "i": null};
@@ -76,9 +80,6 @@ let itemMouseXY = {"x": null, "y": null};
   },
 })
 export default class Layout extends LayoutStorage {
-
-  // protected serviceInstance = Container.get(BaseApiService);
-  // public store: Store = useStore(this.$store);
 
   protected setEditMode(itemId: number): void {
     this.isEdit = !this.isEdit
@@ -97,9 +98,10 @@ export default class Layout extends LayoutStorage {
     this.saveLayoutChanges(layout)
   }
 
+  protected weatherModule: WeatherModule = useModule(this.$store, ['weatherModule']);
+
   created() {
     this.getLayout()
-    // this.serviceInstance.weatherService.hello()
   }
 
   mounted() {
@@ -147,7 +149,8 @@ export default class Layout extends LayoutStorage {
 
   protected drag(event) {
 
-    if (event.target.children[1].__vue__.myOwnProperty !== this.selectedDragItem) {
+    console.log(event.target.children[1].__vue__.ownProperty)
+    if (event.target.children[1].__vue__.ownProperty !== this.selectedDragItem) {
       this.setDragItem(event.target.children[1].__vue__.ownProperty)
     }
 
@@ -161,8 +164,8 @@ export default class Layout extends LayoutStorage {
       this.layout.push({
         x: (this.layout.length * 2) % (this.colNum || 12),
         y: this.layout.length + (this.colNum || 12), // puts it at the bottom
-        w: 2,
-        h: 50,
+        h: this.selectedDragItem.h,
+        w: this.selectedDragItem.w,
         i: 'drop',
       });
     }
@@ -178,7 +181,7 @@ export default class Layout extends LayoutStorage {
       let new_pos = el.calcXY(mouseXY.y - parentRect.top, mouseXY.x - parentRect.left);
 
       if (mouseInGrid === true) {
-        this.$refs.gridlayout.dragEvent('dragstart', 'drop', new_pos.x, new_pos.y, this.gridItemSize.h, this.gridItemSize.w);
+        this.$refs.gridlayout.dragEvent('dragstart', 'drop', new_pos.x, new_pos.y, this.selectedDragItem.h, this.selectedDragItem.w);
         DragPos.i = index; //idk for what it is
         DragPos.x = this.layout[index].x;
         DragPos.y = this.layout[index].y;
@@ -203,8 +206,8 @@ export default class Layout extends LayoutStorage {
       this.layout.push({
         x: DragPos.x,
         y: DragPos.y,
-        w: 2,
-        h: 50,
+        w: this.selectedDragItem.w || 2,
+        h: this.selectedDragItem.h || 20,
         i: newKey,
         c: this.selectedDragItem.c,
         static: this.selectedDragItem.static,

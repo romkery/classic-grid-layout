@@ -49,7 +49,7 @@ export default class Orange extends Vue {
 
 
 <style lang="scss" scoped>
-@import '../../../styles/variables';
+@import '../../../assets/styles/variables';
 
 h1 {
 }

@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {createVuexStore} from 'vuex-simple';
-import Store from './store';
+import RootModule from './modules/RootModule';
 
 Vue.use(Vuex);
 
-const instance = new Store();
+const MyStore = new RootModule()
 
-export default createVuexStore(instance, {
+export default createVuexStore(MyStore, {
     strict: false,
     modules: {},
 });
