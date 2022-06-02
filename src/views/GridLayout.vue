@@ -202,6 +202,7 @@ export default class Layout extends LayoutStorage {
       this.$refs.gridlayout.dragEvent('dragend', 'drop', DragPos.x, DragPos.y, 1, 1);
       this.layout = this.layout.filter(obj => obj.i !== 'drop');
       let newKey = this.layout.length !== 0 ? this.layout.reduce((acc, curr) => acc.i > curr.i ? acc : curr).i + 1 : 0
+      debugger
       this.layout.push({
         x: DragPos.x,
         y: DragPos.y,

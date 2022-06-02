@@ -246,7 +246,7 @@ export default class LayoutStorage extends Vue {
     }
 
     public setStyleValues(value: number, prop: any, selectedItem: LayoutItemType, param: 'color' | 'value') {
-
+        
         const foundProp: any = selectedItem.props?.styleProps[prop.name]
         foundProp && (foundProp[param] = value);
     }

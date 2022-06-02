@@ -5,11 +5,13 @@
     <div class="widget"
          v-if="!model?.props.loading"
          :style="styles()">
-     <div class="container">
+     <div class="container" v-if="typeof cityData !== 'string'">
        <h1>Today</h1>
               <h1>In {{ cityData?.cityName }}</h1>
               <h2>Temperature {{ cityData?.temp_c }}</h2>
+       <h3>{{ cityData.feelslike_c }}</h3>
      </div>
+       <div v-else>{{ cityData }}</div>
     </div>
   </span>
 </template>
@@ -25,6 +27,7 @@ import DeleteAlert from '@/common/mixins/DeleteAlert.vue';
 import {Prop} from 'vue-property-decorator';
 import {useModule} from 'vuex-simple';
 import WeatherModule from '@/store/modules/WeatherModule';
+import {CurrentType} from '@/services/ApiTypes';
 
 
 @Component({
@@ -40,8 +43,8 @@ export default class TodayWeather extends Vue {
   @Prop({}) protected changeEvent!: any
 
   protected storage = new LayoutStorage()
-  protected weatherModule?: WeatherModule = useModule(this.$store, ['weatherModule']);
-  protected cityData: any = {}
+  protected weatherModule?: WeatherModule | any = useModule(this.$store, ['weatherModule']);
+  protected cityData: CurrentType = {}
 
   protected styles() {
     return {
@@ -54,11 +57,16 @@ export default class TodayWeather extends Vue {
   async created() {
     if (this.model) {
 
-      if (!this.model?.props?.city && this.changeEvent) {
+      this.model!.props!.loading! = true
+
+      if (!this.model?.props?.city) {
         this.storage.setWidgetCity(this.weatherModule?.city!, this.model)
-        this.changeEvent!(this.layout)
+        this.changeEvent(this.layout)
       }
+
       this.cityData = await this.weatherModule?.getCity(this.model.props?.city!)
+
+      this.model!.props!.loading! = false
     }
   }
 

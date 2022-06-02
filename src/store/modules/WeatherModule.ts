@@ -15,10 +15,10 @@ export default class WeatherModule extends Vue {
     public cache: any = {}
 
     @State()
-    public currentWeather: CurrentType[] = []
+    public currentWeather: (CurrentType | string)[] = []
 
     @Mutation()
-    public setCityCurrentWeather(data: CurrentType) {
+    public setCityCurrentWeather(data: CurrentType | string) {
         this.currentWeather.push(data)
     }
 
@@ -38,8 +38,10 @@ export default class WeatherModule extends Vue {
 
     public async getCityCurrentWeather(city: string) {
 
-        const data = await this.serviceInstance.getCurrent(city)
-        data['cityName'] = city
+        const data: CurrentType | string = await this.serviceInstance.getCurrent(city)
+        if (typeof data === 'object') {
+            data['cityName'] = city[0].toUpperCase() + city.slice(1)
+        }
         this.setCityCurrentWeather(data)
 
         return {data}
