@@ -1,10 +1,9 @@
 <template>
   <div class="layout">
     <edit-pop-up
-      :model="item"
-      :selected-drag-item="selectedDragItem"
+      :model="selectedDragItem"
       :change-event="changeEvent"
-      :layout="this.layout"
+      :layout.sync="this.layout"
       :is-edit.sync="isEdit"
     />
     <widget-header :drag="drag" :dragend="dragend"/>
@@ -46,7 +45,9 @@
             :drag-outside="dragOutside"
             :set-drag-item="setDragItem"
             :set-edit-mode="setEditMode"
-            :layout="layout"/>
+            :layout="layout"
+            :set-selected-items="setSelectedItems"
+          />
         </grid-item>
       </grid-layout>
     </div>
@@ -81,9 +82,10 @@ let itemMouseXY = {"x": null, "y": null};
 })
 export default class Layout extends LayoutStorage {
 
+  protected selectedItems = []
+
   protected setEditMode(itemId: number): void {
     this.isEdit = !this.isEdit
-    this.item = this.layout.find(n => n.i === itemId)
   }
 
   protected setDragItem(val: LayoutItemType): void {
@@ -92,6 +94,14 @@ export default class Layout extends LayoutStorage {
 
   protected setDeleteMode(state: boolean): void {
     this.selectedDragItem.props!.isDeleteMode = state
+  }
+
+  protected setSelectedItems(id: number): void {
+    if (this.selectedItems.indexOf(id) !== -1) {
+      this.selectedItems = this.selectedItems.filter(el => el !== id)
+    } else {
+      this.selectedItems.push(id)
+    }
   }
 
   protected changeEvent(layout: LayoutType): void {
@@ -127,17 +137,26 @@ export default class Layout extends LayoutStorage {
     if (mouseInGrid === true) {
       this.setDeleteMode(true)
       if (state === 'delete') {
-        let query = document.querySelector<HTMLElement>(`.custom_grid_${val.i}`)
-        query!.style.cssText += `transition:0.2s;
+        setTimeout(() => {
+          const index = this.layout.findIndex(n => n.i === val.i);
+          this.layout.splice(index, 1);
+          this.selectedItems.forEach(itemId => {
+            const selectedItemsIndex = this.layout.findIndex(function (el) {
+              return el.i === itemId
+            })
+            if (selectedItemsIndex !== -1) {
+              this.layout.splice(selectedItemsIndex, 1)
+            }
+          })
+          this.selectedItems = []
+          let query = document.querySelector<HTMLElement>(`.custom_grid_${val.i}`)
+          query!.style.cssText += `transition:0.2s;
                                 height: calc(${this.gridItemSize.h} * ${val.h}px)
                                 width: calc(${this.gridItemSize.w} * ${val.w}px)
                                 animation: show 0.3s;
                                 opacity: 0;
                                 transform: scale(0.1)
                                `
-        setTimeout(() => {
-          const index = this.layout.findIndex(n => n.i === val.i);
-          this.layout.splice(index, 1);
           this.deletedItemsList.push(val)
           this.saveLayoutChanges(this.layout)
         }, 300)
@@ -192,7 +211,7 @@ export default class Layout extends LayoutStorage {
     }
   }
 
-  protected dragend(e) {
+  protected dragend() {
     let parentRect = document.getElementById('content').getBoundingClientRect();
     let mouseInGrid = false;
     if (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right)) && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom))) {
@@ -202,7 +221,6 @@ export default class Layout extends LayoutStorage {
       this.$refs.gridlayout.dragEvent('dragend', 'drop', DragPos.x, DragPos.y, 1, 1);
       this.layout = this.layout.filter(obj => obj.i !== 'drop');
       let newKey = this.layout.length !== 0 ? this.layout.reduce((acc, curr) => acc.i > curr.i ? acc : curr).i + 1 : 0
-      debugger
       this.layout.push({
         x: DragPos.x,
         y: DragPos.y,
@@ -220,10 +238,9 @@ export default class Layout extends LayoutStorage {
       } catch {
       }
     }
+
   }
-
 }
-
 </script>
 
 <style lang="scss">

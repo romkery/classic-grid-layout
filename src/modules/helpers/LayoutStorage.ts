@@ -245,10 +245,13 @@ export default class LayoutStorage extends Vue {
         }
     }
 
-    public setStyleValues(value: number, prop: any, selectedItem: LayoutItemType, param: 'color' | 'value') {
-        
-        const foundProp: any = selectedItem.props?.styleProps[prop.name]
-        foundProp && (foundProp[param] = value);
+    public setStyleValues(value: number, prop: any, itemId: number, param: 'color' | 'value', layout: any, changeEvent: any) {
+
+        let selectedItem = layout.find((el: LayoutItemType) => el.i === itemId)
+
+        const foundedProp: any = selectedItem.props?.styleProps[prop.name]
+        foundedProp && (foundedProp[param] = value);
+        changeEvent(layout)
     }
 
     public setWidgetCity(city: string, selectedItem: LayoutItemType) {

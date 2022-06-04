@@ -1,6 +1,7 @@
 <template>
   <div class="pop-up-mode"
-       v-if="innerIsEdit">
+       v-if="innerIsEdit"
+  >
     <el-drawer
       :size="'20%'"
       :visible.sync="innerIsEdit"
@@ -9,14 +10,18 @@
       @close="changeEvent(layout)"
     >
       <div class="pop-up-mode-content">
-        <EditForms :model="model" :layout.sync="layout"/>
+        <EditForms :model="model"
+                   :layout="layout"
+                   :change-event="changeEvent"
+        />
       </div>
     </el-drawer>
     <div class="pop-up-mode-item">
       <component
-        :is="selectedDragItem.c"
-        :itemProps="selectedDragItem.props"
-        :model="model"/>
+        :is="model.c"
+        :itemProps="model.props"
+        :model="model"
+      />
     </div>
   </div>
 </template>
@@ -33,6 +38,7 @@ import Yellow from '@/modules/components/widgets/Yellow.vue';
 import Black from '@/modules/components/widgets/Black.vue';
 import EditForms from '@/modules/components/widgets/EditForms.vue';
 import {LayoutItemType, LayoutType} from '@/modules/helpers/LayoutStorage';
+import TodayWeather from '@/modules/components/widgets/TodayWeather.vue';
 
 
 @Component({
@@ -42,13 +48,13 @@ import {LayoutItemType, LayoutType} from '@/modules/helpers/LayoutStorage';
     Green,
     Yellow,
     Black,
-    EditForms
+    EditForms,
+    TodayWeather
   }
 })
 export default class EditPopUp extends Vue {
 
   @Prop({}) protected model!: LayoutItemType
-  @Prop({}) protected selectedDragItem!: LayoutItemType
   @Prop({}) protected changeEvent!: any
   @Prop({}) protected layout!: LayoutType
   @Prop({}) protected isEdit!: boolean

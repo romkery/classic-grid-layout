@@ -2,15 +2,18 @@
   <div>
     <div class="search">
       <div>{{ weatherModule.city }}</div>
-      <el-input placeholder="Please input city"
-                v-model="input"
-                @keyup.enter.native="getCity"
-                type="text"
+      <el-autocomplete
+        class="search"
+        placeholder="Please input city"
+        v-model="input"
+        type="text"
+        :fetch-suggestions="querySearch"
+        @select="setCity"
       >
         <i slot="suffix"
            class="el-input__icon el-icon-search">
         </i>
-      </el-input>
+      </el-autocomplete>
     </div>
     <div class="header">
       <widget-list
@@ -18,7 +21,10 @@
         :dragend="dragend"
       />
       <div id="trash">
-        <i class="el-icon-delete" @click="isOpenTrash = true"></i>
+        <el-tooltip placement="bottom">
+          <div slot="content">Ctrl + click <br/> to select.</div>
+          <i class="el-icon-delete" @click="isOpenTrash = true"/>
+        </el-tooltip>
       </div>
     </div>
   </div>
@@ -48,9 +54,13 @@ export default class WidgetHeader extends Vue {
 
   protected input: string = ''
 
-  protected getCity() {
-    this.weatherModule.setCity(this.input)
+  protected setCity(city: any) {
+    this.weatherModule.setCity(city.value)
     this.input = ''
+  }
+
+  protected async querySearch(query: string, callback: any) {
+    callback(await this.weatherModule.getAutocompleteCities(query))
   }
 
 
@@ -63,6 +73,7 @@ export default class WidgetHeader extends Vue {
 
 .search {
   margin-bottom: 20px;
+  width: 100%;
 }
 
 .header {

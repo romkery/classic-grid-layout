@@ -7,7 +7,7 @@
          class="widgets-list-item-container"
          draggable="true"
          :key='index'>
-      <div>{{ widget }}</div>
+      <p>{{ widget }}</p>
       <component :is="widget" v-show="false"/>
     </div>
   </div>
@@ -46,6 +46,10 @@ export default class WidgetList extends Vue {
 .widgets-list {
   display: flex;
   flex-direction: row;
+
+  p {
+    color: #181818;
+  }
 
   &-item-container {
     width: 150px;

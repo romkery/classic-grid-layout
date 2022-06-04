@@ -1,17 +1,27 @@
 import BaseApiService from '@/services/api';
 import {Service} from 'typedi';
-import {CurrentResponseType, CurrentType} from '@/services/ApiTypes';
+import {CurrentResponseType} from '@/services/ApiTypes';
 
 @Service()
 export default class WeatherService extends BaseApiService {
 
-    public async getCurrent(city = "Novosibirsk", lang = 'en'): Promise<CurrentType | string> {
+    public async getCurrent(city = "Novosibirsk", lang = 'en'): Promise<CurrentResponseType | string> {
         try {
             const data = await this.instance.get<CurrentResponseType>(`current.json?q=${city}&lang=${lang}&aqi=yes&`)
-            return data.data.current
+            return data.data
         } catch (error) {
             console.log(error)
             return `"${city}" is not exist.`
+        }
+    }
+
+    public async getSearchCities(city: string): Promise<any> {
+        if (city) {
+            try {
+                return (await this.instance.get(`search.json?q=${city}`)).data
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 }

@@ -5,7 +5,9 @@
        @mouseenter="setDragItem(model)"
        @mousemove="dragOutside(selectedDragItem, 'check')"
        @mouseup="dragOutside(selectedDragItem, 'delete')"
+       @click.shift="selectComponent"
   >
+    <div v-show="selectionMode" class="selection"/>
     <div class="pin-icon-container">
       <div>
         <i class="el-icon-loading"
@@ -57,7 +59,6 @@ import TodayWeather from '@/modules/components/widgets/TodayWeather.vue';
 })
 export default class GridItemContent extends Vue {
 
-
   @Prop({}) protected model!: LayoutItemType
   @Prop({}) protected dragOutside!: any
   @Prop({}) protected setDragItem!: any
@@ -65,7 +66,19 @@ export default class GridItemContent extends Vue {
   @Prop({}) protected changeEvent!: any
   @Prop({}) protected selectedDragItem!: LayoutItemType
   @Prop({}) protected layout!: LayoutType
+  @Prop({}) protected setSelectedItems!: any
 
+  protected selectionMode = false
+
+  selectComponent() {
+    if (!this.selectionMode) {
+      this.setSelectedItems(this.model.i)
+      this.selectionMode = true
+    } else {
+      this.selectionMode = false
+      this.setSelectedItems(this.model.i)
+    }
+  }
 }
 
 </script>
@@ -83,6 +96,12 @@ export default class GridItemContent extends Vue {
       cursor: pointer;
     }
   }
+}
+
+.selection {
+  width: 100%;
+  border: 1px solid red;
+  position: absolute;
 }
 
 </style>

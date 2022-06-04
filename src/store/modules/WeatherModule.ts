@@ -2,7 +2,7 @@ import Vue from 'vue';
 import {Action, Mutation, State} from 'vuex-simple';
 import {Container} from 'typedi';
 import WeatherService from '@/services/WeatherService';
-import {CurrentType} from '@/services/ApiTypes';
+import {CurrentResponseType} from '@/services/ApiTypes';
 
 export default class WeatherModule extends Vue {
 
@@ -15,14 +15,15 @@ export default class WeatherModule extends Vue {
     public cache: any = {}
 
     @State()
-    public currentWeather: (CurrentType | string)[] = []
+    public currentWeather: (CurrentResponseType | string)[] = []
 
     @Mutation()
-    public setCityCurrentWeather(data: CurrentType | string) {
+    public setCityCurrentWeather(data: CurrentResponseType | string) {
         this.currentWeather.push(data)
     }
 
     public setCity(city: string) {
+        debugger
         this.city = city[0].toUpperCase() + city.slice(1)
     }
 
@@ -38,13 +39,32 @@ export default class WeatherModule extends Vue {
 
     public async getCityCurrentWeather(city: string) {
 
-        const data: CurrentType | string = await this.serviceInstance.getCurrent(city)
+        const data: CurrentResponseType | string = await this.serviceInstance.getCurrent(city)
         if (typeof data === 'object') {
-            data['cityName'] = city[0].toUpperCase() + city.slice(1)
+            data.current['cityName'] = city[0].toUpperCase() + city.slice(1)
         }
+
         this.setCityCurrentWeather(data)
 
         return {data}
     }
+
+
+    @State() autocompleteCities = []
+
+
+    @Action()
+    public async getAutocompleteCities(city: string) {
+        this.autocompleteCities = []
+
+        const data = await this.serviceInstance.getSearchCities(city)
+
+        data?.forEach((el: any) => {
+            this.autocompleteCities.push({value: el.name})
+        })
+
+        return this.autocompleteCities
+    }
+
 }
 

@@ -10,13 +10,13 @@
                  :disabled="model.props.loading"
                  :format-tooltip="formatTooltip"
                  :value="prop.value"
-                 @input="store.setStyleValues($event, prop, selectedItem, 'value')"
+                 @input="store.setStyleValues($event, prop, model.i, 'value', layout, changeEvent)"
       />
       <el-color-picker v-if="prop.el === 'colorPicker'"
                        :style="{top: '12px'}"
                        :disabled="model.props.loading"
                        :value="prop.color"
-                       @input="store.setStyleValues($event, prop, selectedItem, 'color')"
+                       @input="store.setStyleValues($event, prop, model.i, 'color', layout, changeEvent)"
       />
     </div>
   </div>
@@ -34,16 +34,12 @@ export default class EditForms extends Vue {
 
   @Prop() model!: LayoutItemType
   @Prop() layout!: LayoutType
+  @Prop() changeEvent!: any
 
   protected store = new LayoutStorage()
-  protected selectedItem!: LayoutItemType | undefined
 
   protected formatTooltip(val: number) {
     return val;
-  }
-
-  created() {
-    this.selectedItem = this.layout.find((el: LayoutItemType) => el.i === this.model.i)
   }
 }
 
