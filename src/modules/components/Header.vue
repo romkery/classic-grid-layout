@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="header">
     <div class="search">
       <div>{{ weatherModule.city }}</div>
       <el-autocomplete
@@ -15,17 +15,11 @@
         </i>
       </el-autocomplete>
     </div>
-    <div class="header">
+    <div class="header__widget-list">
       <widget-list
         :drag="drag"
         :dragend="dragend"
       />
-      <div id="trash">
-        <el-tooltip placement="bottom">
-          <div slot="content">Ctrl + click <br/> to select.</div>
-          <i class="el-icon-delete" @click="isOpenTrash = true"/>
-        </el-tooltip>
-      </div>
     </div>
   </div>
 </template>
@@ -78,24 +72,14 @@ export default class WidgetHeader extends Vue {
 
 .header {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
-}
 
-#trash {
-  width: 50px;
-  height: 50px;
-
-  i {
-    font-size: 50px;
-    color: #c0c0c0;
-    cursor: pointer;
-
-  }
-
-  :hover {
-    transition: 500ms;
-    color: dodgerblue;
+  &__widget-list {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 }
 

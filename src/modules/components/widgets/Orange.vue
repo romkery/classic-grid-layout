@@ -1,10 +1,10 @@
 <template>
   <span>
-    <DeleteAlert v-show="model.props.isDeleteMode"/>
-    <DefaultSkeleton v-if="model.props.preview === 'skeleton' & model.props.loading"/>
+    <DeleteAlert v-show="model?.props.isDeleteMode"/>
+    <DefaultSkeleton v-if="model?.props.preview === 'skeleton' & model?.props.loading"/>
     <div class="widget"
          :style="styles()"
-         v-if="!model.props.loading">
+         v-if="!model?.props.loading">
       <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Orange_logo.svg/200px-Orange_logo.svg.png"
            alt="cola">
       <h2>Lorem Ipsum</h2>
@@ -37,11 +37,34 @@ export default class Orange extends Vue {
 
   protected styles() {
     return {
-      border: `${this.model.props?.styleProps.border?.value}px solid ${this.model.props?.styleProps.border?.color}`,
-      borderRadius: `${this.model.props?.styleProps.borderRadius?.value}px`,
-      background: this.model.props?.styleProps.background?.color
+      border: `${this.model?.props?.styleProps.border?.value}px solid ${this.model?.props?.styleProps.border?.color}`,
+      borderRadius: `${this.model?.props?.styleProps.borderRadius?.value}px`,
+      background: this.model?.props?.styleProps.background?.color
     }
   }
+
+  protected ownProperty = this.store.createNewWidget(2, 50, 'Orange', 'skeleton',
+    [
+      {
+        name: 'border',
+        title: 'Рамка',
+        el: 'slider',
+        min: 10,
+        max: 100,
+        step: 4,
+        value: 20,
+        color: '#ff6200'
+      },
+      {
+        name: 'borderRadius',
+        title: 'Скругление углов',
+        el: 'slider',
+        min: 10,
+        max: 100,
+        step: 1,
+        value: 20,
+      }])
+
 
 }
 

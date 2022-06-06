@@ -63,12 +63,10 @@ import EditPopUp from '@/modules/components/EditPopUp.vue';
 import WidgetList from '@/modules/components/WidgetList.vue';
 import GridItemContent from '@/modules/components/GridItemContent.vue';
 import WidgetHeader from '@/modules/components/Header.vue';
-import WeatherModule from '@/store/modules/WeatherModule';
-import {useModule} from 'vuex-simple';
 
-let mouseXY = {"x": null, "y": null};
-let DragPos = {"x": null, "y": null, "w": 1, "h": 1, "i": null};
-let itemMouseXY = {"x": null, "y": null};
+let mouseXY: any = {"x": null, "y": null};
+let DragPos: any = {"x": null, "y": null, "w": 1, "h": 1, "i": null};
+let itemMouseXY: any = {"x": null, "y": null};
 
 @Component({
   components: {
@@ -82,9 +80,12 @@ let itemMouseXY = {"x": null, "y": null};
 })
 export default class Layout extends LayoutStorage {
 
-  protected selectedItems = []
+  protected selectedItems: number[] = []
 
-  protected setEditMode(itemId: number): void {
+  protected isMouseInTrash: boolean = false
+  protected prevDeleteState: string
+
+  protected setEditMode(): void {
     this.isEdit = !this.isEdit
   }
 
@@ -92,8 +93,8 @@ export default class Layout extends LayoutStorage {
     this.selectedDragItem = val
   }
 
-  protected setDeleteMode(state: boolean): void {
-    this.selectedDragItem.props!.isDeleteMode = state
+  protected setDeleteMode(itemId: any, state: boolean): void {
+    this.layout.find(item => item.i === itemId)!.props!.isDeleteMode = state
   }
 
   protected setSelectedItems(id: number): void {
@@ -108,10 +109,37 @@ export default class Layout extends LayoutStorage {
     this.saveLayoutChanges(layout)
   }
 
-  protected weatherModule: WeatherModule = useModule(this.$store, ['weatherModule']);
+  protected deleteSelectedItems(state: string) {
+    this.selectedItems.forEach(el => this.setDeleteMode(el, true))
+    if (state === 'delete') {
+      this.selectedItems.forEach(itemId => {
+        const selectedItemsIndex = this.layout.findIndex(function (el) {
+          return el.i === itemId
+        })
+        if (selectedItemsIndex !== -1) {
+          this.layout.splice(selectedItemsIndex, 1)
+        }
+      })
+      this.selectedItems = []
+    }
+  }
+
+  protected deleteOneItem(state: string) {
+    this.setDeleteMode(this.selectedDragItem.i, true)
+    if (state === 'delete') {
+      const index = this.layout.findIndex(n => n.i === this.selectedDragItem.i);
+      this.layout.splice(index, 1);
+      this.saveLayoutChanges(this.layout)
+    }
+  }
 
   created() {
     this.getLayout()
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace') {
+        this.dragOutside(this.selectedDragItem, 'delete', 'key');
+      }
+    })
   }
 
   mounted() {
@@ -120,64 +148,52 @@ export default class Layout extends LayoutStorage {
       mouseXY.y = e.clientY;
     }, false);
 
-    document.querySelector('#content')!.onmousemove = function (e) {
+    document.querySelector<HTMLElement>('#content')!.onmousemove = function (e) {
       event = event || window.event; // кроссбраузерность
       itemMouseXY.x = e.clientX;
       itemMouseXY.y = e.clientY;
     }
   }
 
-  protected dragOutside(val: LayoutItemType, state: 'check' | 'delete'): void {
-    let parentRect = document.getElementById('trash').getBoundingClientRect();
-    let mouseInGrid = false;
-    if (((itemMouseXY.x > parentRect.left) && (itemMouseXY.x < parentRect.right)) && ((itemMouseXY.y > parentRect.top) && (itemMouseXY.y < parentRect.bottom))) {
-      mouseInGrid = true;
+  protected dragOutside(val: LayoutItemType, state: 'check' | 'delete', event?: 'key'): void {
+
+    let parentRect = document.getElementById('trash')!.getBoundingClientRect();
+    let prevIsMouseInTrash = this.isMouseInTrash
+
+
+    this.isMouseInTrash = ((itemMouseXY.x! > parentRect.left)
+        && (itemMouseXY.x! < parentRect.right))
+      && ((itemMouseXY.y! > parentRect.top)
+        && (itemMouseXY.y! < parentRect.bottom));
+
+    if (prevIsMouseInTrash !== this.isMouseInTrash || this.prevDeleteState !== state) {
+      if (this.isMouseInTrash || event === 'key') {
+        if (this.selectedItems.length > 0) {
+          this.deleteSelectedItems(state)
+        } else {
+          this.deleteOneItem(state)
+        }
+      } else {
+        this.selectedItems.forEach(el => this.setDeleteMode(el, false))
+        this.setDeleteMode(this.selectedDragItem.i, false)
+      }
+      this.saveLayoutChanges(this.layout)
     }
 
-    if (mouseInGrid === true) {
-      this.setDeleteMode(true)
-      if (state === 'delete') {
-        setTimeout(() => {
-          const index = this.layout.findIndex(n => n.i === val.i);
-          this.layout.splice(index, 1);
-          this.selectedItems.forEach(itemId => {
-            const selectedItemsIndex = this.layout.findIndex(function (el) {
-              return el.i === itemId
-            })
-            if (selectedItemsIndex !== -1) {
-              this.layout.splice(selectedItemsIndex, 1)
-            }
-          })
-          this.selectedItems = []
-          let query = document.querySelector<HTMLElement>(`.custom_grid_${val.i}`)
-          query!.style.cssText += `transition:0.2s;
-                                height: calc(${this.gridItemSize.h} * ${val.h}px)
-                                width: calc(${this.gridItemSize.w} * ${val.w}px)
-                                animation: show 0.3s;
-                                opacity: 0;
-                                transform: scale(0.1)
-                               `
-          this.deletedItemsList.push(val)
-          this.saveLayoutChanges(this.layout)
-        }, 300)
-      }
-    } else {
-      this.setDeleteMode(false)
-    }
+    this.prevDeleteState = state
   }
 
   protected drag(event) {
-
     if (event.target.children[1].__vue__.ownProperty !== this.selectedDragItem) {
       this.setDragItem(event.target.children[1].__vue__.ownProperty)
     }
 
-    let parentRect = document.getElementById('content').getBoundingClientRect();
+    let parentRect = document.getElementById('content')!.getBoundingClientRect();
     let mouseInGrid = false;
     if (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right)) && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom))) {
       mouseInGrid = true;
     }
-    if (mouseInGrid === true && (this.layout.findIndex(item => item.i === 'drop')) === -1) {
+    if (mouseInGrid && (this.layout.findIndex(item => item.i === 'drop')) === -1) {
 
       this.layout.push({
         x: (this.layout.length * 2) % (this.colNum || 12),
@@ -190,51 +206,51 @@ export default class Layout extends LayoutStorage {
     let index = this.layout.findIndex(item => item.i === 'drop');
     if (index !== -1) {
       try {
-        this.$refs.gridlayout.$children[this.layout.length].$refs.item.style.display = "none";
+        this.$refs.gridlayout!.$children[this.layout.length].$refs.item.style.display = "none";
       } catch {
       }
 
-      let el = this.$refs.gridlayout.$children[index];
+      let el = this.$refs.gridlayout!.$children[index];
       el.dragging = {"top": mouseXY.y - parentRect.top, "left": mouseXY.x - parentRect.left};
       let new_pos = el.calcXY(mouseXY.y - parentRect.top, mouseXY.x - parentRect.left);
 
-      if (mouseInGrid === true) {
-        this.$refs.gridlayout.dragEvent('dragstart', 'drop', new_pos.x, new_pos.y, this.selectedDragItem.h, this.selectedDragItem.w);
+      if (mouseInGrid) {
+        this.$refs.gridlayout!.dragEvent('dragstart', 'drop', new_pos.x, new_pos.y, this.selectedDragItem.h, this.selectedDragItem.w);
         DragPos.i = index; //idk for what it is
         DragPos.x = this.layout[index].x;
         DragPos.y = this.layout[index].y;
       }
-      if (mouseInGrid === false) {
-        this.$refs.gridlayout.dragEvent('dragend', 'drop', new_pos.x, new_pos.y, 1, 1);
+      if (!mouseInGrid) {
+        this.$refs.gridlayout!.dragEvent('dragend', 'drop', new_pos.x, new_pos.y, 1, 1);
         this.layout = this.layout.filter(obj => obj.i !== 'drop');
       }
     }
   }
 
   protected dragend() {
-    let parentRect = document.getElementById('content').getBoundingClientRect();
+    let parentRect = document.getElementById('content')!.getBoundingClientRect();
     let mouseInGrid = false;
     if (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right)) && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom))) {
       mouseInGrid = true;
     }
-    if (mouseInGrid === true) {
-      this.$refs.gridlayout.dragEvent('dragend', 'drop', DragPos.x, DragPos.y, 1, 1);
+    if (mouseInGrid) {
+      this.$refs.gridlayout!.dragEvent('dragend', 'drop', DragPos.x, DragPos.y, 1, 1);
       this.layout = this.layout.filter(obj => obj.i !== 'drop');
-      let newKey = this.layout.length !== 0 ? this.layout.reduce((acc, curr) => acc.i > curr.i ? acc : curr).i + 1 : 0
+      let newKey = this.layout.length > 0 ? this.layout.reduce((acc, curr) => acc.i! > curr.i! ? acc : curr).i : 0
       this.layout.push({
         x: DragPos.x,
         y: DragPos.y,
         w: this.selectedDragItem.w || 2,
         h: this.selectedDragItem.h || 20,
-        i: newKey,
+        i: newKey + 1,
         c: this.selectedDragItem.c,
         static: this.selectedDragItem.static,
         props: {...this.selectedDragItem.props},
       });
       this.saveLayoutChanges(this.layout)
-      this.$refs.gridlayout.dragEvent('dragend', newKey + 1, DragPos.x, DragPos.y, this.gridItemSize.h, this.gridItemSize.w);
+      this.$refs.gridlayout!.dragEvent('dragend', newKey + 1, DragPos.x, DragPos.y, this.gridItemSize.h, this.gridItemSize.w);
       try {
-        this.$refs.gridlayout.$children[this.layout.length].$refs.item.style.display = "block";
+        this.$refs.gridlayout!.$children[this.layout.length].$refs.item.style.display = "block";
       } catch {
       }
     }
@@ -329,7 +345,6 @@ export default class Layout extends LayoutStorage {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    -o-user-select: none;
     user-select: none;
   }
 }
