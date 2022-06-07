@@ -7,14 +7,14 @@
                  :max="prop.params.max"
                  :min="prop.params.min"
                  :step="prop.params.step"
-                 :disabled="model.props.loading"
+                 :disabled="model.props.isLoading"
                  :format-tooltip="formatTooltip"
                  :value="prop.value"
                  @input="store.setStyleValues($event, prop, model.i, 'value', layout, changeEvent)"
       />
       <el-color-picker v-if="prop.el === 'colorPicker'"
                        :style="{top: '12px'}"
-                       :disabled="model.props.loading"
+                       :disabled="model.props.isLoading"
                        :value="prop.color"
                        @input="store.setStyleValues($event, prop, model.i, 'color', layout, changeEvent)"
       />

@@ -1,10 +1,10 @@
 <template>
   <span>
     <DeleteAlert v-if="model?.props.isDeleteMode"/>
-    <DefaultSkeleton v-if="model?.props.preview === 'skeleton' & model?.props.loading"/>
+    <DefaultSkeleton v-if="model?.props.preview === 'skeleton' & model?.props.isLoading"/>
     <div class="widget"
          :style="styles()"
-         v-if="!model?.props.loading & !model?.props.isDeleteMode">
+         v-if="!model?.props.isLoading & !model?.props.isDeleteMode">
     <img
       src="https://media.istockphoto.com/photos/green-apple-picture-id584226186?k=20&m=584226186&s=170667a&w=0&h=YaNNvCnxJR8-VVQX62PjEOxa2FhzY8whNfkrsr2FgUs="
       alt="cola">

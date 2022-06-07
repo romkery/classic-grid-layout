@@ -1,6 +1,7 @@
 <template>
-  <div class="pop-up-mode"
-       v-if="innerIsEdit"
+  <div
+    class="pop-up-mode"
+    v-if="innerIsEdit"
   >
     <el-drawer
       :size="'20%'"
@@ -10,9 +11,10 @@
       @close="changeEvent(layout)"
     >
       <div class="pop-up-mode-content">
-        <EditForms :model="model"
-                   :layout="layout"
-                   :change-event="changeEvent"
+        <EditForms
+          :model="model"
+          :layout="layout"
+          :change-event="changeEvent"
         />
       </div>
     </el-drawer>

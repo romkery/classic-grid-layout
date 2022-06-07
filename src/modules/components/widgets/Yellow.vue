@@ -1,9 +1,9 @@
 <template>
   <span>
     <DeleteAlert v-if="model?.props.isDeleteMode"/>
-    <DefaultSkeleton v-if="model?.props.preview === 'skeleton' & model?.props.loading"/>
+    <DefaultSkeleton v-if="model?.props.preview === 'skeleton' & model?.props.isLoading"/>
     <div class="widget"
-         v-if="!model?.props.loading"
+         v-if="!model?.props.isLoading"
          :style="styles()">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLXuSFEShPYz9wzfOwIiuJaJ9JdGSmWFfn_YykysuXfQ&s"
          alt="cola">

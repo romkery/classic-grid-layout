@@ -1,9 +1,9 @@
 <template>
   <span>
     <DeleteAlert v-if="model?.props.isDeleteMode"/>
-    <DefaultSkeleton v-if="model?.props.preview === 'skeleton' & model?.props.loading"/>
+    <DefaultSkeleton v-if="model?.props.preview === 'skeleton' & model?.props.isLoading"/>
     <div class="widget"
-         v-if="!model?.props.loading"
+         v-if="!model?.props.isLoading"
          :style="styles()">
      <div class="container" v-if="typeof cityData !== 'string'">
        <h1>Today</h1>
@@ -62,7 +62,7 @@ export default class TodayWeather extends Vue {
   async created() {
     if (this.model) {
 
-      this.model!.props!.loading! = true
+      this.model!.props!.isLoading! = true
       console.log(`created ${this.model.i}: ${this.model.props?.styleProps.border?.value}`)
       if (!this.model?.props?.city) {
         this.storage.setWidgetCity(this.weatherModule?.city!, this.model)
@@ -71,7 +71,7 @@ export default class TodayWeather extends Vue {
 
       this.cityData = await this.weatherModule?.getCity(this.model.props?.city!)
 
-      this.model!.props!.loading! = false
+      this.model!.props!.isLoading! = false
     }
   }
 
@@ -84,7 +84,7 @@ export default class TodayWeather extends Vue {
         min: 0,
         max: 15,
         step: 1,
-        value: 1,
+        value: Math.floor(Math.random() * 15) + 1,
         color: '#3581e5'
       },
       {

@@ -12,8 +12,8 @@ export default class LayoutStorage extends Vue {
     public defaultLayout: LayoutItemType[] =
         [
             {
-                "x": 0, "y": 1, "w": 3, "h": 50, "i": 0, c: 'CocaCola', static: false, props: {
-                    preview: 'skeleton', loading: false, isDeleteMode: false,
+                "x": 0, "y": 1, "w": 3, "h": 50, "i": 0, c: 'CocaCola', isStatic: false, props: {
+                    preview: 'skeleton', isLoading: false, isDeleteMode: false,
                     styleProps: {
                         border: {
                             name: 'border',
@@ -46,8 +46,8 @@ export default class LayoutStorage extends Vue {
                 }
             },
             {
-                "x": 2, "y": 1, "w": 2, "h": 50, "i": 1, c: 'Orange', static: false, props: {
-                    preview: 'skeleton', loading: true, isDeleteMode: false,
+                "x": 2, "y": 1, "w": 2, "h": 50, "i": 1, c: 'Orange', isStatic: false, props: {
+                    preview: 'skeleton', isLoading: true, isDeleteMode: false,
                     styleProps: {
                         border: {
                             name: 'border',
@@ -80,8 +80,8 @@ export default class LayoutStorage extends Vue {
                 }
             },
             {
-                "x": 4, "y": 1, "w": 2, "h": 50, "i": 2, c: 'Green', static: false, props: {
-                    preview: 'skeleton', loading: false, isDeleteMode: false, styleProps: {
+                "x": 4, "y": 1, "w": 2, "h": 50, "i": 2, c: 'Green', isStatic: false, props: {
+                    preview: 'skeleton', isLoading: false, isDeleteMode: false, styleProps: {
                         border: {
                             name: 'border',
                             title: 'Рамка',
@@ -107,8 +107,8 @@ export default class LayoutStorage extends Vue {
                 }
             },
             {
-                "x": 6, "y": 1, "w": 2, "h": 50, "i": 3, c: 'Orange', static: false, props: {
-                    preview: 'skeleton', loading: true, isDeleteMode: false,
+                "x": 6, "y": 1, "w": 2, "h": 50, "i": 3, c: 'Orange', isStatic: false, props: {
+                    preview: 'skeleton', isLoading: true, isDeleteMode: false,
                     styleProps: {
                         border: {
                             name: 'border',
@@ -131,8 +131,8 @@ export default class LayoutStorage extends Vue {
                 }
             },
             {
-                "x": 8, "y": 1, "w": 2, "h": 50, "i": 4, c: 'CocaCola', static: false, props: {
-                    preview: 'skeleton', loading: false, isDeleteMode: false, styleProps:
+                "x": 8, "y": 1, "w": 2, "h": 50, "i": 4, c: 'CocaCola', isStatic: false, props: {
+                    preview: 'skeleton', isLoading: false, isDeleteMode: false, styleProps:
                         {
                             border: {
                                 name: 'border',
@@ -159,8 +159,8 @@ export default class LayoutStorage extends Vue {
                 }
             },
             {
-                "x": 10, "y": 1, "w": 2, "h": 50, "i": 5, c: 'Green', static: false, props: {
-                    preview: 'skeleton', loading: true, isDeleteMode: false, styleProps: {
+                "x": 10, "y": 1, "w": 2, "h": 50, "i": 5, c: 'Green', isStatic: false, props: {
+                    preview: 'skeleton', isLoading: true, isDeleteMode: false, styleProps: {
                         border: {
                             name: 'border',
                             title: 'Рамка',
@@ -213,7 +213,7 @@ export default class LayoutStorage extends Vue {
     public createNewWidget(w: number, h: number, c: string, preview: string, propsArray: NewWidgetPropsType[], maxW?: number, maxH?: number): LayoutItemType {
 
         let propsObject: StyleType = {}
-
+        
         propsArray.map((el) => {
             propsObject[el.name] = {
                 name: el.name,
@@ -233,12 +233,12 @@ export default class LayoutStorage extends Vue {
             w: w,
             h: h,
             c: c,
-            static: false,
+            isStatic: false,
             props: {
                 maxW: maxW,
                 maxH: maxH,
                 preview: preview,
-                loading: false,
+                isLoading: false,
                 isDeleteMode: false,
                 styleProps: propsObject
             }
@@ -273,14 +273,14 @@ export type LayoutItemType = {
     h?: number;
     i?: number | string;
     c?: string;
-    static?: boolean
+    isStatic?: boolean
     props?: PropsType
 }
 
 export type PropsType = {
     maxW?: number
     maxH?: number
-    loading: boolean
+    isLoading: boolean
     styleProps: StyleType
     preview: string
     isDeleteMode?: boolean

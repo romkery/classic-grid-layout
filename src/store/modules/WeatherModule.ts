@@ -23,7 +23,6 @@ export default class WeatherModule extends Vue {
     }
 
     public setCity(city: string) {
-        debugger
         this.city = city[0].toUpperCase() + city.slice(1)
     }
 

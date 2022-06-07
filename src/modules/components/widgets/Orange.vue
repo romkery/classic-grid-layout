@@ -1,10 +1,10 @@
 <template>
   <span>
     <DeleteAlert v-show="model?.props.isDeleteMode"/>
-    <DefaultSkeleton v-if="model?.props.preview === 'skeleton' & model?.props.loading"/>
+    <DefaultSkeleton v-if="model?.props.preview === 'skeleton' & model?.props.isLoading"/>
     <div class="widget"
          :style="styles()"
-         v-if="!model?.props.loading">
+         v-if="!model?.props.isLoading">
       <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Orange_logo.svg/200px-Orange_logo.svg.png"
            alt="cola">
       <h2>Lorem Ipsum</h2>

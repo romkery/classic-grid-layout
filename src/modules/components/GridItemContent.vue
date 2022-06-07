@@ -7,21 +7,23 @@
        @mouseup="dragOutside(selectedDragItem, 'delete')"
        @click.shift="selectComponent"
   >
-    <div v-show="selectionMode" class="selection"/>
+    <div v-show="selectionMode"
+         class="selection"
+    />
     <div class="pin-icon-container">
       <div>
         <i class="el-icon-loading"
            @click="() =>
-           {model.props.loading = ! model.props.loading; changeEvent(layout)}"
+           {model.props.isLoading = !model.props.isLoading; changeEvent(layout)}"
         />
         <i class="el-icon-setting"
            @click="setEditMode(model.i)"
         />
-        <i class="el-icon-star-off" v-if="!model.static"
-           @click="() => {model.static = true; changeEvent(layout)}"
+        <i class="el-icon-star-off" v-if="!model.isStatic"
+           @click="() => {model.isStatic = true; changeEvent(layout)}"
         />
-        <i class="el-icon-star-on" v-if="model.static"
-           @click="() => {model.static = false; changeEvent(layout)}"/>
+        <i class="el-icon-star-on" v-if="model.isStatic"
+           @click="() => {model.isStatic = false; changeEvent(layout)}"/>
       </div>
     </div>
     <component

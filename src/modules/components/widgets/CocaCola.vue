@@ -1,10 +1,10 @@
 <template>
   <span>
     <DeleteAlert v-if="model?.props.isDeleteMode"/>
-    <DefaultSkeleton v-if="model?.props.preview === 'skeleton' & model?.props.loading"/>
+    <DefaultSkeleton v-if="model?.props.preview === 'skeleton' & model?.props.isLoading"/>
     <div class="widget"
          :style="styles()"
-         v-if="!model?.props.loading">
+         v-if="!model?.props.isLoading">
       <img src="https://democrats.org/wp-content/uploads/2019/08/TeamBlue_gradient.png?w=300"
            alt="cola">
     </div>

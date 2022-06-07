@@ -23,7 +23,7 @@
       >
         <grid-item
           v-for="item in layout"
-          :static="item.static"
+          :static="item.isStatic"
           :key="item.i"
           :x="item.x"
           :y="item.y"
@@ -160,7 +160,6 @@ export default class Layout extends LayoutStorage {
     let parentRect = document.getElementById('trash')!.getBoundingClientRect();
     let prevIsMouseInTrash = this.isMouseInTrash
 
-
     this.isMouseInTrash = ((itemMouseXY.x! > parentRect.left)
         && (itemMouseXY.x! < parentRect.right))
       && ((itemMouseXY.y! > parentRect.top)
@@ -189,10 +188,7 @@ export default class Layout extends LayoutStorage {
     }
 
     let parentRect = document.getElementById('content')!.getBoundingClientRect();
-    let mouseInGrid = false;
-    if (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right)) && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom))) {
-      mouseInGrid = true;
-    }
+    let mouseInGrid = (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right)) && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom)))
     if (mouseInGrid && (this.layout.findIndex(item => item.i === 'drop')) === -1) {
 
       this.layout.push({
@@ -229,26 +225,24 @@ export default class Layout extends LayoutStorage {
 
   protected dragend() {
     let parentRect = document.getElementById('content')!.getBoundingClientRect();
-    let mouseInGrid = false;
-    if (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right)) && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom))) {
-      mouseInGrid = true;
-    }
+    let mouseInGrid = (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right)) && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom)))
     if (mouseInGrid) {
       this.$refs.gridlayout!.dragEvent('dragend', 'drop', DragPos.x, DragPos.y, 1, 1);
       this.layout = this.layout.filter(obj => obj.i !== 'drop');
       let newKey = this.layout.length > 0 ? this.layout.reduce((acc, curr) => acc.i! > curr.i! ? acc : curr).i : 0
+      let item = JSON.parse(JSON.stringify(this.selectedDragItem)) // deep clone object
       this.layout.push({
         x: DragPos.x,
         y: DragPos.y,
-        w: this.selectedDragItem.w || 2,
-        h: this.selectedDragItem.h || 20,
+        w: item.w || 2,
+        h: item.h || 20,
         i: newKey + 1,
-        c: this.selectedDragItem.c,
-        static: this.selectedDragItem.static,
-        props: {...this.selectedDragItem.props},
+        c: item.c,
+        isStatic: item.isStatic,
+        props: item.props
       });
-      this.saveLayoutChanges(this.layout)
       this.$refs.gridlayout!.dragEvent('dragend', newKey + 1, DragPos.x, DragPos.y, this.gridItemSize.h, this.gridItemSize.w);
+      this.saveLayoutChanges(this.layout)
       try {
         this.$refs.gridlayout!.$children[this.layout.length].$refs.item.style.display = "block";
       } catch {
