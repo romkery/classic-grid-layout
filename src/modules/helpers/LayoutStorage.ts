@@ -5,10 +5,10 @@ export default class LayoutStorage extends Vue {
     public gridItemSize = {w: 2, h: 50}
     public isEdit: boolean = false;
     public item: LayoutItemType | Object = {}
-    public outerWidgets = ['Black', 'Yellow', 'TodayWeather', 'CocaCola', 'Green', 'Orange']
+    public outerWidgets = ['Black', 'Yellow', 'TodayWeather', 'CocaCola', 'Green', 'Orange', 'WeekWeather']
     public layout: LayoutType = []
     public deletedItemsList: LayoutType = []
-    public selectedDragItem: LayoutItemType = {}
+    public dragItem: LayoutItemType = {}
     public defaultLayout: LayoutItemType[] =
         [
             {
@@ -206,14 +206,24 @@ export default class LayoutStorage extends Vue {
         localStorage.setItem('layout', JSON.stringify(layout))
     }
 
+    public saveCityChanges(city: string): void {
+        localStorage.setItem('selectedCity', JSON.stringify(city))
+    }
+
+    public getLocalStorageCity(): any {
+        if (!localStorage.getItem('selectedCity')) return 'Novosibirsk'
+        else return JSON.parse(<string>localStorage.getItem('selectedCity'))
+    }
+
     public setLayout(value: LayoutItemType): void {
         this.layout.push(value)
     }
 
-    public createNewWidget(w: number, h: number, c: string, preview: string, propsArray: NewWidgetPropsType[], maxW?: number, maxH?: number): LayoutItemType {
+    public createNewWidget(w: number, h: number, c: string, preview: string, propsArray: NewWidgetPropsType[],
+                           maxW?: number, maxH?: number, minW?: number, minH?: number): LayoutItemType {
 
         let propsObject: StyleType = {}
-        
+
         propsArray.map((el) => {
             propsObject[el.name] = {
                 name: el.name,
@@ -235,6 +245,8 @@ export default class LayoutStorage extends Vue {
             c: c,
             isStatic: false,
             props: {
+                minH: minH,
+                minW: minW,
                 maxW: maxW,
                 maxH: maxH,
                 preview: preview,
@@ -278,6 +290,8 @@ export type LayoutItemType = {
 }
 
 export type PropsType = {
+    minW?: number
+    minH?: number
     maxW?: number
     maxH?: number
     isLoading: boolean

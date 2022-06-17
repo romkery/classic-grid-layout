@@ -33,6 +33,7 @@ import TodayWeather from '@/modules/components/widgets/TodayWeather.vue';
 import Green from '@/modules/components/widgets/Green.vue';
 import Orange from '@/modules/components/widgets/Orange.vue';
 import CocaCola from '@/modules/components/widgets/CocaCola.vue';
+import WeekWeather from '@/modules/components/widgets/WeekWeather.vue';
 
 @Component({
   components: {
@@ -41,7 +42,8 @@ import CocaCola from '@/modules/components/widgets/CocaCola.vue';
     TodayWeather,
     Orange,
     Green,
-    CocaCola
+    CocaCola,
+    WeekWeather
   }
 })
 export default class WidgetList extends Vue {

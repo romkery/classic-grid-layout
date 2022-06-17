@@ -1,14 +1,16 @@
 <template>
-  <div style="height: inherit"
-       class="widget-content"
-       draggable="true"
-       @mouseenter="setDragItem(model)"
-       @mousemove="dragOutside(selectedDragItem, 'check')"
-       @mouseup="dragOutside(selectedDragItem, 'delete')"
-       @click.shift="selectComponent"
+  <div
+    style="height: inherit"
+    class="widget-content"
+    draggable="true"
+    @mouseenter="setDragItem(model)"
+    @mousemove="dragOutside(dragItem, 'check')"
+    @mouseup="dragOutside(dragItem, 'delete')"
+    @click.shift="selectComponent"
   >
-    <div v-show="selectionMode"
-         class="selection"
+    <div
+      v-show="selectionMode"
+      class="selection"
     />
     <div class="pin-icon-container">
       <div>
@@ -48,6 +50,7 @@ import Green from '@/modules/components/widgets/Green.vue';
 import CocaCola from '@/modules/components/widgets/CocaCola.vue';
 import {LayoutItemType, LayoutType} from '@/modules/helpers/LayoutStorage';
 import TodayWeather from '@/modules/components/widgets/TodayWeather.vue';
+import WeekWeather from '@/modules/components/widgets/WeekWeather.vue';
 
 @Component({
   components: {
@@ -56,7 +59,8 @@ import TodayWeather from '@/modules/components/widgets/TodayWeather.vue';
     Green,
     Yellow,
     Black,
-    TodayWeather
+    TodayWeather,
+    WeekWeather
   }
 })
 export default class GridItemContent extends Vue {
@@ -66,7 +70,7 @@ export default class GridItemContent extends Vue {
   @Prop({}) protected setDragItem!: any
   @Prop({}) protected setEditMode!: any
   @Prop({}) protected changeEvent!: any
-  @Prop({}) protected selectedDragItem!: LayoutItemType
+  @Prop({}) protected dragItem!: LayoutItemType
   @Prop({}) protected layout!: LayoutType
   @Prop({}) protected setSelectedItems!: any
 

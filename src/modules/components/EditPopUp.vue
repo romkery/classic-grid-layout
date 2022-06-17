@@ -41,6 +41,7 @@ import Black from '@/modules/components/widgets/Black.vue';
 import EditForms from '@/modules/components/widgets/EditForms.vue';
 import {LayoutItemType, LayoutType} from '@/modules/helpers/LayoutStorage';
 import TodayWeather from '@/modules/components/widgets/TodayWeather.vue';
+import WeekWeather from '@/modules/components/widgets/WeekWeather.vue';
 
 
 @Component({
@@ -51,7 +52,8 @@ import TodayWeather from '@/modules/components/widgets/TodayWeather.vue';
     Yellow,
     Black,
     EditForms,
-    TodayWeather
+    TodayWeather,
+    WeekWeather
   }
 })
 export default class EditPopUp extends Vue {

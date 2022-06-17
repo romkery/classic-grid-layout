@@ -10,8 +10,9 @@
         :fetch-suggestions="querySearch"
         @select="setCity"
       >
-        <i slot="suffix"
-           class="el-input__icon el-icon-search">
+        <i
+          slot="suffix"
+          class="el-input__icon el-icon-search">
         </i>
       </el-autocomplete>
     </div>
@@ -44,7 +45,7 @@ export default class WidgetHeader extends Vue {
   @Prop({}) protected drag!: any
   @Prop({}) protected dragend!: any
 
-  protected weatherModule: WeatherModule = useModule(this.$store, ['weatherModule']);
+  protected weatherModule: WeatherModule = useModule(this.$store, ['weatherModule'])!;
 
   protected input: string = ''
 

@@ -1,12 +1,15 @@
 <template>
   <div class="layout">
     <edit-pop-up
-      :model="selectedDragItem"
+      :model="dragItem"
       :change-event="changeEvent"
       :layout.sync="this.layout"
       :is-edit.sync="isEdit"
     />
-    <widget-header :drag="drag" :dragend="dragend"/>
+    <widget-header
+      :drag="drag"
+      :dragend="dragend"
+    />
     <div id="content">
       <grid-layout
         ref="gridlayout"
@@ -32,14 +35,14 @@
           :i="item.i"
           :maxH="item.props?.maxH"
           :maxW="item.props?.maxW"
-          :minH="20"
-          :minW="2"
+          :minH="item.props?.minH ?? 20"
+          :minW="item.props?.minW ?? 2"
           :class="'custom_grid_'+ item.i"
           @moved="changeEvent(layout)"
           @resized="changeEvent(layout)"
         >
           <grid-item-content
-            :selected-drag-item="selectedDragItem"
+            :selected-drag-item="dragItem"
             :change-event="changeEvent"
             :model="item"
             :drag-outside="dragOutside"
@@ -63,6 +66,8 @@ import EditPopUp from '@/modules/components/EditPopUp.vue';
 import WidgetList from '@/modules/components/WidgetList.vue';
 import GridItemContent from '@/modules/components/GridItemContent.vue';
 import WidgetHeader from '@/modules/components/Header.vue';
+import WeatherModule from '@/store/modules/WeatherModule';
+import {useModule} from 'vuex-simple';
 
 let mouseXY: any = {"x": null, "y": null};
 let DragPos: any = {"x": null, "y": null, "w": 1, "h": 1, "i": null};
@@ -81,16 +86,16 @@ let itemMouseXY: any = {"x": null, "y": null};
 export default class Layout extends LayoutStorage {
 
   protected selectedItems: number[] = []
-
   protected isMouseInTrash: boolean = false
   protected prevDeleteState: string
+  protected weatherModule?: WeatherModule = useModule(this.$store, ['weatherModule']);
 
   protected setEditMode(): void {
     this.isEdit = !this.isEdit
   }
 
   protected setDragItem(val: LayoutItemType): void {
-    this.selectedDragItem = val
+    this.dragItem = val
   }
 
   protected setDeleteMode(itemId: any, state: boolean): void {
@@ -125,9 +130,9 @@ export default class Layout extends LayoutStorage {
   }
 
   protected deleteOneItem(state: string) {
-    this.setDeleteMode(this.selectedDragItem.i, true)
+    this.setDeleteMode(this.dragItem.i, true)
     if (state === 'delete') {
-      const index = this.layout.findIndex(n => n.i === this.selectedDragItem.i);
+      const index = this.layout.findIndex(n => n.i === this.dragItem.i);
       this.layout.splice(index, 1);
       this.saveLayoutChanges(this.layout)
     }
@@ -135,9 +140,10 @@ export default class Layout extends LayoutStorage {
 
   created() {
     this.getLayout()
+    this.weatherModule?.getLocalStorageCity()
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Backspace') {
-        this.dragOutside(this.selectedDragItem, 'delete', 'key');
+      if (e.key === 'Backspace' && this.selectedItems.length > 0) {
+        this.dragOutside(this.dragItem, 'delete', 'key');
       }
     })
   }
@@ -174,7 +180,7 @@ export default class Layout extends LayoutStorage {
         }
       } else {
         this.selectedItems.forEach(el => this.setDeleteMode(el, false))
-        this.setDeleteMode(this.selectedDragItem.i, false)
+        this.setDeleteMode(this.dragItem.i, false)
       }
       this.saveLayoutChanges(this.layout)
     }
@@ -183,7 +189,7 @@ export default class Layout extends LayoutStorage {
   }
 
   protected drag(event) {
-    if (event.target.children[1].__vue__.ownProperty !== this.selectedDragItem) {
+    if (event.target.children[1].__vue__.ownProperty !== this.dragItem) {
       this.setDragItem(event.target.children[1].__vue__.ownProperty)
     }
 
@@ -194,8 +200,8 @@ export default class Layout extends LayoutStorage {
       this.layout.push({
         x: (this.layout.length * 2) % (this.colNum || 12),
         y: this.layout.length + (this.colNum || 12), // puts it at the bottom
-        h: this.selectedDragItem.h,
-        w: this.selectedDragItem.w,
+        h: this.dragItem.h,
+        w: this.dragItem.w,
         i: 'drop',
       });
     }
@@ -211,7 +217,7 @@ export default class Layout extends LayoutStorage {
       let new_pos = el.calcXY(mouseXY.y - parentRect.top, mouseXY.x - parentRect.left);
 
       if (mouseInGrid) {
-        this.$refs.gridlayout!.dragEvent('dragstart', 'drop', new_pos.x, new_pos.y, this.selectedDragItem.h, this.selectedDragItem.w);
+        this.$refs.gridlayout!.dragEvent('dragstart', 'drop', new_pos.x, new_pos.y, this.dragItem.h, this.dragItem.w);
         DragPos.i = index; //idk for what it is
         DragPos.x = this.layout[index].x;
         DragPos.y = this.layout[index].y;
@@ -230,7 +236,7 @@ export default class Layout extends LayoutStorage {
       this.$refs.gridlayout!.dragEvent('dragend', 'drop', DragPos.x, DragPos.y, 1, 1);
       this.layout = this.layout.filter(obj => obj.i !== 'drop');
       let newKey = this.layout.length > 0 ? this.layout.reduce((acc, curr) => acc.i! > curr.i! ? acc : curr).i : 0
-      let item = JSON.parse(JSON.stringify(this.selectedDragItem)) // deep clone object
+      let item = JSON.parse(JSON.stringify(this.dragItem)) // deep clone object
       this.layout.push({
         x: DragPos.x,
         y: DragPos.y,
