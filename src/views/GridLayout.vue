@@ -116,6 +116,7 @@ export default class Layout extends LayoutStorage {
   }
 
   protected deleteSelectedItems(state: string) {
+
     this.selectedItems.forEach(el => this.setDeleteMode(el, true))
     if (state === 'delete') {
       this.selectedItems.forEach(itemId => {
@@ -128,6 +129,7 @@ export default class Layout extends LayoutStorage {
       })
       this.selectedItems = []
     }
+    this.saveLayoutChanges(this.layout)
   }
 
   protected deleteOneItem(state: string) {
@@ -144,7 +146,7 @@ export default class Layout extends LayoutStorage {
     this.weatherModule?.getLocalStorageCity()
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Backspace' && this.selectedItems.length > 0) {
-        this.dragOutside(this.dragItem, 'delete', 'key');
+        this.dragOutside('delete', 'key');
       }
     })
   }
@@ -162,7 +164,7 @@ export default class Layout extends LayoutStorage {
     }
   }
 
-  protected dragOutside(val: LayoutItemType, state: 'check' | 'delete', event?: 'key'): void {
+  protected dragOutside(state: 'check' | 'delete', event?: 'key'): void {
 
     let parentRect = document.getElementById('trash')!.getBoundingClientRect();
     let prevIsMouseInTrash = this.isMouseInTrash
@@ -172,12 +174,12 @@ export default class Layout extends LayoutStorage {
       && ((itemMouseXY.y! > parentRect.top)
         && (itemMouseXY.y! < parentRect.bottom));
 
-    if (prevIsMouseInTrash !== this.isMouseInTrash || this.prevDeleteState !== state) {
+    if (prevIsMouseInTrash !== this.isMouseInTrash || state === 'delete') {
       if (this.isMouseInTrash || event === 'key') {
         if (this.selectedItems.length > 0) {
           this.deleteSelectedItems(state)
         } else {
-          this.deleteOneItem(state)
+          this.deleteOneItem(state);
         }
       } else {
         this.selectedItems.forEach(el => this.setDeleteMode(el, false))

@@ -4,8 +4,8 @@
     class="widget-content"
     draggable="true"
     @mouseenter="setDragItem(model)"
-    @mousemove="dragOutside(dragItem, 'check')"
-    @mouseup="dragOutside(dragItem, 'delete')"
+    @mousemove="dragOutside('check')"
+    @mouseup="dragOutside('delete')"
     @click.shift="selectComponent"
   >
     <div
