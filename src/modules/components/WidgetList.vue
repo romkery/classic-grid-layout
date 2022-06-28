@@ -14,8 +14,8 @@
     </div>
     <div id="trash">
       <el-tooltip placement="bottom">
-        <div slot="content">Ctrl + click <br/> to select.</div>
-        <i class="el-icon-delete" @click="isOpenTrash = true"/>
+        <div slot="content">Shift + Click <br/> to select.</div>
+        <i class="el-icon-delete" @click="deleteSelectedItems('delete')"/>
       </el-tooltip>
     </div>
   </div>
@@ -50,6 +50,7 @@ export default class WidgetList extends Vue {
 
   @Prop({}) protected dragend!: any
   @Prop({}) protected drag!: any
+  @Prop({}) protected deleteSelectedItems!: any
 
   protected store = new LayoutStorage()
 }

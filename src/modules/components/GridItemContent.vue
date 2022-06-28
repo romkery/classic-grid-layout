@@ -100,6 +100,7 @@ export default class GridItemContent extends Vue {
 
     i {
       cursor: pointer;
+      color: white;
     }
   }
 }

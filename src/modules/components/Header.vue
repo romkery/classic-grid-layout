@@ -20,6 +20,7 @@
       <widget-list
         :drag="drag"
         :dragend="dragend"
+        :deleteSelectedItems="deleteSelectedItems"
       />
     </div>
   </div>
@@ -44,6 +45,7 @@ export default class WidgetHeader extends Vue {
 
   @Prop({}) protected drag!: any
   @Prop({}) protected dragend!: any
+  @Prop({}) protected deleteSelectedItems!: any
 
   protected weatherModule: WeatherModule = useModule(this.$store, ['weatherModule'])!;
 
@@ -72,9 +74,17 @@ export default class WidgetHeader extends Vue {
 }
 
 .header {
-  display: flex;
+  color: white;
+  top: 0;
+  position: sticky;
+  display: block;
+  z-index: 2;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
+  background: #222222;
+  padding-bottom: 20px;
+  border-bottom: 1px solid white;
 
   &__widget-list {
     width: 100%;

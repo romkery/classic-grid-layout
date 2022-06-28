@@ -9,6 +9,7 @@
     <widget-header
       :drag="drag"
       :dragend="dragend"
+      :deleteSelectedItems="deleteSelectedItems"
     />
     <div id="content">
       <grid-layout

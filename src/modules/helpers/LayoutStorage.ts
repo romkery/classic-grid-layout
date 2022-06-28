@@ -5,7 +5,7 @@ export default class LayoutStorage extends Vue {
     public gridItemSize = {w: 2, h: 50}
     public isEdit: boolean = false;
     public item: LayoutItemType | Object = {}
-    public outerWidgets = ['Black', 'Yellow', 'TodayWeather', 'CocaCola', 'Green', 'Orange', 'WeekWeather']
+    public outerWidgets = ['TodayWeather', 'WeekWeather', 'Black', 'Yellow', 'CocaCola', 'Green', 'Orange']
     public layout: LayoutType = []
     public deletedItemsList: LayoutType = []
     public dragItem: LayoutItemType = {}

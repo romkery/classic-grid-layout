@@ -38,6 +38,7 @@
           <h3>RH</h3>
           <p>{{ dayData.day.avghumidity }}%</p>
         </div>
+        <b>Hello</b>
       </div>
     </div>
   </span>
@@ -68,12 +69,11 @@ export default class DayWeather extends Vue {
   @Prop({}) protected selectedDay: number
   @Prop({}) protected days: number
 
-  protected dayData!: ForecastDayType
+  public dayData!: ForecastDayType
 
   protected setIsInfo() {
     this.$emit('update:isInfo', false)
   }
-
 
   created() {
     this.dayData = this.cityData?.forecast?.forecastday[this.selectedDay - 1]

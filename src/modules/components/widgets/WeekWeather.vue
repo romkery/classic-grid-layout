@@ -136,7 +136,12 @@ export default class WeekWeather extends Vue {
         max: 50,
         step: 1,
         value: 15,
-      }], 4, 40, 2, 30)
+      }, {
+      name: 'background',
+      title: 'Фон',
+      el: 'colorPicker',
+      color: '#66b8fb',
+    }], 4, 40, 2, 30)
 
 }
 
@@ -226,8 +231,6 @@ export default class WeekWeather extends Vue {
 
   &__bottom {
     height: inherit;
-    background: #66b8fb;
-    border: 1px solid #66b8fb;
     display: flex;
     flex-direction: row;
     align-items: center;
