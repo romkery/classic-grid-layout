@@ -38,7 +38,6 @@
           <h3>RH</h3>
           <p>{{ dayData.day.avghumidity }}%</p>
         </div>
-        <b>Hello</b>
       </div>
     </div>
   </span>

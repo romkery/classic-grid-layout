@@ -22,7 +22,7 @@
         :useCssTransforms="false"
         :responsive="true"
         :rowHeight='1'
-        :margin="[10, 10]"
+        :colNum="10"
         @click="changeEvent(layout)"
       >
         <grid-item
