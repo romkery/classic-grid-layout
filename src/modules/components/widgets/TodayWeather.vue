@@ -109,12 +109,12 @@ export default class TodayWeather extends Vue {
 </script>
 
 
-<style lang="scss" scoped>
-@import '../../../assets/styles/variables';
+<style lang="less" scoped>
+@import '../../../assets/styles/_variables';
 
 .widget {
   background: #66b8fb;
-  height: $grid-content-height;
+  height: @grid-content-height;
   padding: 10px;
   color: white;
   font-family: Circe-Light;

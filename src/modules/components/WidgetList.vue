@@ -58,7 +58,7 @@ export default class WidgetList extends Vue {
 </script>
 
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .widgets {
   width: 100%;
   display: flex;

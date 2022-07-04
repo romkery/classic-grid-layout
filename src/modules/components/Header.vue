@@ -66,7 +66,7 @@ export default class WidgetHeader extends Vue {
 </script>
 
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 
 .search {
   margin-bottom: 20px;

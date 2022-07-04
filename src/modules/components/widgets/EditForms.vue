@@ -45,6 +45,6 @@ export default class EditForms extends Vue {
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 
 </style>

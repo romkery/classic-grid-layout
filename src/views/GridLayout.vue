@@ -262,7 +262,7 @@ export default class Layout extends LayoutStorage {
 }
 </script>
 
-<style lang="scss">
+<style lang="less">
 
 .vue-grid-layout {
   margin-top: 20px;
@@ -274,6 +274,7 @@ export default class Layout extends LayoutStorage {
   transition: all 200ms ease;
   transition-property: left, top, right;
   border: 1px solid transparent;
+  touch-action: none;
 
   .el-card {
     height: calc(100% - 20px);
@@ -353,7 +354,7 @@ export default class Layout extends LayoutStorage {
 }
 </style>
 
-<style lang="scss">
+<style lang="less">
 .el-drawer.drawer-adoption--kill-skinization {
   overflow: auto;
   padding: 0;

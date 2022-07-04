@@ -90,7 +90,7 @@ export default class GridItemContent extends Vue {
 </script>
 
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 
 .widget-content {
 

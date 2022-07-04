@@ -80,7 +80,7 @@ export default class EditPopUp extends Vue {
 </script>
 
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 
 .pop-up-mode {
 

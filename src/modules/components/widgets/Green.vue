@@ -70,12 +70,12 @@ export default class Green extends Vue {
 </script>
 
 
-<style lang="scss" scoped>
-@import '../../../assets/styles/variables';
+<style lang="less" scoped>
+@import '../../../assets/styles/_variables';
 
 .widget {
   background: white;
-  height: $grid-content-height;
+  height: @grid-content-height;
   padding: 10px;
 }
 
