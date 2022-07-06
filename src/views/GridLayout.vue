@@ -2,9 +2,9 @@
   <div class="layout">
     <edit-pop-up
       :model="dragItem"
-      :change-event="changeEvent"
       :layout.sync="this.layout"
       :is-edit.sync="isEdit"
+      :change-event="saveLayoutChanges"
     />
     <widget-header
       :drag="drag"
@@ -19,11 +19,10 @@
         :isDraggable="!isEdit"
         :verticalCompact="true"
         :isResizable="true"
-        :useCssTransforms="false"
         :responsive="true"
         :rowHeight='1'
         :colNum="10"
-        @click="changeEvent(layout)"
+        @click="saveLayoutChanges(layout)"
       >
         <grid-item
           v-for="item in layout"
@@ -39,17 +38,17 @@
           :minH="item.props?.minH ?? 20"
           :minW="item.props?.minW ?? 2"
           :class="'custom_grid_'+ item.i"
-          @moved="changeEvent(layout)"
-          @resized="changeEvent(layout)"
+          @moved="saveLayoutChanges(layout)"
+          @resized="saveLayoutChanges(layout)"
         >
           <grid-item-content
-            :selected-drag-item="dragItem"
-            :change-event="changeEvent"
             :model="item"
+            :selected-drag-item="dragItem"
+            :layout="layout"
+            :change-event="saveLayoutChanges"
             :drag-outside="dragOutside"
             :set-drag-item="setDragItem"
             :set-edit-mode="setEditMode"
-            :layout="layout"
             :set-selected-items="setSelectedItems"
           />
         </grid-item>
@@ -62,7 +61,7 @@
 // @ts-ignore
 import {GridItem, GridLayout} from "vue-grid-layout"
 import Component from 'vue-class-component';
-import LayoutStorage, {LayoutItemType, LayoutType} from '@/modules/helpers/LayoutStorage';
+import LayoutStorage, {LayoutItemType} from '@/modules/helpers/LayoutStorage';
 import EditPopUp from '@/modules/components/EditPopUp.vue';
 import WidgetList from '@/modules/components/WidgetList.vue';
 import GridItemContent from '@/modules/components/GridItemContent.vue';
@@ -86,9 +85,6 @@ let itemMouseXY: any = {"x": null, "y": null};
 })
 export default class Layout extends LayoutStorage {
 
-  protected selectedItems: number[] = []
-  protected isMouseInTrash: boolean = false
-  protected prevDeleteState: string
   protected weatherModule?: WeatherModule = useModule(this.$store, ['weatherModule']);
 
   protected setEditMode(): void {
@@ -99,10 +95,6 @@ export default class Layout extends LayoutStorage {
     this.dragItem = val
   }
 
-  protected setDeleteMode(itemId: any, state: boolean): void {
-    this.layout.find(item => item.i === itemId)!.props!.isDeleteMode = state
-  }
-
   protected setSelectedItems(id: number): void {
     if (this.selectedItems.indexOf(id) !== -1) {
       this.selectedItems = this.selectedItems.filter(el => el !== id)
@@ -111,29 +103,8 @@ export default class Layout extends LayoutStorage {
     }
   }
 
-  protected changeEvent(layout: LayoutType): void {
-    this.saveLayoutChanges(layout)
-  }
-
-  protected deleteSelectedItems(state: string) {
-
-    this.selectedItems.forEach(el => this.setDeleteMode(el, true))
-    if (state === 'delete') {
-      this.selectedItems.forEach(itemId => {
-        const selectedItemsIndex = this.layout.findIndex(function (el) {
-          return el.i === itemId
-        })
-        if (selectedItemsIndex !== -1) {
-          this.layout.splice(selectedItemsIndex, 1)
-        }
-      })
-      this.selectedItems = []
-    }
-    this.saveLayoutChanges(this.layout)
-  }
-
   protected deleteOneItem(state: string) {
-    this.setDeleteMode(this.dragItem.i, true)
+    // Если state === "check", функция проигнорируется
     if (state === 'delete') {
       const index = this.layout.findIndex(n => n.i === this.dragItem.i);
       this.layout.splice(index, 1);
@@ -141,9 +112,26 @@ export default class Layout extends LayoutStorage {
     }
   }
 
+  public deleteSelectedItems(state: string) {
+    if (state === 'delete') {
+      this.selectedItems.forEach(itemId => {
+        const selectedItemsIndex = this.layout.findIndex(function (el) {
+          return el.i === itemId;
+        })
+        if (selectedItemsIndex !== -1) {
+          this.layout.splice(selectedItemsIndex, 1)
+        }
+      })
+      this.selectedItems = [];
+      this.saveLayoutChanges(this.layout)
+    }
+  }
+
   created() {
     this.getLayout()
     this.weatherModule?.getLocalStorageCity()
+
+    //Добавление ивента на удаление элементов при нажатии Backspace
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Backspace' && this.selectedItems.length > 0) {
         this.dragOutside('delete', 'key');
@@ -174,72 +162,72 @@ export default class Layout extends LayoutStorage {
       && ((itemMouseXY.y! > parentRect.top)
         && (itemMouseXY.y! < parentRect.bottom));
 
-    if (prevIsMouseInTrash !== this.isMouseInTrash || state === 'delete') {
-      if (this.isMouseInTrash || event === 'key') {
+    if (prevIsMouseInTrash !== this.isMouseInTrash || state === 'delete') { //Сравнении prev сделано для оптимизации
+      if (this.isMouseInTrash || event === 'key') { //Обработка
         if (this.selectedItems.length > 0) {
+          this.selectedItems.forEach(el => this.setDeleteMode(el, true))
           this.deleteSelectedItems(state)
         } else {
+          this.setDeleteMode(this.dragItem.i, true)
           this.deleteOneItem(state);
         }
       } else {
         this.selectedItems.forEach(el => this.setDeleteMode(el, false))
         this.setDeleteMode(this.dragItem.i, false)
       }
+
       this.saveLayoutChanges(this.layout)
     }
-
-    this.prevDeleteState = state
   }
 
-  protected drag(event) {
+  protected drag(event: any) {
     if (event.target.children[1].__vue__.ownProperty !== this.dragItem) {
-      this.setDragItem(event.target.children[1].__vue__.ownProperty)
+      this.setDragItem(event.target.children[1].__vue__.ownProperty) // Смена перетаскиваемого элемента
     }
 
-    let parentRect = document.getElementById('content')!.getBoundingClientRect();
-    let mouseInGrid = (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right)) && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom)))
-    if (mouseInGrid && (this.layout.findIndex(item => item.i === 'drop')) === -1) {
+    const parentRect = document.getElementById('content')!.getBoundingClientRect();
+    const mouseInGrid = (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right)) && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom)))
 
+    if (mouseInGrid && (this.layout.findIndex(item => item.i === 'drop')) === -1) {
       this.layout.push({
-        x: (this.layout.length * 2) % (this.colNum || 12),
-        y: this.layout.length + (this.colNum || 12), // puts it at the bottom
+        x: (this.layout.length * 2) % 12,
+        y: this.layout.length + 12, // puts it at the bottom
         h: this.dragItem.h,
         w: this.dragItem.w,
         i: 'drop',
       });
     }
-    let index = this.layout.findIndex(item => item.i === 'drop');
-    if (index !== -1) {
-      try {
-        this.$refs.gridlayout!.$children[this.layout.length].$refs.item.style.display = "none";
-      } catch {
-      }
 
-      let el = this.$refs.gridlayout!.$children[index];
+    const index = this.layout.findIndex((item: LayoutItemType) => item.i === 'drop');
+    if (index !== -1) {
+      const el = this.$refs.gridlayout!.$children[index];
       el.dragging = {"top": mouseXY.y - parentRect.top, "left": mouseXY.x - parentRect.left};
       let new_pos = el.calcXY(mouseXY.y - parentRect.top, mouseXY.x - parentRect.left);
 
       if (mouseInGrid) {
         this.$refs.gridlayout!.dragEvent('dragstart', 'drop', new_pos.x, new_pos.y, this.dragItem.h, this.dragItem.w);
-        DragPos.i = index; //idk for what it is
         DragPos.x = this.layout[index].x;
         DragPos.y = this.layout[index].y;
       }
       if (!mouseInGrid) {
         this.$refs.gridlayout!.dragEvent('dragend', 'drop', new_pos.x, new_pos.y, 1, 1);
-        this.layout = this.layout.filter(obj => obj.i !== 'drop');
+        this.layout = this.layout.filter((item: LayoutItemType) => item.i !== 'drop');
       }
     }
   }
 
   protected dragend() {
-    let parentRect = document.getElementById('content')!.getBoundingClientRect();
-    let mouseInGrid = (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right)) && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom)))
+    const parentRect = document.getElementById('content')!.getBoundingClientRect();
+    const mouseInGrid = (((mouseXY.x > parentRect.left) && (mouseXY.x < parentRect.right)) && ((mouseXY.y > parentRect.top) && (mouseXY.y < parentRect.bottom)))
+
     if (mouseInGrid) {
       this.$refs.gridlayout!.dragEvent('dragend', 'drop', DragPos.x, DragPos.y, 1, 1);
       this.layout = this.layout.filter(obj => obj.i !== 'drop');
-      let newKey = this.layout.length > 0 ? this.layout.reduce((acc, curr) => acc.i! > curr.i! ? acc : curr).i : 0
-      let item = JSON.parse(JSON.stringify(this.dragItem)) // deep clone object
+
+      const newKey = this.layout.length > 0 ?
+        Number(this.layout?.reduce((sum, curr) => sum.i! > curr.i! ? sum : curr).i) + 1 : 0
+      const item = JSON.parse(JSON.stringify(this.dragItem)) // deep clone object
+
       this.layout.push({
         x: DragPos.x,
         y: DragPos.y,
@@ -250,14 +238,10 @@ export default class Layout extends LayoutStorage {
         isStatic: item.isStatic,
         props: item.props
       });
+
       this.$refs.gridlayout!.dragEvent('dragend', newKey + 1, DragPos.x, DragPos.y, this.gridItemSize.h, this.gridItemSize.w);
       this.saveLayoutChanges(this.layout)
-      try {
-        this.$refs.gridlayout!.$children[this.layout.length].$refs.item.style.display = "block";
-      } catch {
-      }
     }
-
   }
 }
 </script>
@@ -289,6 +273,10 @@ export default class Layout extends LayoutStorage {
   100% {
     opacity: 1;
   }
+}
+
+.customization-on .vue-grid-item.vue-grid-placeholder {
+  z-index: -2;
 }
 
 .customization-on {
@@ -352,9 +340,7 @@ export default class Layout extends LayoutStorage {
     user-select: none;
   }
 }
-</style>
 
-<style lang="less">
 .el-drawer.drawer-adoption--kill-skinization {
   overflow: auto;
   padding: 0;

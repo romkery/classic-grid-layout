@@ -3,20 +3,22 @@
     <div v-for="(prop, index) in model.props.styleProps"
          :key="index">
       {{ prop.title }} - {{ prop.value }}
-      <el-slider v-if="prop.el === 'slider'"
-                 :max="prop.params.max"
-                 :min="prop.params.min"
-                 :step="prop.params.step"
-                 :disabled="model.props.isLoading"
-                 :format-tooltip="formatTooltip"
-                 :value="prop.value"
-                 @input="store.setStyleValues($event, prop, model.i, 'value', layout, changeEvent)"
+      <el-slider
+        v-if="prop.el === 'slider'"
+        :max="prop.params.max"
+        :min="prop.params.min"
+        :step="prop.params.step"
+        :disabled="model.props.isLoading"
+        :format-tooltip="formatTooltip"
+        :value="prop.value"
+        @input="store.setStyleValues($event, prop, +model.i, 'value', layout, changeEvent)"
       />
-      <el-color-picker v-if="prop.el === 'colorPicker'"
-                       :style="{top: '12px'}"
-                       :disabled="model.props.isLoading"
-                       :value="prop.color"
-                       @input="store.setStyleValues($event, prop, model.i, 'color', layout, changeEvent)"
+      <el-color-picker
+        v-if="prop.el === 'colorPicker'"
+        :style="{top: '12px'}"
+        :disabled="model.props.isLoading"
+        :value="prop.color"
+        @input="store.setStyleValues($event, prop, +model.i, 'color', layout, changeEvent)"
       />
     </div>
   </div>
@@ -32,9 +34,9 @@ import LayoutStorage, {LayoutItemType, LayoutType} from '@/modules/helpers/Layou
 @Component
 export default class EditForms extends Vue {
 
-  @Prop() model!: LayoutItemType
-  @Prop() layout!: LayoutType
-  @Prop() changeEvent!: any
+  @Prop({}) model!: LayoutItemType
+  @Prop({}) layout!: LayoutType
+  @Prop({}) changeEvent!: void
 
   protected store = new LayoutStorage()
 
@@ -46,5 +48,10 @@ export default class EditForms extends Vue {
 </script>
 
 <style lang="less" scoped>
+
+
+.edit-forms {
+  color: #222222;
+}
 
 </style>

@@ -5,24 +5,24 @@
     <div class="widget"
          v-if="!model?.props.isLoading"
          :style="styles()">
-     <div class="widget__content">
-       <p>{{ cityData?.current?.temp_c }}°</p>
-       <div class="widget__content-location">
-         <div class="block"></div>
-         <img :src="cityData?.current?.condition.icon" alt="condition-icon"/>
-         <div class="widget__content-location-info">
-           <div class="info-container">
+       <div class="widget__header">
+           <p>{{ cityData?.current?.temp_c }}°</p>
+           <img :src="cityData?.current?.condition.icon" alt="condition-icon"/>
+       </div>
+      <span id="separator"/>
+       <div class="widget__bottom">
+         <div class="widget__bottom">
+           <div class="widget__bottom-info">
              <i class="el-icon-location"/>
              <h3>{{ cityData?.location?.name }}</h3>
            </div>
-           <div class="info-container">
+           <div class="widget__bottom-info">
              <h3>{{ localTime(cityData) }}</h3>
              <i class="el-icon-refresh"/>
            </div>
          </div>
          </div>
      </div>
-    </div>
   </span>
 </template>
 
@@ -39,6 +39,7 @@ import {useModule} from 'vuex-simple';
 import WeatherModule from '@/store/modules/WeatherModule';
 import {CurrentResponseType} from '@/services/ApiTypes';
 import getLocalTime from '@/modules/helpers/getLocalTime'
+import mockCityData from '@/modules/helpers/mockCityData';
 
 
 @Component({
@@ -56,7 +57,7 @@ export default class TodayWeather extends Vue {
   protected localTime = getLocalTime
   protected storage = new LayoutStorage()
   protected weatherModule?: WeatherModule | any = useModule(this.$store, ['weatherModule']);
-  protected cityData: CurrentResponseType = {}
+  protected cityData: CurrentResponseType = mockCityData;
 
   protected styles() {
     return {
@@ -118,60 +119,61 @@ export default class TodayWeather extends Vue {
   padding: 10px;
   color: white;
   font-family: Circe-Light;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
-  &__content {
-    height: 100%;
+  p {
+    font-size: 2.5rem;
+  }
 
-    p {
-      font-size: 2.5rem;
-      position: absolute;
+  &__header {
+    display: flex;
+    justify-content: space-between;
+
+    img {
+      max-height: 100px;
+      max-width: 100px;
+      height: 100%;
+      width: 100%;
     }
+  }
 
-    &-location {
+  #separator {
+    max-width: 100px;
+    max-height: 100px;
+    height: 100%;
+    width: 100%;
+  }
+
+  &__bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: end;
+
+    &-info {
       max-height: 100%;
-      height: inherit;
       display: flex;
-      flex-direction: column;
-      align-items: end;
+      align-items: center;
+      justify-content: end;
 
-      .block {
-        max-height: 150px;
-        max-width: 10px;
-        height: 100%;
-      }
+      h3 {
+        line-height: 1.4rem;
+        font-size: 1.2rem;
 
-      img {
-        max-width: 130px;
-        max-height: 130px;
-      }
+        .el-icon-location {
+          margin-right: 2px;
+          font-size: 18px;
+          bottom: 1px;
+        }
 
-      &-info {
-
-        .info-container {
-          max-height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: end;
-
-          h3 {
-            line-height: 1.4rem;
-            font-size: 1.2rem;
-          }
-
-          .el-icon-location {
-            margin-right: 2px;
-            font-size: 18px;
-            bottom: 1px;
-          }
-
-          .el-icon-refresh {
-            font-size: 18px;
-            bottom: 1px;
-            margin-left: 2px;
-          }
+        .el-icon-refresh {
+          font-size: 18px;
+          bottom: 1px;
+          margin-left: 2px;
         }
       }
-
     }
   }
 }

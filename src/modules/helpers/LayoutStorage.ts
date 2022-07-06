@@ -5,10 +5,11 @@ export default class LayoutStorage extends Vue {
     public gridItemSize = {w: 2, h: 50}
     public isEdit: boolean = false;
     public item: LayoutItemType | Object = {}
-    public outerWidgets = ['TodayWeather', 'WeekWeather', 'Black', 'Yellow', 'CocaCola', 'Green', 'Orange']
-    public layout: LayoutType = []
-    public deletedItemsList: LayoutType = []
-    public dragItem: LayoutItemType = {}
+    public outerWidgets = ['TodayWeather', 'WeekWeather', 'Black', 'Yellow', 'CocaCola', 'Green', 'Orange', 'TodayWeather', 'WeekWeather', 'Black', 'Yellow', 'CocaCola', 'Green', 'Orange']
+    public layout: LayoutType = [];
+    public dragItem: LayoutItemType = {};
+    protected selectedItems: number[] = []
+    protected isMouseInTrash: boolean = false
     public defaultLayout: LayoutItemType[] =
         [
             {
@@ -45,152 +46,7 @@ export default class LayoutStorage extends Vue {
                     }
                 }
             },
-            {
-                "x": 2, "y": 1, "w": 2, "h": 50, "i": 1, c: 'Orange', isStatic: false, props: {
-                    preview: 'skeleton', isLoading: true, isDeleteMode: false,
-                    styleProps: {
-                        border: {
-                            name: 'border',
-                            title: 'Рамка',
-                            el: 'slider',
-                            value: 10,
-                            color: '#21B1EC',
-                            params: {
-                                min: 0,
-                                max: 50,
-                            }
-                        },
-                        borderRadius: {
-                            name: 'borderRadius',
-                            title: 'Скругление углов',
-                            el: 'slider',
-                            value: 10,
-                            params: {
-                                min: 0,
-                                max: 50,
-                            }
-                        },
-                        background: {
-                            name: 'background',
-                            title: 'Фон',
-                            el: 'colorPicker',
-                            color: '#000000'
-                        }
-                    }
-                }
-            },
-            {
-                "x": 4, "y": 1, "w": 2, "h": 50, "i": 2, c: 'Green', isStatic: false, props: {
-                    preview: 'skeleton', isLoading: false, isDeleteMode: false, styleProps: {
-                        border: {
-                            name: 'border',
-                            title: 'Рамка',
-                            el: 'slider',
-                            value: 20,
-                            color: '#31e862',
-                            params: {
-                                min: 0,
-                                max: 50,
-                            }
-                        },
-                        borderRadius: {
-                            name: 'borderRadius',
-                            title: 'Скругление углов',
-                            el: 'slider',
-                            value: 10,
-                            params: {
-                                min: 0,
-                                max: 50,
-                            }
-                        }
-                    }
-                }
-            },
-            {
-                "x": 6, "y": 1, "w": 2, "h": 50, "i": 3, c: 'Orange', isStatic: false, props: {
-                    preview: 'skeleton', isLoading: true, isDeleteMode: false,
-                    styleProps: {
-                        border: {
-                            name: 'border',
-                            title: 'Рамка',
-                            el: 'slider',
-                            value: 10,
-                            color: '#e3812b',
-                            params: {
-                                min: 0,
-                                max: 100,
-                            }
-                        },
-                        background: {
-                            name: 'background',
-                            title: 'Фон',
-                            el: 'colorPicker',
-                            color: '#5df854'
-                        }
-                    }
-                }
-            },
-            {
-                "x": 8, "y": 1, "w": 2, "h": 50, "i": 4, c: 'CocaCola', isStatic: false, props: {
-                    preview: 'skeleton', isLoading: false, isDeleteMode: false, styleProps:
-                        {
-                            border: {
-                                name: 'border',
-                                title: 'Рамка',
-                                el: 'slider',
-                                value: 2,
-                                color: '#21B1EC',
-                                params: {
-                                    min: 0,
-                                    max: 50,
-                                }
-                            },
-                            borderRadius: {
-                                name: 'borderRadius',
-                                title: 'Скругление углов',
-                                el: 'slider',
-                                value: 10,
-                                params: {
-                                    min: 0,
-                                    max: 50,
-                                }
-                            }
-                        },
-                }
-            },
-            {
-                "x": 10, "y": 1, "w": 2, "h": 50, "i": 5, c: 'Green', isStatic: false, props: {
-                    preview: 'skeleton', isLoading: true, isDeleteMode: false, styleProps: {
-                        border: {
-                            name: 'border',
-                            title: 'Рамка',
-                            el: 'slider',
-                            value: 10,
-                            color: '#31e862',
-                            params: {
-                                min: 0,
-                                max: 50,
-                            }
-                        },
-                        borderRadius: {
-                            name: 'borderRadius',
-                            title: 'Рамка',
-                            el: 'slider',
-                            value: 10,
-                            params: {
-                                min: 0,
-                                max: 50,
-                            }
-                        },
-                        background: {
-                            name: 'background',
-                            title: 'Фон',
-                            el: 'colorPicker',
-                            color: '#deafaf'
-                        }
-                    }
-                }
-            }]
+        ]
 
     public getLayout(): void {
         if (!localStorage.getItem('layout')) {
@@ -272,6 +128,10 @@ export default class LayoutStorage extends Vue {
                 selectedItem.props!.city = city
             }
         }
+    }
+
+    protected setDeleteMode(itemId: any, state: boolean): void {
+        this.layout.find(item => item.i === itemId)!.props!.isDeleteMode = state
     }
 
 }

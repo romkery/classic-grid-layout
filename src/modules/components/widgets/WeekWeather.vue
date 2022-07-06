@@ -64,6 +64,7 @@ import WeatherModule from '@/store/modules/WeatherModule';
 import {ForecastResponseType} from '@/services/ApiTypes';
 import DayWeather from '@/modules/components/widgets/DayWeather.vue';
 import getLocalTime from '@/modules/helpers/getLocalTime'
+import mockCityData from '@/modules/helpers/mockCityData';
 
 
 @Component({
@@ -81,11 +82,11 @@ export default class WeekWeather extends Vue {
 
   protected storage = new LayoutStorage()
   protected weatherModule?: WeatherModule | any = useModule(this.$store, ['weatherModule']);
-  protected cityData: ForecastResponseType = {}
+  protected cityData: ForecastResponseType = mockCityData;
   protected days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   protected isInfo = false
   protected selectedDay!: number
-  protected localTime = getLocalTime
+  protected localTime = getLocalTime;
 
   protected getMoreDayWeather(day: number) {
     this.selectedDay = day

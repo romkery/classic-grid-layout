@@ -4,21 +4,21 @@
     v-if="innerIsEdit"
   >
     <el-drawer
+      class="pop-up-mode_sidebar"
       :size="'20%'"
       :visible.sync="innerIsEdit"
       :close-on-press-escape="true"
       :with-header="false"
       @close="changeEvent(layout)"
     >
-      <div class="pop-up-mode-content">
-        <EditForms
-          :model="model"
-          :layout="layout"
-          :change-event="changeEvent"
-        />
-      </div>
+      <EditForms
+        class="pop-up-mode_sidebar-content"
+        :model="model"
+        :layout="layout"
+        :change-event="changeEvent"
+      />
     </el-drawer>
-    <div class="pop-up-mode-item">
+    <div class="pop-up-mode_item">
       <component
         :is="model.c"
         :itemProps="model.props"
@@ -84,11 +84,16 @@ export default class EditPopUp extends Vue {
 
 .pop-up-mode {
 
-  &-content {
-    padding: 20px;
+  &_sidebar {
+    position: fixed;
+    padding: 10px;
+
+    &-content {
+      padding: 20px;
+    }
   }
 
-  &-item {
+  &_item {
     max-width: 400px;
     max-height: 600px;
     height: 100%;

@@ -8,7 +8,7 @@
         v-model="input"
         type="text"
         :fetch-suggestions="querySearch"
-        @select="setCity"
+        @select="selectCity"
       >
         <i
           slot="suffix"
@@ -51,7 +51,7 @@ export default class WidgetHeader extends Vue {
 
   protected input: string = ''
 
-  protected setCity(city: any) {
+  protected selectCity(city: any) {
     this.weatherModule.setCity(city.value)
     this.input = ''
   }
