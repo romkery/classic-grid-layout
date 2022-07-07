@@ -8,13 +8,13 @@
     >
       <div class="widget__header">
           <div class="widget__header-title">
-            <p>{{ cityData?.location?.name }}</p>
+            <p @click="changeCity">{{ cityData?.location?.name }}</p>
             <span>{{ cityData?.current?.temp_c }}°</span>
               <div class="widget__header-title-time">
                 <h3>{{ localTime(cityData) }}</h3>
-                <i class="el-icon-refresh"/>
+                <i class="el-icon-refresh" @click="refreshCity"/>
               </div>
-              <span>{{ cityData?.location?.country }}</span>
+              <span>{{ cityData?.location?.country.length > 10 ? '' : cityData?.location?.country }}</span>
   </div>
   <img class="widget__header-icon" :src="cityData?.current?.condition.icon"/>
   </div>
@@ -91,6 +91,17 @@ export default class WeekWeather extends Vue {
   protected getMoreDayWeather(day: number) {
     this.selectedDay = day
     this.isInfo = true
+  }
+
+  protected async changeCity() {
+    this.model.props!.city = this.weatherModule?.city
+    this.cityData = await this.weatherModule?.getCityForecast(this.model.props?.city!)
+    this.changeEvent(this.layout)
+  }
+
+  protected async refreshCity() {
+    this.cityData = await this.weatherModule?.refreshCityData(this.model.props?.city!, 'forecast')
+    this.changeEvent(this.layout)
   }
 
   protected styles() {
@@ -189,15 +200,22 @@ export default class WeekWeather extends Vue {
     &-title {
       display: flex;
       flex-direction: column;
-      max-width: 100px;
+      max-width: 80px;
       height: 100%;
       color: #474747;
       font-weight: bold;
       font-size: 30px;
+      white-space: nowrap;
 
       p {
         line-height: 1.5rem;
         font-weight: bold;
+        cursor: pointer;
+
+        &:hover {
+          color: white;
+          transition: .5s;
+        }
       }
 
       span {
@@ -214,9 +232,10 @@ export default class WeekWeather extends Vue {
         }
 
         i {
-          font-size: 0.5rem;
+          font-size: 0.8rem;
           bottom: 1px;
           margin-left: 2px;
+          cursor: pointer;
         }
       }
     }

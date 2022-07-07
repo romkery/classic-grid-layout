@@ -1,6 +1,6 @@
 import {CurrentResponseType} from '@/services/ApiTypes';
 
-export default function getLocalTime(cityData: CurrentResponseType) {
+export default function getLocalTime(cityData: CurrentResponseType): string | void {
     if (cityData.location) {
         const time = cityData.location.localtime.split(' ')[1]
         const hour: number = +time.split(':')[0]
@@ -9,5 +9,5 @@ export default function getLocalTime(cityData: CurrentResponseType) {
         hour > 0 && hour < 12 ? abbreviations = 'AM' : abbreviations = "PM"
 
         return time + ' ' + abbreviations
-    } else return
+    }
 }

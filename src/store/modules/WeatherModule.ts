@@ -55,6 +55,18 @@ export default class WeatherModule extends Vue {
         return (await this.currentCache[city]).data
     }
 
+    @Action()
+    public deleteCache() {
+        this.currentCache = {}
+    }
+
+    public async refreshCityData(city: string, time: string) {
+        let data: CurrentResponseType
+        if (time === 'current') data = await this.serviceInstance.getCurrent(city);
+        else data = await this.serviceInstance.getForecast(city);
+        return data;
+    }
+
     public async getCityCurrentWeather(city: string) {
         const data: CurrentResponseType = await this.serviceInstance.getCurrent(city)
         this.setCityCurrentWeather(data)

@@ -16,7 +16,7 @@ export default class WeatherService extends BaseApiService {
         }
     }
 
-    public async getForecast(city = "Novosibirsk", days: number = 2, lang = 'en'): Promise<ForecastResponseType> {
+    public async getForecast(city = "Novosibirsk", days: number = 3, lang = 'en'): Promise<ForecastResponseType> {
         let data: any
         try {
             data = await this.instance.get<CurrentResponseType>(`forecast.json?q=${city}&lang=${lang}&days=${days}`)

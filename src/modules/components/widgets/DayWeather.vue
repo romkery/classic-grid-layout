@@ -5,7 +5,7 @@
          @click="setIsInfo">
       <div class="day-info__header">
         <div class="day-info__header-info">
-          <h2>{{ cityData?.location?.name }}</h2>
+          <p>{{ cityData?.location?.name }}</p>
           <p>
             <span>
               {{ dayData.day.maxtemp_c.toFixed() }}°
@@ -115,8 +115,8 @@ export default class DayWeather extends Vue {
     justify-content: space-between;
 
     &-icon {
-      max-height: 150px;
-      max-width: 150px;
+      max-height: 120px;
+      max-width: 120px;
       height: 100%;
       width: 100%;
       animation: Orbita 15s linear infinite;
@@ -128,9 +128,10 @@ export default class DayWeather extends Vue {
       height: 100%;
       z-index: 2;
 
-      h2 {
+      p {
         font-size: 30px;
         font-family: Circe-Regular;
+        line-height: 1.5rem;
       }
 
       span {

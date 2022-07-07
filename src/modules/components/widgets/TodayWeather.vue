@@ -7,20 +7,20 @@
          :style="styles()">
        <div class="widget__header">
            <p>{{ cityData?.current?.temp_c }}°</p>
-           <img :src="cityData?.current?.condition.icon" alt="condition-icon"/>
        </div>
       <span id="separator"/>
-       <div class="widget__bottom">
          <div class="widget__bottom">
+             <img :src="cityData?.current?.condition.icon" alt="condition-icon"/>
            <div class="widget__bottom-info">
              <i class="el-icon-location"/>
-             <h3>{{ cityData?.location?.name }}</h3>
+             <el-tooltip content="Change to current" placement="top">
+             <h3 @click="changeCity">{{ cityData?.location?.name }}</h3>
+             </el-tooltip>
            </div>
            <div class="widget__bottom-info">
-             <h3>{{ localTime(cityData) }}</h3>
-             <i class="el-icon-refresh"/>
+                <h3>{{ localTime(cityData) }}</h3>
+             <i class="el-icon-refresh" @click="refreshCity"/>
            </div>
-         </div>
          </div>
      </div>
   </span>
@@ -58,6 +58,17 @@ export default class TodayWeather extends Vue {
   protected storage = new LayoutStorage()
   protected weatherModule?: WeatherModule | any = useModule(this.$store, ['weatherModule']);
   protected cityData: CurrentResponseType = mockCityData;
+
+  protected async changeCity() {
+    this.model.props!.city = this.weatherModule?.city
+    this.cityData = await this.weatherModule?.getCityCurrent(this.model.props?.city!)
+    this.changeEvent(this.layout)
+  }
+
+  protected async refreshCity() {
+    this.cityData = await this.weatherModule?.refreshCityData(this.model.props?.city!, 'current')
+    this.changeEvent(this.layout)
+  }
 
   protected styles() {
     return {
@@ -116,26 +127,21 @@ export default class TodayWeather extends Vue {
 .widget {
   background: #66b8fb;
   height: @grid-content-height;
-  padding: 10px;
+  padding: 10px 10px 5px 10px;
   color: white;
   font-family: Circe-Light;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
-  p {
-    font-size: 2.5rem;
-  }
-
   &__header {
+    margin-left: 10px;
     display: flex;
     justify-content: space-between;
 
-    img {
-      max-height: 100px;
-      max-width: 100px;
-      height: 100%;
-      width: 100%;
+    p {
+      position: absolute;
+      font-size: 2.5rem;
     }
   }
 
@@ -149,8 +155,15 @@ export default class TodayWeather extends Vue {
   &__bottom {
     display: flex;
     flex-direction: column;
-    justify-content: end;
     align-items: end;
+    justify-content: end;
+
+    img {
+      max-height: 80px;
+      max-width: 80px;
+      height: 100%;
+      width: 100%;
+    }
 
     &-info {
       max-height: 100%;
@@ -162,17 +175,27 @@ export default class TodayWeather extends Vue {
         line-height: 1.4rem;
         font-size: 1.2rem;
 
-        .el-icon-location {
-          margin-right: 2px;
-          font-size: 18px;
-          bottom: 1px;
-        }
+        &:last-child {
+          cursor: pointer;
 
-        .el-icon-refresh {
-          font-size: 18px;
-          bottom: 1px;
-          margin-left: 2px;
+          &:hover {
+            color: black;
+            transition: .5s;
+          }
         }
+      }
+
+      .el-icon-location {
+        margin-right: 2px;
+        font-size: 18px;
+        bottom: 2px;
+      }
+
+      .el-icon-refresh {
+        font-size: 18px;
+        bottom: 1px;
+        margin-left: 2px;
+        cursor: pointer;
       }
     }
   }

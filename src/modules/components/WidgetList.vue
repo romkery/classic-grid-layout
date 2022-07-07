@@ -2,11 +2,13 @@
   <div class="widgets">
     <div class="widgets__title">
       <h3>Widgets:</h3>
-      <el-button type="primary"
-                 @click="isDisablePreview = !isDisablePreview"
-      >
-        {{ !isDisablePreview ? 'disable' : 'disabled' }}
-      </el-button>
+      <el-tooltip content="Disable preview" placement="top">
+        <el-switch
+          v-model="isDisablePreview"
+          active-color="#13ce66"
+          inactive-color="#4287f5">
+        </el-switch>
+      </el-tooltip>
     </div>
     <div class="widgets__list"
          @mouseenter="showPreview(true)"
@@ -119,8 +121,8 @@ export default class WidgetList extends Vue {
   &__title {
     margin-right: 20px;
 
-    .el-button {
-
+    .el-switch {
+      margin-left: 10px;
     }
   }
 
@@ -138,11 +140,11 @@ export default class WidgetList extends Vue {
     &-box {
       min-width: 200px;
       width: 100%;
-      background: #aeffd7;
+      background: #85fcc9;
       border: 1px solid black;
       border-radius: 10px;
       margin: 0 10px;
-      padding: 5px;
+      padding: 10px 5px 0 5px;
 
       p {
         text-align: center;
