@@ -10,9 +10,10 @@
         </el-switch>
       </el-tooltip>
     </div>
-    <div class="widgets__list"
-         @mouseenter="showPreview(true)"
-         @mouseleave="showPreview(false)"
+    <div
+      class="widgets__list"
+      @mouseenter="showPreview(true)"
+      @mouseleave="showPreview(false)"
     >
       <div
         class="widgets__list-box"
@@ -30,17 +31,7 @@
         />
       </div>
     </div>
-    <div id="trash">
-      <el-tooltip placement="bottom">
-        <div slot="content">
-          Shift + Click <br/> to select.
-        </div>
-        <i
-          class="el-icon-delete"
-          @click="deleteSelectedItems('delete')"
-        />
-      </el-tooltip>
-    </div>
+    <trash/>
   </div>
 </template>
 
@@ -57,9 +48,11 @@ import Green from '@/modules/components/widgets/Green.vue';
 import Orange from '@/modules/components/widgets/Orange.vue';
 import CocaCola from '@/modules/components/widgets/CocaCola.vue';
 import WeekWeather from '@/modules/components/widgets/WeekWeather.vue';
+import Trash from '@/modules/components/Trash.vue';
 
 @Component({
   components: {
+    Trash,
     Yellow,
     Black,
     TodayWeather,
@@ -96,16 +89,6 @@ export default class WidgetList extends Vue {
 <style lang="less" scoped>
 
 @import '../../assets/styles/_variables';
-
-
-.fade-enter-active, .fade-leave-active {
-  transition: all .5s;
-}
-
-.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
-  height: 300px;
-}
-
 
 .widgets {
   width: 100%;
@@ -157,23 +140,6 @@ export default class WidgetList extends Vue {
         text-align: center;
       }
     }
-  }
-}
-
-#trash {
-  width: 50px;
-  height: 50px;
-
-  i {
-    font-size: 50px;
-    color: #c0c0c0;
-    cursor: pointer;
-
-  }
-
-  :hover {
-    transition: 500ms;
-    color: dodgerblue;
   }
 }
 

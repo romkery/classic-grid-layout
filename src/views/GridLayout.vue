@@ -128,8 +128,9 @@ export default class Layout extends LayoutStorage {
   }
 
   created() {
-    this.getLayout()
-    this.weatherModule?.getLocalStorageCity()
+    this.getLayout();
+    this.weatherModule?.deleteCache(); // Удаляем кешируемые промисы, что-бы данные обновлялись
+    this.weatherModule?.getLocalStorageCity();
 
     //Добавление ивента на удаление элементов при нажатии Backspace
     document.addEventListener('keydown', (e) => {

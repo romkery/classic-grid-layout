@@ -75,7 +75,6 @@ export default class WeatherModule extends Vue {
     }
 
     public async getCityForecast(city: string, days: number) {
-        city = city.toLowerCase()
         if (!this.forecastCache[city]) {
             this.forecastCache[city] = this.getCityForecastWeather(city, days)
         }

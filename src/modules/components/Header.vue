@@ -1,9 +1,9 @@
 <template>
   <div class="header">
-    <div class="search">
+    <div class="header__search">
       <div>{{ weatherModule.city }}</div>
       <el-autocomplete
-        class="search"
+        class="header__search-input"
         placeholder="Please input city"
         v-model="input"
         type="text"
@@ -35,32 +35,28 @@ import WidgetList from '@/modules/components/WidgetList.vue';
 import WeatherModule from '@/store/modules/WeatherModule';
 import {useModule} from 'vuex-simple';
 
-
 @Component({
   components: {
     WidgetList
   }
 })
-export default class WidgetHeader extends Vue {
+export default class Header extends Vue {
 
-  @Prop({}) protected drag!: any
-  @Prop({}) protected dragend!: any
-  @Prop({}) protected deleteSelectedItems!: any
+  @Prop({}) protected drag!: void;
+  @Prop({}) protected dragend!: void;
+  @Prop({}) protected deleteSelectedItems!: void;
 
-  protected weatherModule: WeatherModule = useModule(this.$store, ['weatherModule']);
-
-  protected input: string = ''
+  protected weatherModule: WeatherModule = useModule(this.$store, ['weatherModule'])!;
+  protected input: string = '';
 
   protected selectCity(city: any) {
-    this.weatherModule.setCity(city.value)
-    this.input = ''
+    this.weatherModule.setCity(city.value);
+    this.input = '';
   }
 
   protected async querySearch(query: string, callback: any) {
-    callback(await this.weatherModule.getAutocompleteCities(query))
+    callback(await this.weatherModule.getAutocompleteCities(query));
   }
-
-
 }
 
 </script>
@@ -68,23 +64,26 @@ export default class WidgetHeader extends Vue {
 
 <style lang="less" scoped>
 
-.search {
-  margin-bottom: 20px;
-  width: 100%;
-}
-
 .header {
-  color: white;
+  width: 100%;
   top: 0;
   position: sticky;
   display: block;
-  z-index: 2;
   flex-direction: column;
   justify-content: space-between;
-  width: 100%;
-  background: #222222;
   padding-bottom: 20px;
   border-bottom: 1px solid white;
+  color: white;
+  background: #222222;
+  z-index: 2;
+
+  &__search {
+    margin-bottom: 20px;
+
+    &-input {
+      width: 100%;
+    }
+  }
 
   &__widget-list {
     width: 100%;

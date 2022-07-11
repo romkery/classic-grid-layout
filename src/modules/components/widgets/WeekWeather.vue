@@ -97,7 +97,7 @@ export default class WeekWeather extends Vue {
 
   protected async changeCity() {
     this.model.props!.city = this.weatherModule?.city
-    this.cityData = await this.weatherModule?.getCityForecast(this.model.props?.city!)
+    this.cityData = await this.weatherModule?.getCityForecast(this.model.props?.city!, 3)
     this.changeEvent(this.layout)
   }
 
@@ -168,7 +168,7 @@ export default class WeekWeather extends Vue {
 .widget {
 
   * {
-    font-family: Circe-Light;
+    font-family: Circe-Light, serif;
     color: #474747;
     line-height: 1.5;
   }
@@ -266,7 +266,8 @@ export default class WeekWeather extends Vue {
       justify-content: center;
 
       &:hover * {
-        color: white
+        color: white;
+        transition: all .3s
       }
 
       &:not(:last-child)::after {
@@ -295,7 +296,7 @@ export default class WeekWeather extends Vue {
         font-size: 1rem;
 
         span:first-child {
-          font-family: Circe-Regular;
+          font-family: Circe-Regular, serif;
         }
       }
     }

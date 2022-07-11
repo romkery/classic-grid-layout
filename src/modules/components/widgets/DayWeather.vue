@@ -14,7 +14,7 @@
               {{ dayData.day.mintemp_c.toFixed() }}°
             </span>
             <br/>
-            <span>average {{ dayData.day.avgtemp_c }}</span>
+            <span>average {{ dayData.day.avgtemp_c }}°</span>
             <br/>
             <span>{{ days[new Date(dayData.date).getDay()] }}</span>
           </p>

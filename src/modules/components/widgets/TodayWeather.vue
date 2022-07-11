@@ -54,10 +54,31 @@ export default class TodayWeather extends Vue {
   @Prop({}) protected layout!: LayoutType;
   @Prop({}) protected changeEvent: (layout: LayoutType) => void;
 
-  protected storage = new LayoutStorage()
+  protected layoutStorage = new LayoutStorage()
   protected weatherModule?: WeatherModule | any = useModule(this.$store, ['weatherModule']);
   protected cityData: ForecastResponseType = mockCityData;
   protected getLocalTime = getLocalTime;
+  protected ownProperty: LayoutItemType = this.layoutStorage.createNewWidget(2, 30, 'TodayWeather', 'skeleton',
+    [
+      {
+        name: 'border',
+        title: 'Рамка',
+        el: 'slider',
+        min: 0,
+        max: 15,
+        step: 1,
+        value: 4,
+        color: '#3581e5'
+      },
+      {
+        name: 'borderRadius',
+        title: 'Скругление углов',
+        el: 'slider',
+        min: 0,
+        max: 50,
+        step: 1,
+        value: 15,
+      }], 2, 30)
 
   protected async changeCity() {
     this.model.props!.city = this.weatherModule?.city
@@ -81,48 +102,24 @@ export default class TodayWeather extends Vue {
   async created() {
 
     if (this.model) {
-
-      this.model!.props!.isLoading! = true
+      this.model.props!.isLoading = true;
 
       if (!this.model?.props?.city) {
-        this.storage.setWidgetCity(this.weatherModule?.city!, this.model)
-        this.changeEvent(this.layout)
+        this.layoutStorage.setWidgetCity(this.weatherModule?.city!, this.model);
+        this.changeEvent(this.layout);
       }
 
-      this.cityData = await this.weatherModule?.getCityCurrent(this.model.props?.city!)
+      this.cityData = await this.weatherModule?.getCityCurrent(this.model.props?.city!);
 
-      this.model!.props!.isLoading! = false
+      this.model!.props!.isLoading! = false;
     }
   }
-
-  protected ownProperty: LayoutItemType = this.storage.createNewWidget(2, 30, 'TodayWeather', 'skeleton',
-    [
-      {
-        name: 'border',
-        title: 'Рамка',
-        el: 'slider',
-        min: 0,
-        max: 15,
-        step: 1,
-        value: 4,
-        color: '#3581e5'
-      },
-      {
-        name: 'borderRadius',
-        title: 'Скругление углов',
-        el: 'slider',
-        min: 0,
-        max: 50,
-        step: 1,
-        value: 15,
-      }], 2, 30)
 }
 
 </script>
 
 
 <style lang="less" scoped>
-@import '../../../assets/styles/_variables';
 
 .widget {
 
@@ -162,8 +159,8 @@ export default class TodayWeather extends Vue {
     justify-content: end;
 
     img {
-      max-height: 80px;
-      max-width: 80px;
+      max-height: 90px;
+      max-width: 90px;
       height: 100%;
       width: 100%;
     }
@@ -202,14 +199,5 @@ export default class TodayWeather extends Vue {
       }
     }
   }
-
 }
-
-
-img {
-  width: 100%;
-  height: 50%;
-  object-fit: contain;
-}
-
 </style>

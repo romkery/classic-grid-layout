@@ -1,7 +1,6 @@
 <template>
   <div
-    style="height: inherit"
-    class="widget-content"
+    class="container"
     draggable="true"
     @mouseenter="setDragItem(model)"
     @mousemove="dragOutside('check')"
@@ -13,25 +12,24 @@
       class="selection"
     />
     <div class="pin-icon-container">
-      <div>
-        <i class="el-icon-loading"
-           @click="() =>
-           {model.props.isLoading = !model.props.isLoading; changeEvent(layout)}"
-        />
-        <i class="el-icon-setting"
-           @click="setEditMode(model.i)"
-        />
-        <i class="el-icon-star-off" v-if="!model.isStatic"
-           @click="() => {model.isStatic = true; changeEvent(layout)}"
-        />
-        <i class="el-icon-star-on" v-if="model.isStatic"
-           @click="() => {model.isStatic = false; changeEvent(layout)}"/>
-      </div>
+      <i class="el-icon-loading"
+         @click="() => {model.props.isLoading = !model.props.isLoading; changeEvent(layout)}"
+      />
+      <i class="el-icon-setting"
+         @click="setEditMode(model.i)"
+      />
+      <i class="el-icon-star-off"
+         v-if="!model.isStatic"
+         @click="setIsStatic(true)"
+      />
+      <i class="el-icon-star-on"
+         v-if="model.isStatic"
+         @click="setIsStatic(false)"/>
     </div>
     <component
+      :class="'grid-model-content'+ model.i"
       :is="model.c"
       :model="model"
-      :class="'grid-model-content'+ model.i"
       :layout="layout"
       :change-event="changeEvent"
     />
@@ -74,9 +72,14 @@ export default class GridItemContent extends Vue {
   @Prop({}) protected layout!: LayoutType
   @Prop({}) protected setSelectedItems!: any
 
-  protected selectionMode = false
+  protected selectionMode = false;
 
-  selectComponent() {
+  protected setIsStatic(isStatic: boolean) {
+    this.model.isStatic = isStatic;
+    this.changeEvent(this.layout);
+  };
+
+  protected selectComponent() {
     if (!this.selectionMode) {
       this.setSelectedItems(this.model.i)
       this.selectionMode = true
@@ -84,20 +87,18 @@ export default class GridItemContent extends Vue {
       this.selectionMode = false
       this.setSelectedItems(this.model.i)
     }
-  }
-}
+  };
+};
 
 </script>
 
 
 <style lang="less" scoped>
 
-.widget-content {
+.container {
+  height: inherit;
 
   .pin-icon-container {
-    display: flex;
-    justify-content: space-between;
-
     i {
       cursor: pointer;
       color: white;
