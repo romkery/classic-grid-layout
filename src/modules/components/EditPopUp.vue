@@ -38,7 +38,7 @@ import Orange from '@/modules/components/widgets/Orange.vue';
 import Green from '@/modules/components/widgets/Green.vue';
 import Yellow from '@/modules/components/widgets/Yellow.vue';
 import Black from '@/modules/components/widgets/Black.vue';
-import EditForms from '@/modules/components/widgets/EditForms.vue';
+import EditForms from '@/modules/components/EditForms.vue';
 import {LayoutItemType, LayoutType} from '@/modules/helpers/LayoutStorage';
 import TodayWeather from '@/modules/components/widgets/TodayWeather.vue';
 import WeekWeather from '@/modules/components/widgets/WeekWeather.vue';

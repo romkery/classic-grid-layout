@@ -3,7 +3,7 @@
     <DeleteAlert v-if="model?.props.isDeleteMode"/>
     <DefaultSkeleton v-if="model?.props.preview === 'skeleton' & model?.props.isLoading"/>
     <div class="widget"
-         :style="styles()"
+         :style="getStyles()"
          v-if="!model?.props.isLoading & !model?.props.isDeleteMode">
     <img
       src="https://media.istockphoto.com/photos/green-apple-picture-id584226186?k=20&m=584226186&s=170667a&w=0&h=YaNNvCnxJR8-VVQX62PjEOxa2FhzY8whNfkrsr2FgUs="
@@ -21,7 +21,7 @@ import Vue from 'vue';
 import LayoutStorage, {LayoutItemType} from '@/modules/helpers/LayoutStorage';
 import DefaultSkeleton from '@/common/mixins/DefaultSkeleton.vue';
 import DeleteAlert from '@/common/mixins/DeleteAlert.vue';
-
+import getStyles from '@/modules/helpers/getStyles';
 
 @Component({
   components: {
@@ -31,18 +31,9 @@ import DeleteAlert from '@/common/mixins/DeleteAlert.vue';
 })
 export default class Green extends Vue {
 
-  protected store = new LayoutStorage()
-
   @Prop({}) protected model!: LayoutItemType
 
-  protected styles() {
-    return {
-      border: `${this.model?.props?.styleProps.border?.value}px solid ${this.model?.props?.styleProps.border.color}`,
-      borderRadius: `${this.model?.props?.styleProps.borderRadius?.value}px`,
-      background: this.model?.props?.styleProps.background?.color
-    }
-  }
-
+  protected store = new LayoutStorage()
   protected ownProperty = this.store.createNewWidget(2, 50, 'Green', 'skeleton',
     [
       {
@@ -65,6 +56,7 @@ export default class Green extends Vue {
         value: 20,
       }])
 
+  protected getStyles = getStyles.bind(this)
 }
 
 </script>

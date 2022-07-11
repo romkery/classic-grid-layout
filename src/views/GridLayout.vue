@@ -2,7 +2,7 @@
   <div class="layout">
     <edit-pop-up
       :model="dragItem"
-      :layout.sync="this.layout"
+      :layout.sync="layout"
       :is-edit.sync="isEdit"
       :change-event="saveLayoutChanges"
     />
@@ -92,14 +92,14 @@ export default class Layout extends LayoutStorage {
   }
 
   protected setDragItem(val: LayoutItemType): void {
-    this.dragItem = val
-  }
+    this.dragItem = val;
+  };
 
   protected setSelectedItems(id: number): void {
     if (this.selectedItems.indexOf(id) !== -1) {
       this.selectedItems = this.selectedItems.filter(el => el !== id)
     } else {
-      this.selectedItems.push(id)
+      this.selectedItems.push(id);
     }
   }
 
@@ -277,7 +277,7 @@ export default class Layout extends LayoutStorage {
 }
 
 .customization-on .vue-grid-item.vue-grid-placeholder {
-  z-index: -2;
+  z-index: -1;
 }
 
 .customization-on {

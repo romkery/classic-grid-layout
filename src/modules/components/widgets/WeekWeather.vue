@@ -3,7 +3,7 @@
     <WidgetBasis :model="model" v-if="!isInfo">
       <div class="widget__content"
            v-if="!model?.props.isLoading"
-           :style="styles()"
+           :style="getStyles()"
       >
         <div class="widget__header">
           <div class="widget__header-title">
@@ -40,7 +40,7 @@
       </div>
     </WidgetBasis>
     <DayWeather v-if="isInfo"
-                :styles="styles"
+                :styles="getStyles"
                 :is-info.sync="isInfo"
                 :model="model"
                 :city-data="cityData"
@@ -63,10 +63,12 @@ import {useModule} from 'vuex-simple';
 import WeatherModule from '@/store/modules/WeatherModule';
 import {ForecastResponseType} from '@/services/ApiTypes';
 import DayWeather from '@/modules/components/widgets/DayWeather.vue';
-import getLocalTime from '@/modules/helpers/getLocalTime'
-import mockCityData from '@/modules/helpers/mockCityData';
+import getLocalTime from '@/modules/helpers/weatherWidgets/getLocalTime'
+import mockCityData from '@/modules/helpers/weatherWidgets/mockCityData';
 import WidgetBasis from '@/modules/components/WidgetBasis.vue';
-
+import getStyles from '@/modules/helpers/getStyles';
+import onCreated from '@/modules/helpers/weatherWidgets/onCreated';
+import {changeCity, refreshCity} from '@/modules/helpers/weatherWidgets/methods';
 
 @Component({
   components: {
@@ -89,47 +91,6 @@ export default class WeekWeather extends Vue {
   protected isInfo = false
   protected selectedDay!: number
   protected localTime = getLocalTime;
-
-  protected getMoreDayWeather(day: number) {
-    this.selectedDay = day
-    this.isInfo = true
-  }
-
-  protected async changeCity() {
-    this.model.props!.city = this.weatherModule?.city
-    this.cityData = await this.weatherModule?.getCityForecast(this.model.props?.city!, 3)
-    this.changeEvent(this.layout)
-  }
-
-  protected async refreshCity() {
-    this.cityData = await this.weatherModule?.refreshCityData(this.model.props?.city!, 'forecast')
-    this.changeEvent(this.layout)
-  }
-
-  protected styles() {
-    return {
-      border: `${this.model?.props?.styleProps.border?.value}px solid ${this.model?.props?.styleProps.border?.color}`,
-      borderRadius: `${this.model?.props?.styleProps.borderRadius?.value}px`,
-      background: this.model?.props?.styleProps.background?.color
-    }
-  }
-
-  async created() {
-    if (this.model) {
-
-      this.model!.props!.isLoading! = true
-
-      if (!this.model?.props?.city) {
-        this.storage.setWidgetCity(this.weatherModule?.city!, this.model)
-        this.changeEvent(this.layout)
-      }
-
-      this.cityData = await this.weatherModule?.getCityForecast(this.model.props?.city!, 3)
-
-      this.model!.props!.isLoading! = false
-    }
-  }
-
   protected ownProperty: LayoutItemType = this.storage.createNewWidget(2, 30, 'WeekWeather', 'skeleton',
     [
       {
@@ -155,8 +116,30 @@ export default class WeekWeather extends Vue {
       title: 'Фон',
       el: 'colorPicker',
       color: '#66b8fb',
-    }], 4, 40, 2, 30)
+    }], 4, 40, 2, 30
+  )
 
+
+  protected getMoreDayWeather(day: number) {
+    this.selectedDay = day
+    this.isInfo = true
+  }
+
+  protected async refreshCity() {
+    // Получение обновленных данных универсальной функцией
+    this.cityData = await refreshCity.bind(this, 'forecast')();
+  }
+
+  protected async changeCity() {
+    this.cityData = await changeCity.bind(this, 'forecast')();
+  }
+
+  protected onCreated: any = onCreated.bind(this, 'forecast');
+  protected getStyles = getStyles.bind(this)
+
+  async created() {
+    this.cityData = await this.onCreated() // Вызываем универсальную функцию
+  }
 }
 
 </script>

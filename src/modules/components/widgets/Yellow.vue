@@ -4,7 +4,7 @@
     <DefaultSkeleton v-if="model?.props.preview === 'skeleton' & model?.props.isLoading"/>
     <div class="widget"
          v-if="!model?.props.isLoading"
-         :style="styles()">
+         :style="getStyles()">
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLXuSFEShPYz9wzfOwIiuJaJ9JdGSmWFfn_YykysuXfQ&s"
          alt="cola">
     </div>
@@ -20,7 +20,7 @@ import LayoutStorage, {LayoutItemType} from '@/modules/helpers/LayoutStorage';
 import DefaultSkeleton from '@/common/mixins/DefaultSkeleton.vue';
 import DeleteAlert from '@/common/mixins/DeleteAlert.vue';
 import {Prop} from 'vue-property-decorator';
-
+import getStyles from '@/modules/helpers/getStyles';
 
 @Component({
   components: {
@@ -30,17 +30,9 @@ import {Prop} from 'vue-property-decorator';
 })
 export default class Yellow extends Vue {
 
-  protected store = new LayoutStorage()
   @Prop({}) protected model!: LayoutItemType
-
-  protected styles() {
-    return {
-      border: `${this.model?.props?.styleProps.border?.value}px solid ${this.model?.props?.styleProps.border?.color}`,
-      borderRadius: `${this.model?.props?.styleProps.borderRadius?.value}px`,
-      background: this.model?.props?.styleProps.background?.color
-    }
-  }
-
+  
+  protected store = new LayoutStorage()
   protected ownProperty: LayoutItemType = this.store.createNewWidget(2, 50, 'Yellow', 'skeleton',
     [
       {
@@ -70,11 +62,10 @@ export default class Yellow extends Vue {
       }
     ]
   )
+
+  protected getStyles = getStyles.bind(this)
 }
-
-
 </script>
-
 
 <style lang="less" scoped>
 @import '../../../assets/styles/_variables';

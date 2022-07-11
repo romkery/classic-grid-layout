@@ -3,7 +3,7 @@
     <DeleteAlert v-if="model?.props.isDeleteMode"/>
     <DefaultSkeleton v-if="model?.props.preview === 'skeleton' & model?.props.isLoading"/>
     <div class="widget"
-         :style="styles()"
+         :style="getStyles()"
          v-if="!model?.props.isLoading">
       <img src="https://democrats.org/wp-content/uploads/2019/08/TeamBlue_gradient.png?w=300"
            alt="cola">
@@ -20,7 +20,7 @@ import Vue from 'vue';
 import LayoutStorage, {LayoutItemType} from '@/modules/helpers/LayoutStorage';
 import DefaultSkeleton from '@/common/mixins/DefaultSkeleton.vue';
 import DeleteAlert from '@/common/mixins/DeleteAlert.vue';
-
+import getStyles from '@/modules/helpers/getStyles';
 
 @Component({
   components: {
@@ -30,18 +30,9 @@ import DeleteAlert from '@/common/mixins/DeleteAlert.vue';
 })
 export default class CocaCola extends Vue {
 
-  protected store = new LayoutStorage()
-
   @Prop({}) protected model!: LayoutItemType
 
-  protected styles() {
-    return {
-      border: `${this.model?.props?.styleProps.border?.value}px solid ${this.model?.props?.styleProps.border.color}`,
-      borderRadius: `${this.model?.props?.styleProps.borderRadius?.value}px`,
-      background: this.model?.props?.styleProps.background?.color
-    }
-  }
-
+  protected store = new LayoutStorage()
   protected ownProperty = this.store.createNewWidget(2, 50, 'CocaCola', 'skeleton',
     [
       {
@@ -64,8 +55,8 @@ export default class CocaCola extends Vue {
         value: 20,
       }])
 
+  protected getStyles = getStyles.bind(this)
 }
-
 </script>
 
 
