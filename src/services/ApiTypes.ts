@@ -38,7 +38,7 @@ export type CurrentType = {
     "uv": number
     "gust_mph": number
     "gust_kph": number
-    "air_quality": AirQualityType
+    "air_quality"?: AirQualityType
 }
 
 export type AirQualityType = {
@@ -106,29 +106,28 @@ export type AstroForecastType = {
 }
 
 export type DayForecastType = {
-    "maxtemp_c"?: number | null,
-    "maxtemp_f"?: number | null
-    "mintemp_c"?: number | null
-    "mintemp_f"?: number | null
-    "avgtemp_c"?: number | null
-    "avgtemp_f"?: number | null
-    "maxwind_mph"?: number | null
-    "maxwind_kph"?: number | null
-    "totalprecip_mm"?: number | null
-    "totalprecip_in"?: number | null
-    "avgvis_km"?: number | null
-    "avgvis_miles"?: number | null
-    "avghumidity"?: number | null
-    "daily_will_it_rain"?: number | null
-    "daily_chance_of_rain"?: number | null
-    "daily_will_it_snow"?: number | null
-    "daily_chance_of_snow"?: number | null
+    "maxtemp_c": number
+    "maxtemp_f": number
+    "mintemp_c": number
+    "mintemp_f": number
+    "avgtemp_f": number
+    "maxwind_mph": number
+    "maxwind_kph": number
+    "totalprecip_mm": number
+    "totalprecip_in": number
+    "avgvis_km": number
+    "avgvis_miles": number
+    "avghumidity": number
+    "daily_will_it_rain": number
+    "daily_chance_of_rain": number
+    "daily_will_it_snow": number
+    "daily_chance_of_snow": number
     "condition": {
-        "text": string | null
-        "icon": string | null
-        "code": number | null
+        "text": string
+        "icon": string
+        "code": number
     },
-    "uv"?: number | null
+    "uv": number
 }
 
 export type ForecastDayType = {

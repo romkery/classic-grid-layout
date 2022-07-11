@@ -12,7 +12,8 @@
     </div>
     <div class="widgets__list"
          @mouseenter="showPreview(true)"
-         @mouseleave="showPreview(false)">
+         @mouseleave="showPreview(false)"
+    >
       <div
         class="widgets__list-box"
         v-for="(widget, index) in this.store.outerWidgets"
@@ -94,6 +95,8 @@ export default class WidgetList extends Vue {
 
 <style lang="less" scoped>
 
+@import '../../assets/styles/_variables';
+
 
 .fade-enter-active, .fade-leave-active {
   transition: all .5s;
@@ -144,7 +147,11 @@ export default class WidgetList extends Vue {
       border: 1px solid black;
       border-radius: 10px;
       margin: 0 10px;
-      padding: 10px 5px 0 5px;
+      padding: 10px 5px 5px 5px;
+
+      &-item {
+        height: @grid-content-height;
+      }
 
       p {
         text-align: center;

@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <div class="container">
     <div class="day-info"
          :style="styles()"
          @click="setIsInfo">
@@ -14,12 +14,12 @@
               {{ dayData.day.mintemp_c.toFixed() }}°
             </span>
             <br/>
-             <span>average {{ dayData.day.avgtemp_c }}</span>
+            <span>average {{ dayData.day.avgtemp_c }}</span>
             <br/>
             <span>{{ days[new Date(dayData.date).getDay()] }}</span>
           </p>
         </div>
-         <img class="day-info__header-icon" :src="dayData.day.condition.icon"/>
+        <img class="day-info__header-icon" :src="dayData.day.condition.icon"/>
       </div>
       <span id="separator"/>
       <div class="day-info__bottom">
@@ -40,7 +40,7 @@
         </div>
       </div>
     </div>
-  </span>
+  </div>
 </template>
 
 
@@ -85,96 +85,103 @@ export default class DayWeather extends Vue {
 <style lang="less" scoped>
 @import '../../../assets/styles/_variables';
 
-.day-info {
-  width: inherit;
-  height: @grid-content-height;
-  background: #66b8fb;
-  border-radius: 16px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
+.container {
 
-  * {
-    font-family: Circe-Light;
-    color: #474747;
-    line-height: 1.5;
-  }
+  height: inherit;
 
-  #separator {
-    max-height: 60px;
-    height: 100%;
-  }
-
-  &__header {
-    width: 100%;
-    padding-left: 7%;
-    padding-top: 7%;
+  .day-info {
+    width: inherit;
+    height: @grid-content-height;
+    background: #66b8fb;
+    border-radius: 16px;
+    overflow: hidden;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
+    cursor: pointer;
 
-    &-icon {
-      max-height: 120px;
-      max-width: 120px;
-      height: 100%;
-      width: 100%;
-      animation: Orbita 15s linear infinite;
+
+    * {
+      font-family: Circe-Light;
+      color: #474747;
+      line-height: 1.5;
     }
 
-    &-info {
-      white-space: nowrap;
-      max-width: 70px;
+    #separator {
+      max-height: 60px;
       height: 100%;
-      z-index: 2;
+    }
 
-      p {
-        font-size: 30px;
-        font-family: Circe-Regular;
-        line-height: 1.5rem;
+    &__header {
+      width: 100%;
+      padding-left: 7%;
+      padding-top: 7%;
+      display: flex;
+      justify-content: space-between;
+
+      &-icon {
+        max-height: 120px;
+        max-width: 120px;
+        height: 100%;
+        width: 100%;
+        animation: Orbita 15s linear infinite;
       }
 
-      span {
-        font-size: 18px;
+      &-info {
+        white-space: nowrap;
+        max-width: 70px;
+        height: 100%;
+        z-index: 2;
 
-        &:not(:last-child) {
+        p {
+          font-size: 30px;
           font-family: Circe-Regular;
+          line-height: 1.5rem;
+        }
+
+        span {
+          font-size: 18px;
+
+          &:not(:last-child) {
+            font-family: Circe-Regular;
+          }
         }
       }
+
     }
 
-  }
-
-  &__bottom {
-    height: inherit;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
-
-    div {
-      width: 33%;
+    &__bottom {
+      height: inherit;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
+      margin-bottom: 10px;
 
-      img {
-        min-width: 30px;
-        min-height: 30px;
-        height: 40%;
-        width: 40%;
+      div {
+        width: 33%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        img {
+          min-width: 30px;
+          min-height: 30px;
+          height: 40%;
+          width: 40%;
+        }
+
+        p {
+          font-family: Circe-Bold;
+        }
       }
 
       p {
-        font-family: Circe-Bold;
+        padding: 0;
+
       }
     }
-
-    p {
-      padding: 0;
-
-    }
   }
+
 }
 
 

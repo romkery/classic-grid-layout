@@ -1,34 +1,32 @@
 <template>
-  <span>
-    <DeleteAlert v-if="model?.props.isDeleteMode"/>
-    <DefaultSkeleton v-if="model?.props.preview === 'skeleton' & model?.props.isLoading"/>
-    <div class="widget"
+  <WidgetBasis :model="model">
+    <div class="widget__content"
          v-if="!model?.props.isLoading"
-         :style="styles()">
-       <div class="widget__header">
-           <p>{{ cityData?.current?.temp_c }}°</p>
-       </div>
+         :style="styles()"
+    >
+      <div class="widget__header">
+        <p>{{ cityData?.current?.temp_c }}°</p>
+      </div>
       <span id="separator"/>
-         <div class="widget__bottom">
-             <img :src="cityData?.current?.condition.icon" alt="condition-icon"/>
-           <div class="widget__bottom-info">
-             <i class="el-icon-location"/>
-             <el-tooltip content="Change to current" placement="top">
-             <h3 @click="changeCity">{{ cityData?.location?.name }}</h3>
-             </el-tooltip>
-           </div>
-           <div class="widget__bottom-info">
-                <h3>{{ localTime(cityData) }}</h3>
-             <i class="el-icon-refresh" @click="refreshCity"/>
-           </div>
-         </div>
-     </div>
-  </span>
+      <div class="widget__bottom">
+        <img :src="cityData?.current?.condition.icon"
+             alt="condition-icon"/>
+        <div class="widget__bottom-info">
+          <i class="el-icon-location"/>
+          <el-tooltip content="Change to current" placement="top">
+            <h3 @click="changeCity">{{ cityData?.location?.name }}</h3>
+          </el-tooltip>
+        </div>
+        <div class="widget__bottom-info">
+          <h3>{{ getLocalTime(cityData) }}</h3>
+          <i class="el-icon-refresh" @click="refreshCity"/>
+        </div>
+      </div>
+    </div>
+  </WidgetBasis>
 </template>
 
-
 <script lang="ts">
-
 import Component from 'vue-class-component';
 import Vue from 'vue';
 import LayoutStorage, {LayoutItemType, LayoutType} from '@/modules/helpers/LayoutStorage';
@@ -37,27 +35,29 @@ import DeleteAlert from '@/common/mixins/DeleteAlert.vue';
 import {Prop} from 'vue-property-decorator';
 import {useModule} from 'vuex-simple';
 import WeatherModule from '@/store/modules/WeatherModule';
-import {CurrentResponseType} from '@/services/ApiTypes';
-import getLocalTime from '@/modules/helpers/getLocalTime'
+import {ForecastResponseType} from '@/services/ApiTypes';
 import mockCityData from '@/modules/helpers/mockCityData';
+import getLocalTime from '@/modules/helpers/getLocalTime';
+import WidgetBasis from '@/modules/components/WidgetBasis.vue';
 
 
 @Component({
   components: {
+    WidgetBasis,
     DefaultSkeleton,
     DeleteAlert
   }
 })
 export default class TodayWeather extends Vue {
 
-  @Prop({}) protected model!: LayoutItemType
-  @Prop({}) protected layout!: LayoutType
-  @Prop({}) protected changeEvent!: any
+  @Prop({}) protected model!: LayoutItemType;
+  @Prop({}) protected layout!: LayoutType;
+  @Prop({}) protected changeEvent: (layout: LayoutType) => void;
 
-  protected localTime = getLocalTime
   protected storage = new LayoutStorage()
   protected weatherModule?: WeatherModule | any = useModule(this.$store, ['weatherModule']);
-  protected cityData: CurrentResponseType = mockCityData;
+  protected cityData: ForecastResponseType = mockCityData;
+  protected getLocalTime = getLocalTime;
 
   protected async changeCity() {
     this.model.props!.city = this.weatherModule?.city
@@ -79,6 +79,7 @@ export default class TodayWeather extends Vue {
   }
 
   async created() {
+
     if (this.model) {
 
       this.model!.props!.isLoading! = true
@@ -115,7 +116,6 @@ export default class TodayWeather extends Vue {
         step: 1,
         value: 15,
       }], 2, 30)
-
 }
 
 </script>
@@ -125,14 +125,17 @@ export default class TodayWeather extends Vue {
 @import '../../../assets/styles/_variables';
 
 .widget {
-  background: #66b8fb;
-  height: @grid-content-height;
-  padding: 10px 10px 5px 10px;
-  color: white;
-  font-family: Circe-Light;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+
+  &__content {
+    color: white;
+    background: #66b8fb;
+    font-family: Circe-Light, serif;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+  }
 
   &__header {
     margin-left: 10px;
@@ -199,6 +202,7 @@ export default class TodayWeather extends Vue {
       }
     }
   }
+
 }
 
 

@@ -47,7 +47,7 @@ export default class WidgetHeader extends Vue {
   @Prop({}) protected dragend!: any
   @Prop({}) protected deleteSelectedItems!: any
 
-  protected weatherModule: WeatherModule = useModule(this.$store, ['weatherModule'])!;
+  protected weatherModule: WeatherModule = useModule(this.$store, ['weatherModule']);
 
   protected input: string = ''
 

@@ -37,7 +37,7 @@ export default class DefaultSkeleton extends Vue {
 @import '../../assets/styles/_variables';
 
 .widget-skeleton {
-  height: @grid-content-height;
+  height: 100%;
   border: 1px solid black;
   border-radius: 10px;
   background: white;

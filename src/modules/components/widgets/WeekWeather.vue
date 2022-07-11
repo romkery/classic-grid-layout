@@ -1,53 +1,53 @@
 <template>
-  <span>
-    <DeleteAlert v-if="model?.props.isDeleteMode"/>
-    <DefaultSkeleton v-if="model?.props.preview === 'skeleton' & model?.props.isLoading"/>
-    <div class="widget"
-         v-if="!model?.props.isLoading && !isInfo"
-         :style="styles()"
-    >
-      <div class="widget__header">
+  <div style="height: inherit">
+    <WidgetBasis :model="model" v-if="!isInfo">
+      <div class="widget__content"
+           v-if="!model?.props.isLoading"
+           :style="styles()"
+      >
+        <div class="widget__header">
           <div class="widget__header-title">
             <p @click="changeCity">{{ cityData?.location?.name }}</p>
             <span>{{ cityData?.current?.temp_c }}°</span>
-              <div class="widget__header-title-time">
-                <h3>{{ localTime(cityData) }}</h3>
-                <i class="el-icon-refresh" @click="refreshCity"/>
-              </div>
-              <span>{{ cityData?.location?.country.length > 10 ? '' : cityData?.location?.country }}</span>
-  </div>
-  <img class="widget__header-icon" :src="cityData?.current?.condition.icon"/>
-  </div>
-  <span id="separator"/>
-  <div class="widget__bottom">
-    <div class="widget__bottom-day"
-         @click="getMoreDayWeather(day)"
-         v-for="day in 3">
-      <div class="widget__bottom-day-title">{{
-          days[new Date(cityData?.forecast?.forecastday[day - 1].date).getDay()]
-        }}
-      </div>
-      <img :src="cityData?.forecast?.forecastday[day - 1].day.condition.icon" alt="condition_icon"/>
-      <div class="widget__bottom-day-degrees">
+            <div class="widget__header-title-time">
+              <h3>{{ localTime(cityData) }}</h3>
+              <i class="el-icon-refresh" @click="refreshCity"/>
+            </div>
+            <span>{{ cityData?.location?.country.length > 10 ? '' : cityData?.location?.country }}</span>
+          </div>
+          <img class="widget__header-icon" :src="cityData?.current?.condition.icon"/>
+        </div>
+        <span id="separator"/>
+        <div class="widget__bottom">
+          <div class="widget__bottom-day"
+               @click="getMoreDayWeather(day)"
+               v-for="day in 3">
+            <div class="widget__bottom-day-title">{{
+                days[new Date(cityData?.forecast?.forecastday[day - 1].date).getDay()]
+              }}
+            </div>
+            <img :src="cityData?.forecast?.forecastday[day - 1].day.condition.icon" alt="condition_icon"/>
+            <div class="widget__bottom-day-degrees">
             <span>
               {{ cityData?.forecast?.forecastday[day - 1].day.maxtemp_c.toFixed() }}°
             </span>
-        <span>
+              <span>
               {{ cityData?.forecast?.forecastday[day - 1].day.mintemp_c.toFixed() }}°
             </span>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </WidgetBasis>
+    <DayWeather v-if="isInfo"
+                :styles="styles"
+                :is-info.sync="isInfo"
+                :model="model"
+                :city-data="cityData"
+                :selected-day="selectedDay"
+                :days="days"
+    />
   </div>
-  </div>
-  <DayWeather v-if="isInfo"
-              :styles="styles"
-              :is-info.sync="isInfo"
-              :model="model"
-              :city-data="cityData"
-              :selected-day="selectedDay"
-              :days="days"
-  />
-  </span>
 </template>
 
 
@@ -65,10 +65,12 @@ import {ForecastResponseType} from '@/services/ApiTypes';
 import DayWeather from '@/modules/components/widgets/DayWeather.vue';
 import getLocalTime from '@/modules/helpers/getLocalTime'
 import mockCityData from '@/modules/helpers/mockCityData';
+import WidgetBasis from '@/modules/components/WidgetBasis.vue';
 
 
 @Component({
   components: {
+    WidgetBasis,
     DayWeather,
     DefaultSkeleton,
     DeleteAlert
@@ -163,18 +165,7 @@ export default class WeekWeather extends Vue {
 <style lang="less" scoped>
 @import '../../../assets/styles/_variables';
 
-.widget * {
-  position: relative;
-}
-
 .widget {
-  width: inherit;
-  height: @grid-content-height;
-  background: #66b8fb;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 
   * {
     font-family: Circe-Light;
@@ -187,6 +178,16 @@ export default class WeekWeather extends Vue {
     max-height: 50px;
     height: 100%;
     width: 100%;
+  }
+
+  &__content {
+    color: white;
+    background: #66b8fb;
+    font-family: Circe-Light, serif;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   &__header {
