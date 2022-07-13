@@ -21,7 +21,8 @@
         <div class="widget__bottom">
           <div class="widget__bottom-day"
                @click="getMoreDayWeather(day)"
-               v-for="day in 3">
+               v-for="day in 3"
+          >
             <div class="widget__bottom-day-title">{{
                 days[new Date(cityData?.forecast?.forecastday[day - 1].date).getDay()]
               }}

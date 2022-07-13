@@ -33,7 +33,7 @@
 import Component from 'vue-class-component';
 import {Prop, Watch} from 'vue-property-decorator';
 import Vue from 'vue';
-import CocaCola from '@/modules/components/widgets/CocaCola.vue';
+import Blue from '@/modules/components/widgets/Blue.vue';
 import Orange from '@/modules/components/widgets/Orange.vue';
 import Green from '@/modules/components/widgets/Green.vue';
 import Yellow from '@/modules/components/widgets/Yellow.vue';
@@ -46,7 +46,7 @@ import WeekWeather from '@/modules/components/widgets/WeekWeather.vue';
 
 @Component({
   components: {
-    CocaCola,
+    Blue,
     Orange,
     Green,
     Yellow,

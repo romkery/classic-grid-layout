@@ -14,12 +14,15 @@
 
 
 <script lang="ts">
-import {Prop} from 'vue-property-decorator';
 import Vue from 'vue';
+import {Prop} from 'vue-property-decorator';
+import Component from 'vue-class-component';
 
+@Component
 export default class Trash extends Vue {
 
-  @Prop({}) protected deleteSelectedItems!: (state: string) => void;
+  @Prop({}) protected deleteSelectedItems: (state: string) => void;
+  
 }
 
 </script>

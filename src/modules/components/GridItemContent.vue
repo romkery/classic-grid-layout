@@ -12,19 +12,21 @@
       class="selection"
     />
     <div class="pin-icon-container">
-      <i class="el-icon-loading"
-         @click="() => {model.props.isLoading = !model.props.isLoading; changeEvent(layout)}"
+      <div>
+        <i class="el-icon-loading"
+           @click="() => {model.props.isLoading = !model.props.isLoading; changeEvent(layout)}"
+        />
+        <i class="el-icon-setting"
+           @click="setEditMode(model.i)"
+        />
+        <i class="el-icon-star-off"
+           v-if="!model.isStatic"
+           @click="setIsStatic(true)"
+        />
+      </div>
+      <i class="el-icon-delete"
+         @click="deleteOneItem('delete')"
       />
-      <i class="el-icon-setting"
-         @click="setEditMode(model.i)"
-      />
-      <i class="el-icon-star-off"
-         v-if="!model.isStatic"
-         @click="setIsStatic(true)"
-      />
-      <i class="el-icon-star-on"
-         v-if="model.isStatic"
-         @click="setIsStatic(false)"/>
     </div>
     <component
       :class="'grid-model-content'+ model.i"
@@ -45,14 +47,14 @@ import Yellow from '@/modules/components/widgets/Yellow.vue';
 import Black from '@/modules/components/widgets/Black.vue';
 import Orange from '@/modules/components/widgets/Orange.vue';
 import Green from '@/modules/components/widgets/Green.vue';
-import CocaCola from '@/modules/components/widgets/CocaCola.vue';
+import Blue from '@/modules/components/widgets/Blue.vue';
 import {LayoutItemType, LayoutType} from '@/modules/helpers/LayoutStorage';
 import TodayWeather from '@/modules/components/widgets/TodayWeather.vue';
 import WeekWeather from '@/modules/components/widgets/WeekWeather.vue';
 
 @Component({
   components: {
-    CocaCola,
+    Blue,
     Orange,
     Green,
     Yellow,
@@ -71,6 +73,7 @@ export default class GridItemContent extends Vue {
   @Prop({}) protected dragItem!: LayoutItemType
   @Prop({}) protected layout!: LayoutType
   @Prop({}) protected setSelectedItems!: any
+  @Prop({}) protected deleteOneItem!: any
 
   protected selectionMode = false;
 
@@ -99,6 +102,11 @@ export default class GridItemContent extends Vue {
   height: inherit;
 
   .pin-icon-container {
+    padding: 0 2px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
     i {
       cursor: pointer;
       color: white;

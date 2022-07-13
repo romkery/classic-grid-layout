@@ -1,17 +1,28 @@
 <template>
-  <span>
-    <DeleteAlert v-show="model?.props.isDeleteMode"/>
-    <DefaultSkeleton v-if="model?.props.preview === 'skeleton' & model?.props.isLoading"/>
-    <div class="widget"
+  <WidgetBasis :model="model">
+    <div class="widget__content"
          :style="getStyles()"
          v-if="!model?.props.isLoading">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Orange_logo.svg/200px-Orange_logo.svg.png"
-           alt="cola">
-      <h2>Lorem Ipsum</h2>
+      <img src="https://i.gifer.com/6vw5.gif"
+           alt="pikachu">
+      <div class="widget__text"
+           @dblclick="isShowEdit = true">
+        Text:
+        <p>{{ inputText }}</p>
+        <el-input
+          type="textarea"
+          placeholder="Please input"
+          v-model="inputText"
+          maxlength="50"
+          show-word-limit
+          v-show="isShowEdit"
+          autocomplete="on"
+          v-on:keyup.native.enter="isShowEdit = false"
+        />
+      </div>
     </div>
-  </span>
+  </WidgetBasis>
 </template>
-
 
 <script lang="ts">
 
@@ -22,9 +33,11 @@ import LayoutStorage, {LayoutItemType} from '@/modules/helpers/LayoutStorage';
 import DefaultSkeleton from '@/common/mixins/DefaultSkeleton.vue';
 import DeleteAlert from '@/common/mixins/DeleteAlert.vue';
 import getStyles from '@/modules/helpers/getStyles';
+import WidgetBasis from '@/modules/components/WidgetBasis.vue';
 
 @Component({
   components: {
+    WidgetBasis,
     DefaultSkeleton,
     DeleteAlert
   }
@@ -40,9 +53,9 @@ export default class Orange extends Vue {
         name: 'border',
         title: 'Рамка',
         el: 'slider',
-        min: 10,
+        min: 1,
         max: 100,
-        step: 4,
+        step: 1,
         value: 20,
         color: '#ff6200'
       },
@@ -55,6 +68,8 @@ export default class Orange extends Vue {
         step: 1,
         value: 20,
       }])
+  protected isShowEdit: boolean = false;
+  protected inputText: string = 'Double tap to change';
 
   protected getStyles = getStyles.bind(this)
 }
@@ -68,15 +83,26 @@ h1 {
 }
 
 .widget {
-  background: white;
-  height: @grid-content-height;
-  padding: 10px;
-}
+  &__content {
+    height: 100%;
 
-img {
-  width: 100%;
-  height: 50%;
-  object-fit: contain;
-}
+    img {
+      width: 100%;
+      height: 50%;
+      object-fit: contain;
+    }
+  }
 
+  &__text {
+    align-items: center;
+    font-size: 20px;
+    word-break: break-word;
+    cursor: pointer;
+    margin: 10px;
+
+    .el-textarea {
+      position: absolute;
+    }
+  }
+}
 </style>

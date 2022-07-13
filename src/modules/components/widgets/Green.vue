@@ -1,15 +1,13 @@
 <template>
-  <span>
-    <DeleteAlert v-if="model?.props.isDeleteMode"/>
-    <DefaultSkeleton v-if="model?.props.preview === 'skeleton' & model?.props.isLoading"/>
-    <div class="widget"
+  <WidgetBasis :model="model">
+    <div class="widget__content"
          :style="getStyles()"
          v-if="!model?.props.isLoading & !model?.props.isDeleteMode">
-    <img
-      src="https://media.istockphoto.com/photos/green-apple-picture-id584226186?k=20&m=584226186&s=170667a&w=0&h=YaNNvCnxJR8-VVQX62PjEOxa2FhzY8whNfkrsr2FgUs="
-      alt="cola">
+      <img
+        src="https://i.gifer.com/XHXk.gif"
+        alt="cola">
     </div>
-  </span>
+  </WidgetBasis>
 </template>
 
 
@@ -22,9 +20,11 @@ import LayoutStorage, {LayoutItemType} from '@/modules/helpers/LayoutStorage';
 import DefaultSkeleton from '@/common/mixins/DefaultSkeleton.vue';
 import DeleteAlert from '@/common/mixins/DeleteAlert.vue';
 import getStyles from '@/modules/helpers/getStyles';
+import WidgetBasis from '@/modules/components/WidgetBasis.vue';
 
 @Component({
   components: {
+    WidgetBasis,
     DeleteAlert,
     DefaultSkeleton
   }
@@ -40,20 +40,32 @@ export default class Green extends Vue {
         name: 'border',
         title: 'Рамка',
         el: 'slider',
-        min: 10,
+        min: 0,
         max: 100,
-        step: 4,
-        value: 20,
-        color: '#7eff19'
+        step: 1,
+        value: 1,
+        color: '#b7ff7d'
       },
       {
         name: 'borderRadius',
         title: 'Скругление углов',
         el: 'slider',
-        min: 10,
+        min: 0,
         max: 100,
         step: 1,
         value: 20,
+      },
+      {
+        name: 'background',
+        title: 'Фон',
+        el: 'colorPicker',
+        color: '#212121',
+      },
+      {
+        name: 'borderColor',
+        title: 'Цвет рамки',
+        el: 'borderColorPicker',
+        color: '#B7FF7DFF',
       }])
 
   protected getStyles = getStyles.bind(this)
@@ -66,16 +78,15 @@ export default class Green extends Vue {
 @import '../../../assets/styles/_variables';
 
 .widget {
-  background: white;
-  height: @grid-content-height;
-  padding: 10px;
-}
+  &__content {
+    height: 100%;
 
-img {
-  width: 100%;
-  height: 50%;
-  object-fit: contain;
+    img {
+      width: 100%;
+      height: 50%;
+      object-fit: contain;
+    }
+  }
 }
-
 
 </style>

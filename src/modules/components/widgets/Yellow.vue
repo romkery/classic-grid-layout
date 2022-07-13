@@ -1,14 +1,13 @@
 <template>
-  <span>
-    <DeleteAlert v-if="model?.props.isDeleteMode"/>
-    <DefaultSkeleton v-if="model?.props.preview === 'skeleton' & model?.props.isLoading"/>
-    <div class="widget"
+  <WidgetBasis :model="model">
+    <div class="widget__content"
          v-if="!model?.props.isLoading"
          :style="getStyles()">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLXuSFEShPYz9wzfOwIiuJaJ9JdGSmWFfn_YykysuXfQ&s"
-         alt="cola">
+      <img
+        src="https://i.gifer.com/5Jy1.gif"
+        alt="chick">
     </div>
-    </span>
+  </WidgetBasis>
 </template>
 
 
@@ -21,9 +20,11 @@ import DefaultSkeleton from '@/common/mixins/DefaultSkeleton.vue';
 import DeleteAlert from '@/common/mixins/DeleteAlert.vue';
 import {Prop} from 'vue-property-decorator';
 import getStyles from '@/modules/helpers/getStyles';
+import WidgetBasis from '@/modules/components/WidgetBasis.vue';
 
 @Component({
   components: {
+    WidgetBasis,
     DefaultSkeleton,
     DeleteAlert
   }
@@ -31,7 +32,7 @@ import getStyles from '@/modules/helpers/getStyles';
 export default class Yellow extends Vue {
 
   @Prop({}) protected model!: LayoutItemType
-  
+
   protected store = new LayoutStorage()
   protected ownProperty: LayoutItemType = this.store.createNewWidget(2, 50, 'Yellow', 'skeleton',
     [
@@ -39,25 +40,31 @@ export default class Yellow extends Vue {
         name: 'border',
         title: 'Рамка',
         el: 'slider',
-        min: 10,
+        min: 1,
         max: 100,
-        step: 4,
-        value: 20,
+        step: 2,
+        value: 3,
         color: '#ff7d7d',
       },
       {
         name: 'borderRadius',
         title: 'Скругление углов',
         el: 'slider',
-        min: 10,
+        min: 1,
         max: 100,
-        step: 1,
+        step: 2,
         value: 20,
       },
       {
         name: 'background',
         title: 'Фон',
         el: 'colorPicker',
+        color: '#212121',
+      },
+      {
+        name: 'borderColor',
+        title: 'Цвет рамки',
+        el: 'borderColorPicker',
         color: '#ffe21c',
       }
     ]
@@ -71,15 +78,15 @@ export default class Yellow extends Vue {
 @import '../../../assets/styles/_variables';
 
 .widget {
-  background: white;
-  height: @grid-content-height;
-  padding: 10px;
-}
+  &__content {
+    height: 100%;
 
-img {
-  width: 100%;
-  height: 50%;
-  object-fit: contain;
+    img {
+      width: 100%;
+      height: 50%;
+      object-fit: contain;
+    }
+  }
 }
 
 </style>

@@ -111,6 +111,7 @@ export type DayForecastType = {
     "mintemp_c": number
     "mintemp_f": number
     "avgtemp_f": number
+    "avgtemp_c": number
     "maxwind_mph": number
     "maxwind_kph": number
     "totalprecip_mm": number

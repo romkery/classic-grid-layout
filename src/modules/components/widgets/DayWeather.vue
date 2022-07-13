@@ -19,7 +19,7 @@
             <span>{{ days[new Date(dayData.date).getDay()] }}</span>
           </p>
         </div>
-        <img class="day-info__header-icon" :src="dayData.day.condition.icon"/>
+        <img class="day-info__header-icon" :src="dayData.day.condition.icon" alt="condition icon"/>
       </div>
       <span id="separator"/>
       <div class="day-info__bottom">
@@ -100,9 +100,8 @@ export default class DayWeather extends Vue {
     justify-content: space-between;
     cursor: pointer;
 
-
     * {
-      font-family: Circe-Light;
+      font-family: Circe-Light, serif;
       color: #474747;
       line-height: 1.5;
     }
@@ -135,7 +134,7 @@ export default class DayWeather extends Vue {
 
         p {
           font-size: 30px;
-          font-family: Circe-Regular;
+          font-family: Circe-Regular, serif;
           line-height: 1.5rem;
         }
 
@@ -143,7 +142,7 @@ export default class DayWeather extends Vue {
           font-size: 18px;
 
           &:not(:last-child) {
-            font-family: Circe-Regular;
+            font-family: Circe-Regular, serif;
           }
         }
       }
@@ -171,7 +170,7 @@ export default class DayWeather extends Vue {
         }
 
         p {
-          font-family: Circe-Bold;
+          font-family: Circe-Bold, serif;
         }
       }
 

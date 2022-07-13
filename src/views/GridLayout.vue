@@ -50,6 +50,7 @@
             :set-drag-item="setDragItem"
             :set-edit-mode="setEditMode"
             :set-selected-items="setSelectedItems"
+            :deleteOneItem="deleteOneItem"
           />
         </grid-item>
       </grid-layout>
@@ -115,7 +116,7 @@ export default class Layout extends LayoutStorage {
   public deleteSelectedItems(state: string) {
     if (state === 'delete') {
       this.selectedItems.forEach(itemId => {
-        const selectedItemsIndex = this.layout.findIndex(function (el) {
+        const selectedItemsIndex = this.layout.findIndex((el) => {
           return el.i === itemId;
         })
         if (selectedItemsIndex !== -1) {

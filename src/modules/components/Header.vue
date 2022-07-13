@@ -46,16 +46,16 @@ export default class Header extends Vue {
   @Prop({}) protected dragend!: void;
   @Prop({}) protected deleteSelectedItems!: void;
 
-  protected weatherModule: WeatherModule = useModule(this.$store, ['weatherModule'])!;
+  protected weatherModule?: WeatherModule = useModule(this.$store, ['weatherModule']);
   protected input: string = '';
 
   protected selectCity(city: any) {
-    this.weatherModule.setCity(city.value);
+    this.weatherModule?.setCity(city.value);
     this.input = '';
   }
 
   protected async querySearch(query: string, callback: any) {
-    callback(await this.weatherModule.getAutocompleteCities(query));
+    callback(await this.weatherModule?.getAutocompleteCities(query));
   }
 }
 
@@ -72,13 +72,23 @@ export default class Header extends Vue {
   flex-direction: column;
   justify-content: space-between;
   padding-bottom: 20px;
-  border-bottom: 1px solid white;
   color: white;
-  background: #222222;
   z-index: 2;
+  border-bottom: 1px solid;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  margin-bottom: 20px;
+  background-color: #212121B3;
+  box-shadow: 0 10px 15px rgb(0 0 0 / 20%);
+  border-bottom-right-radius: 12px;
+  border-bottom-left-radius: 12px;
+  box-sizing: border-box;
+  backdrop-filter: blur(33px);
+  background-blend-mode: overlay;
+  align-items: center;
 
   &__search {
-    margin-bottom: 20px;
+    padding: 0 5px 20px 5px;
 
     &-input {
       width: 100%;

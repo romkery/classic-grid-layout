@@ -20,6 +20,13 @@
         :value="prop.color"
         @input="store.setStyleValues($event, prop, +model.i, 'color', layout, changeEvent)"
       />
+      <el-color-picker
+        v-if="prop.el === 'borderColorPicker'"
+        :style="{top: '12px'}"
+        :disabled="model.props.isLoading"
+        :value="prop.color"
+        @input="store.setStyleValues($event, prop, +model.i, 'color', layout, changeEvent)"
+      />
     </div>
   </div>
 </template>

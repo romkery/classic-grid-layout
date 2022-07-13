@@ -31,7 +31,7 @@
         />
       </div>
     </div>
-    <trash/>
+    <Trash :delete-selected-items="deleteSelectedItems"/>
   </div>
 </template>
 
@@ -46,7 +46,7 @@ import LayoutStorage from '@/modules/helpers/LayoutStorage';
 import TodayWeather from '@/modules/components/widgets/TodayWeather.vue';
 import Green from '@/modules/components/widgets/Green.vue';
 import Orange from '@/modules/components/widgets/Orange.vue';
-import CocaCola from '@/modules/components/widgets/CocaCola.vue';
+import Blue from '@/modules/components/widgets/Blue.vue';
 import WeekWeather from '@/modules/components/widgets/WeekWeather.vue';
 import Trash from '@/modules/components/Trash.vue';
 
@@ -58,7 +58,7 @@ import Trash from '@/modules/components/Trash.vue';
     TodayWeather,
     Orange,
     Green,
-    CocaCola,
+    Blue,
     WeekWeather
   }
 })
@@ -66,7 +66,7 @@ export default class WidgetList extends Vue {
 
   @Prop({}) protected dragend!: any
   @Prop({}) protected drag!: any
-  @Prop({}) protected deleteSelectedItems!: any
+  @Prop({}) protected deleteSelectedItems!: (state: string) => void;
 
   protected store = new LayoutStorage()
   protected isShowPreview = false;
@@ -95,9 +95,10 @@ export default class WidgetList extends Vue {
   display: flex;
   height: 50px;
   transition: all .5s;
+  padding: 0 5px;
 
   p {
-    color: #181818;
+    color: white;
   }
 
   h3 {
@@ -126,8 +127,7 @@ export default class WidgetList extends Vue {
     &-box {
       min-width: 200px;
       width: 100%;
-      background: #85fcc9;
-      border: 1px solid black;
+      border: 1px solid lightgreen;
       border-radius: 10px;
       margin: 0 10px;
       padding: 10px 5px 5px 5px;

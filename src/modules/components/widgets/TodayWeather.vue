@@ -82,7 +82,7 @@ export default class TodayWeather extends Vue {
         value: 15,
       }], 2, 30
   )
-  
+
   protected async refreshCity() {
     // Получение обновленных данных универсальной функцией
     this.cityData = await refreshCity.bind(this, 'current')();
@@ -96,7 +96,7 @@ export default class TodayWeather extends Vue {
   protected getStyles = getStyles.bind(this);// Присваивание универсальной функции
 
   async created() {
-    this.cityData = await this.onCreated() // Вызываем универсальную функцию
+    this.cityData = await this.onCreated();
   }
 
 }

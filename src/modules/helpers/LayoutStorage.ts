@@ -5,7 +5,7 @@ export default class LayoutStorage extends Vue {
     public gridItemSize = {w: 2, h: 50}
     public isEdit: boolean = false;
     public item: LayoutItemType | Object = {}
-    public outerWidgets = ['TodayWeather', 'WeekWeather', 'Black', 'Yellow', 'CocaCola', 'Green', 'Orange', 'TodayWeather', 'WeekWeather', 'Black', 'Yellow', 'CocaCola', 'Green', 'Orange']
+    public outerWidgets = ['TodayWeather', 'WeekWeather', 'Black', 'Yellow', 'Blue', 'Green', 'Orange', 'TodayWeather', 'WeekWeather', 'Black', 'Yellow', 'Blue', 'Green', 'Orange']
     public layout: LayoutType = [];
     public dragItem: LayoutItemType = {};
     protected selectedItems: number[] = []
@@ -13,7 +13,7 @@ export default class LayoutStorage extends Vue {
     public defaultLayout: LayoutItemType[] =
         [
             {
-                "x": 0, "y": 1, "w": 3, "h": 50, "i": 0, c: 'CocaCola', isStatic: false, props: {
+                "x": 0, "y": 1, "w": 3, "h": 50, "i": 0, c: 'Blue', isStatic: false, props: {
                     preview: 'skeleton', isLoading: false, isDeleteMode: false,
                     styleProps: {
                         border: {
@@ -86,7 +86,7 @@ export default class LayoutStorage extends Vue {
                 title: el.title,
                 el: el.el,
                 color: el.color ? el.color : undefined,
-                value: el.value ? el.value : 0,
+                value: el.value ? el.value : '',
                 params: {
                     min: el.min ? el.min : 0,
                     max: el.max ? el.max : 100,
@@ -125,7 +125,7 @@ export default class LayoutStorage extends Vue {
     public setWidgetCity(city: string, selectedItem: LayoutItemType) {
         if (selectedItem) {
             if (!selectedItem.props!.city) {
-                selectedItem.props!.city = city
+                selectedItem.props!.city = city;
             }
         }
     }
@@ -167,7 +167,7 @@ export type StyleType = {
         title: string
         el: string,
         color?: string
-        value?: number
+        value?: number | string
         params?: {
             min?: number
             max?: number
