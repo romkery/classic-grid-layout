@@ -13,9 +13,9 @@
              alt="condition-icon"/>
         <div class="widget__bottom-info">
           <i class="el-icon-location"/>
-          <el-tooltip content="Change to current" placement="top">
-            <h3 @click="changeCity">{{ cityData?.location?.name }}</h3>
-          </el-tooltip>
+          <!--                    <el-tooltip content="Change to current" placement="top">-->
+          <!--                    </el-tooltip>-->
+          <h3 @click="changeCity">{{ cityData?.location?.name }}</h3>
         </div>
         <div class="widget__bottom-info">
           <h3>{{ getLocalTime(cityData) }}</h3>

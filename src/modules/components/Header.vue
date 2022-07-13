@@ -64,6 +64,16 @@ export default class Header extends Vue {
 
 <style lang="less" scoped>
 
+@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+  .header {
+    box-sizing: border-box;
+    background-blend-mode: overlay;
+    background-color: #212121B3;
+    -webkit-backdrop-filter: blur(33px);
+    backdrop-filter: blur(33px);
+  }
+}
+
 .header {
   width: 100%;
   top: 0;
@@ -78,13 +88,11 @@ export default class Header extends Vue {
   border-right: 1px solid black;
   border-left: 1px solid black;
   margin-bottom: 20px;
-  background-color: #212121B3;
+  background-color: #2121219D;
+
   box-shadow: 0 10px 15px rgb(0 0 0 / 20%);
   border-bottom-right-radius: 12px;
   border-bottom-left-radius: 12px;
-  box-sizing: border-box;
-  backdrop-filter: blur(33px);
-  background-blend-mode: overlay;
   align-items: center;
 
   &__search {

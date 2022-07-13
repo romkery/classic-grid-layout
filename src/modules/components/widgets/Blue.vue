@@ -43,7 +43,6 @@ export default class Blue extends Vue {
         max: 100,
         step: 4,
         value: 3,
-        color: '#2bffc7'
       },
       {
         name: 'borderRadius',

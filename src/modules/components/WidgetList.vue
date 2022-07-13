@@ -117,8 +117,10 @@ export default class WidgetList extends Vue {
     width: 100%;
     display: flex;
     flex-direction: row;
-    overflow: scroll;
     margin-right: 10px;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE 11 */
+    scrollbar-width: none; /* Firefox 64 */
 
     &::-webkit-scrollbar {
       display: none;
