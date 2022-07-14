@@ -136,6 +136,7 @@ export default class WidgetList extends Vue {
 
       &-item {
         height: @grid-content-height;
+        pointer-events: none;
       }
 
       p {

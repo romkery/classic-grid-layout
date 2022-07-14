@@ -66,7 +66,7 @@ import {ForecastResponseType} from '@/services/ApiTypes';
 import DayWeather from '@/modules/components/widgets/DayWeather.vue';
 import getLocalTime from '@/modules/helpers/weatherWidgets/getLocalTime'
 import mockCityData from '@/modules/helpers/weatherWidgets/mockCityData';
-import WidgetBasis from '@/modules/components/WidgetBasis.vue';
+import WidgetBasis from '@/common/mixins/WidgetBasis.vue';
 import getStyles from '@/modules/helpers/getStyles';
 import onCreated from '@/modules/helpers/weatherWidgets/onCreated';
 import {changeCity, refreshCity} from '@/modules/helpers/weatherWidgets/methods';
