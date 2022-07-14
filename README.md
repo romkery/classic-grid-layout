@@ -1,5 +1,5 @@
 <h2 align="center" id="font-patcher">
-<img src="https://raw.githubusercontent.com/romkery/weather-grid-layout/5263b4bf9a92aef6d209de8d1a14a1a5548bd7c4/readme-сontent/title.svg?token=ATMWOJSSCOOHNWQ2OBYG2QLCZ6EKQs" alt="вв">
+<img src="https://raw.githubusercontent.com/romkery/weather-grid-layout/15bc587b98dafa483ab6c649242040cbf23403e4/readme-content/title.svg?token=ATMWOJVNR7QUHKUMDYLVM6TCZ6KXG" alt="Logo">
 </h2>
 
 ## Description
@@ -10,6 +10,14 @@ With it, you can create any widgets, place them in the grid as you like, set cus
 In addition, what could be better than your own content appearance management?
 
 ## Recommended IDE Setup
+
+Showing gifs need two things
+
+1- Use this syntax as in these examples
+
+![Alt Text](https://github.com/romkery/weather-grid-layout/blob/weather-grid/readme-content/Preview.gif?raw=true)
+
+<img src="https://github.com/romkery/weather-grid-layout/blob/weather-grid/readme-content/Preview.gif?raw=true"></img>
 
 [VSCode](https://code.visualstudio.com/)
 
