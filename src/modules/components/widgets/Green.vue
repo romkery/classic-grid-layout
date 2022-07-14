@@ -20,7 +20,7 @@ import LayoutStorage, {LayoutItemType} from '@/modules/helpers/LayoutStorage';
 import DefaultSkeleton from '@/common/mixins/DefaultSkeleton.vue';
 import DeleteAlert from '@/common/mixins/DeleteAlert.vue';
 import getStyles from '@/modules/helpers/getStyles';
-import WidgetBasis from '@/modules/components/WidgetBasis.vue';
+import WidgetBasis from '@/common/mixins/WidgetBasis.vue';
 
 @Component({
   components: {
@@ -85,6 +85,7 @@ export default class Green extends Vue {
       width: 100%;
       height: 50%;
       object-fit: contain;
+      right: 10px;
     }
   }
 }
