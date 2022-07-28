@@ -4,7 +4,7 @@
 
 <h1>
 <p align="center">
-  <img src="/Users/romkery/Documents/WebStormWeb/layout-roman/readme-content/CL.svg" alt="Logo">
+  <img src="readme-content/CL.svg" alt="Logo">
   <br>Classic Grid Layout
 </h1>
 <p align="center">
@@ -15,7 +15,7 @@ ____
 
 <p align="center">
   <a href="#about-the-project">About the Project</a> •
-  <a href="#what-problems-does-it-solve?">What problems does it solve?</a> •
+  <a href="#what-problems-does-it-solve">What problems does it solve?</a> •
   <a href="#usage">How To Use</a> •
   <a href="#other-features">Features</a> •
   <a href="#more-info">More info</a> •
@@ -24,7 +24,7 @@ ____
 
 <h1>
 <p align="center">
-  <img src="/Users/romkery/Documents/WebStormWeb/layout-roman/readme-content/Preview_1.gif" alt="Logo">
+  <img src="readme-content/Preview_1.gif" alt="Preview">
 </h1>
 
 ## About The Project
@@ -34,7 +34,7 @@ a web application written in Vue and based on vue-grid-layout, which provides a 
 With it, you can create any widgets, place them in the grid as you like, set custom styling and delete unnecessary ones.
 In addition, what could be better than your own content appearance management?
 
-## What problems does it solve?
+## What problems does it solve
 
 - The complexity of user interaction with "products"
 - Bad user experience.
@@ -49,14 +49,14 @@ widget stores its city values ​​in localStorage.
 
 <h1>
 <p align="center">
-  <img src="/Users/romkery/Documents/WebStormWeb/layout-roman/readme-content/CreateWidget.gif" alt="Logo">
+  <img src="readme-content/CreateWidget.gif" alt="CreateWidget">
 </h1>
 
 You can also change the style of any widget by clicking on the settings at the top of it.
 
 <h1>
 <p align="center">
-  <img src="/Users/romkery/Documents/WebStormWeb/layout-roman/readme-content/ChangeWidgetStyle.gif" alt="Logo">
+  <img src="readme-content/ChangeWidgetStyle.gif" alt="Change Widget Style">
 </h1>
 
 You can delete widgets by dragging them to the Trash, and you can also use the Ctrl + click shortcut to select multiple
@@ -64,7 +64,7 @@ widgets and delete them with the Backspace key. You can also just click on the b
 
 <h1>
 <p align="center">
-  <img src="/Users/romkery/Documents/WebStormWeb/layout-roman/readme-content/DeleteWidgets.gif" alt="Logo">
+  <img src="readme-content/DeleteWidgets.gif" alt="DeleteWidgets">
 </h1>
 
 ## Other features
@@ -75,7 +75,7 @@ recreating the widget, you just need to enter select a new city in the input and
 
 <h1>
 <p align="center">
-  <img src="/Users/romkery/Documents/WebStormWeb/layout-roman/readme-content/OtherFeatures.gif" alt="Logo">
+  <img src="readme-content/OtherFeatures.gif" alt="OtherFeatures">
 </h1>
 
 ## More info
