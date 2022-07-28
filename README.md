@@ -1,52 +1,100 @@
-<h2 align="center" id="font-patcher">
-<img src="https://raw.githubusercontent.com/romkery/weather-grid-layout/15bc587b98dafa483ab6c649242040cbf23403e4/readme-content/title.svg?token=ATMWOJVNR7QUHKUMDYLVM6TCZ6KXG" alt="Logo">
-</h2>
+![made-with-vue2](https://img.shields.io/badge/Made%20with-Vue2-success)
+![made-with-typescript](https://img.shields.io/badge/Made%20with-Typescript-blue)
 
-## Description
 
-// The Classic Grid Layout is a simple and convenient grid in which you can place any widgets and make them custom. This
-is a web application written in Vue and based on vue-grid-layout, which provides a grid with the ability to move items.
+<h1>
+<p align="center">
+  <img src="/Users/romkery/Documents/WebStormWeb/layout-roman/readme-content/CL.svg" alt="Logo">
+  <br>Classic Grid Layout
+</h1>
+<p align="center">
+   Vue 2 grid, for creating and managing components.
+</p>
+
+____
+
+<p align="center">
+  <a href="#about-the-project">About the Project</a> •
+  <a href="#what-problems-does-it-solve?">What problems does it solve?</a> •
+  <a href="#usage">How To Use</a> •
+  <a href="#other-features">Features</a> •
+  <a href="#more-info">More info</a> •
+  <a href="#credits">Credits</a> •
+</p>
+
+<h1>
+<p align="center">
+  <img src="/Users/romkery/Documents/WebStormWeb/layout-roman/readme-content/Preview_1.gif" alt="Logo">
+</h1>
+
+## About The Project
+
+The Classic Grid Layout is a simple and convenient grid in which you can place any widgets and make them custom. This is
+a web application written in Vue and based on vue-grid-layout, which provides a grid with the ability to move items.
 With it, you can create any widgets, place them in the grid as you like, set custom styling and delete unnecessary ones.
 In addition, what could be better than your own content appearance management?
 
-## Recommended IDE Setup
+## What problems does it solve?
 
-Showing gifs need two things
+- The complexity of user interaction with "products"
+- Bad user experience.
+- Lack of content flexibility.
+- The lack of basic functionality of the grid layout, such as convenient removal and management of widgets.
 
-1- Use this syntax as in these examples
+## Usage
 
-![Alt Text](/Users/romkery/Documents/WebStormWeb/layout-roman/readme-content/Preview.gif)
+For example, a version of the weather site was created using a grid layout. To create a widget, drag it to the layout.
+The selected city is on top, it can be changed by input. The widget is created with the city currently selected. Each
+widget stores its city values ​​in localStorage.
 
-## Recommended IDE Setup
+<h1>
+<p align="center">
+  <img src="/Users/romkery/Documents/WebStormWeb/layout-roman/readme-content/CreateWidget.gif" alt="Logo">
+</h1>
 
-[VSCode](https://code.visualstudio.com/)
+You can also change the style of any widget by clicking on the settings at the top of it.
 
-## Type Support for `.vue` Imports in TS
+<h1>
+<p align="center">
+  <img src="/Users/romkery/Documents/WebStormWeb/layout-roman/readme-content/ChangeWidgetStyle.gif" alt="Logo">
+</h1>
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type
-by default. In most cases this is fine if you don't really care about component prop types outside of templates.
+You can delete widgets by dragging them to the Trash, and you can also use the Ctrl + click shortcut to select multiple
+widgets and delete them with the Backspace key. You can also just click on the basket at the top of the widget.
 
-However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using
-manual `h(...)` calls), you can run `Volar: Switch TS Plugin on/off` from VSCode command palette.
+<h1>
+<p align="center">
+  <img src="/Users/romkery/Documents/WebStormWeb/layout-roman/readme-content/DeleteWidgets.gif" alt="Logo">
+</h1>
 
-## Customize configuration
+## Other features
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+You can turn off preview mode with a switcher, this is useful if you know perfectly well what you will be dragging.
+Also, each widget can be positioned as convenient and pinned. In the weather widget, you can change the city without
+recreating the widget, you just need to enter select a new city in the input and click on the city name in the widget.
 
-## Project Setup
+<h1>
+<p align="center">
+  <img src="/Users/romkery/Documents/WebStormWeb/layout-roman/readme-content/OtherFeatures.gif" alt="Logo">
+</h1>
 
-```sh
-npm install
-```
+## More info
 
-### Compile and Hot-Reload for Development
+The project is written in the vue 2 framework, using OOP, with the help of vue-class-component. All widgets are
+completely independent and are able to change their styles, add new ones and change old ones. All data needed for the
+component is stored in LocalStorage. The weather data is stored in the Vuex Store in order not to produce requests to
+the server. The main class that provides methods for working with Classic Grid Layout is Layout Storage, Grid Layout
+inherits from it.
 
-```sh
-npm run dev
-```
+## Credits
 
-### Type-Check, Compile and Minify for Production
+Author and developer Dmitriev Roman, junior frontend developer.
 
-```sh
-npm run build
-```
+### Social networks
+
+- Telegram: classic_rd
+- Vk: classic_rd
+
+<br>
+
+

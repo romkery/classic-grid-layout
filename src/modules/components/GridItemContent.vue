@@ -23,6 +23,10 @@
            v-if="!model.isStatic"
            @click="setIsStatic(true)"
         />
+        <i class="el-icon-star-on"
+           v-if="model.isStatic"
+           @click="setIsStatic(false)"
+        />
       </div>
       <i class="el-icon-delete"
          @click="deleteOneItem('delete')"
