@@ -1,13 +1,21 @@
 <h2 align="center" id="font-patcher">
-<img src="https://raw.githubusercontent.com/romkery/weather-grid-layout/5263b4bf9a92aef6d209de8d1a14a1a5548bd7c4/readme-сontent/title.svg?token=ATMWOJSSCOOHNWQ2OBYG2QLCZ6EKQs" alt="вв">
+<img src="https://raw.githubusercontent.com/romkery/weather-grid-layout/15bc587b98dafa483ab6c649242040cbf23403e4/readme-content/title.svg?token=ATMWOJVNR7QUHKUMDYLVM6TCZ6KXG" alt="Logo">
 </h2>
 
 ## Description
 
-The Classic Grid Layout is a simple and convenient grid in which you can place any widgets and make them custom. This is
-a web application written in Vue and based on vue-grid-layout, which provides a grid with the ability to move items.
+// The Classic Grid Layout is a simple and convenient grid in which you can place any widgets and make them custom. This
+is a web application written in Vue and based on vue-grid-layout, which provides a grid with the ability to move items.
 With it, you can create any widgets, place them in the grid as you like, set custom styling and delete unnecessary ones.
 In addition, what could be better than your own content appearance management?
+
+## Recommended IDE Setup
+
+Showing gifs need two things
+
+1- Use this syntax as in these examples
+
+![Alt Text](/Users/romkery/Documents/WebStormWeb/layout-roman/readme-content/Preview.gif)
 
 ## Recommended IDE Setup
 

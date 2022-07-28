@@ -20,7 +20,7 @@ import DefaultSkeleton from '@/common/mixins/DefaultSkeleton.vue';
 import DeleteAlert from '@/common/mixins/DeleteAlert.vue';
 import {Prop} from 'vue-property-decorator';
 import getStyles from '@/modules/helpers/getStyles';
-import WidgetBasis from '@/modules/components/WidgetBasis.vue';
+import WidgetBasis from '@/common/mixins/WidgetBasis.vue';
 
 
 @Component({
