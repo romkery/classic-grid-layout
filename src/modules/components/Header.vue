@@ -62,7 +62,7 @@ export default class Header extends Vue {
 </script>
 
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 
 @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
   .header {

@@ -9,6 +9,14 @@
           inactive-color="#4287f5">
         </el-switch>
       </el-tooltip>
+      <el-tooltip content="Dark theme" placement="top">
+        <el-switch
+          v-model="isDark"
+          active-color="#13ce66"
+          inactive-color="#4287f5"
+          @change="toggleTheme">
+        </el-switch>
+      </el-tooltip>
     </div>
     <div
       class="widgets__list"
@@ -68,6 +76,20 @@ export default class WidgetList extends Vue {
   @Prop({}) protected drag!: any
   @Prop({}) protected deleteSelectedItems!: (state: string) => void;
 
+  protected isDark: boolean = false;
+
+  protected toggleTheme() {
+    this.isDark = !this.isDark;
+    if (this.isDark) {
+      document.getElementsByTagName('html')[0].classList.remove('dark');
+      document.getElementsByTagName('html')[0].setAttribute('class', 'light');
+    } else {
+      document.getElementsByTagName('html')[0].classList.remove('light');
+      document.getElementsByTagName('html')[0].setAttribute('class', 'dark');
+    }
+    this.isDark = !this.isDark;
+  }
+
   protected store = new LayoutStorage()
   protected isShowPreview = false;
   protected isDisablePreview = false;
@@ -86,9 +108,9 @@ export default class WidgetList extends Vue {
 </script>
 
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 
-@import '../../assets/styles/_variables';
+@import './src/scss/globals/variables';
 
 .widgets {
   width: 100%;
@@ -135,7 +157,7 @@ export default class WidgetList extends Vue {
       padding: 10px 5px 5px 5px;
 
       &-item {
-        height: @grid-content-height;
+        height: $grid-content-height;
         pointer-events: none;
       }
 

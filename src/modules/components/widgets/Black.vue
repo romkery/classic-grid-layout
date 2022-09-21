@@ -70,8 +70,8 @@ export default class Black extends Vue {
 </script>
 
 
-<style lang="less" scoped>
-@import '../../../assets/styles/_variables';
+<style lang="scss" scoped>
+@import './src/scss/globals/variables';
 
 .widget {
   &__content {

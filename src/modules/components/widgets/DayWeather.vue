@@ -82,8 +82,8 @@ export default class DayWeather extends Vue {
 </script>
 
 
-<style lang="less" scoped>
-@import '../../../assets/styles/_variables';
+<style lang="scss" scoped>
+@import './src/scss/globals/variables';
 
 .container {
 
@@ -91,7 +91,7 @@ export default class DayWeather extends Vue {
 
   .day-info {
     width: inherit;
-    height: @grid-content-height;
+    height: $grid-content-height;
     background: #66b8fb;
     border-radius: 16px;
     overflow: hidden;

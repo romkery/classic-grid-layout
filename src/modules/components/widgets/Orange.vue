@@ -76,8 +76,8 @@ export default class Orange extends Vue {
 
 </script>
 
-<style lang="less" scoped>
-@import '../../../assets/styles/_variables';
+<style lang="scss" scoped>
+
 
 h1 {
 }

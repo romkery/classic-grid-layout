@@ -103,7 +103,7 @@ export default class TodayWeather extends Vue {
 
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 
 .widget {
 

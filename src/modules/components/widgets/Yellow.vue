@@ -74,8 +74,8 @@ export default class Yellow extends Vue {
 }
 </script>
 
-<style lang="less" scoped>
-@import '../../../assets/styles/_variables';
+<style lang="scss" scoped>
+
 
 .widget {
   &__content {

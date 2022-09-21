@@ -1,0 +1,42 @@
+$accent-color: hsl(211, 100%, 50%);
+$fontSize: 16;
+$maxWidth: 3840;
+
+$grid-item-header-margin: 26px;
+$grid-content-height: calc(100% - 26px);
+
+$--background-primary: --background-color;
+$--background-secondary: --background-secondary;
+$--background-header: --background-header;
+$--font-color: --font-color;
+
+$--background-btn: --background-btn;
+$--hover-btn: --hover-btn;
+$--color-btn: --color-btn;
+
+$--accent-color: --accent-color;
+$--hover-input-bg: --hover-input-bg;
+
+$theme-map-light: (
+        $--background-primary: hsl(0, 7%, 94%, 0.99),
+        $--background-secondary: hsla(0, 0%, 0%, 0.08),
+        $--background-header: hsl(0, 0%, 100%, 0.6),
+        $--font-color: hsl(0, 0%, 7%),
+        $--background-btn: hsl(0, 0%, 7%),
+        $--hover-btn: hsl(0, 0%, 8%),
+        $--color-btn: hsl(0, 7%, 94%, 0.99),
+        $--accent-color: $accent-color,
+        $--hover-input-bg: hsla(0, 0%, 0%, 0.13)
+);
+// Override the default light theme
+$theme-map-dark: (
+        $--background-primary:hsla(0, 0%, 7%, 0.94),
+        $--background-secondary: hsl(0, 0%, 100%, 0.15),
+        $--background-header: hsl(0, 0%, 7%, 0.42),
+        $--font-color: hsl(0, 7%, 94%, 0.99),
+        $--background-btn: hsl(0 0% 100% / 0.8),
+        $--hover-btn: hsl(0 0% 100% / 1),
+        $--color-btn: hsl(0, 0%, 7%),
+        $--accent-color: $accent-color,
+        $--hover-input-bg: hsl(0 0% 100% / 0.20)
+);

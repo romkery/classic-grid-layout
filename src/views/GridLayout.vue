@@ -248,7 +248,7 @@ export default class Layout extends LayoutStorage {
 }
 </script>
 
-<style lang="less">
+<style lang="scss">
 
 .vue-grid-layout {
   margin-top: 20px;

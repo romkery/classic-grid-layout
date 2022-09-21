@@ -2,6 +2,7 @@ import Vue from 'vue';
 
 export default class LayoutStorage extends Vue {
 
+    public isDark = false;
     public gridItemSize = {w: 2, h: 50}
     public isEdit: boolean = false;
     public item: LayoutItemType | Object = {}

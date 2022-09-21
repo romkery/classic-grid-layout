@@ -4,7 +4,7 @@
 
 <h1>
 <p align="center">
-  <img src="readme-content/CL.svg" alt="Logo">
+  <img src="src/assets/readme-content/CL.svg" alt="Logo">
   <br>Classic Grid Layout
 </h1>
 <p align="center">
@@ -24,7 +24,7 @@ ____
 
 <h1>
 <p align="center">
-  <img src="readme-content/Preview_1.gif" alt="Preview">
+  <img src="src/assets/readme-content/Preview_1.gif" alt="Preview">
 </h1>
 
 ## About The Project
@@ -49,14 +49,14 @@ widget stores its city values ​​in localStorage.
 
 <h1>
 <p align="center">
-  <img src="readme-content/CreateWidget.gif" alt="CreateWidget">
+  <img src="src/assets/readme-content/CreateWidget.gif" alt="CreateWidget">
 </h1>
 
 You can also change the style of any widget by clicking on the settings at the top of it.
 
 <h1>
 <p align="center">
-  <img src="readme-content/ChangeWidgetStyle.gif" alt="Change Widget Style">
+  <img src="src/assets/readme-content/ChangeWidgetStyle.gif" alt="Change Widget Style">
 </h1>
 
 You can delete widgets by dragging them to the Trash, and you can also use the Ctrl + click shortcut to select multiple
@@ -64,7 +64,7 @@ widgets and delete them with the Backspace key. You can also just click on the b
 
 <h1>
 <p align="center">
-  <img src="readme-content/DeleteWidgets.gif" alt="DeleteWidgets">
+  <img src="src/assets/readme-content/DeleteWidgets.gif" alt="DeleteWidgets">
 </h1>
 
 ## Other features
@@ -75,7 +75,7 @@ recreating the widget, you just need to enter select a new city in the input and
 
 <h1>
 <p align="center">
-  <img src="readme-content/OtherFeatures.gif" alt="OtherFeatures">
+  <img src="src/assets/readme-content/OtherFeatures.gif" alt="OtherFeatures">
 </h1>
 
 ## More info
