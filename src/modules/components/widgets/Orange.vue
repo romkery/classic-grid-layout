@@ -77,16 +77,13 @@ export default class Orange extends Vue {
 </script>
 
 <style lang="scss" scoped>
-
-
-h1 {
-}
+@use './src/scss/util' as u;
 
 .widget {
   &__content {
-    height: 100%;
     display: flex;
     flex-direction: column;
+    height: 100%;
 
     img {
       width: 100%;
@@ -97,10 +94,10 @@ h1 {
 
   &__text {
     align-items: center;
+    margin: u.rem(10);
+    cursor: pointer;
     font-size: 0.7rem;
     word-break: break-word;
-    cursor: pointer;
-    margin: 10px;
 
     .el-textarea {
       position: absolute;

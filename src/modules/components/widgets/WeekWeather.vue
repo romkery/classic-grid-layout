@@ -147,6 +147,7 @@ export default class WeekWeather extends Vue {
 
 
 <style lang="scss" scoped>
+@use './src/scss/util' as u;
 @import './src/scss/globals/variables';
 
 .widget {
@@ -158,43 +159,42 @@ export default class WeekWeather extends Vue {
   }
 
   #separator {
-    max-width: 50px;
-    max-height: 50px;
-    height: 100%;
     width: 100%;
+    height: 100%;
+    max-width: u.rem(50);
+    max-height: u.rem(50);
   }
 
   &__content {
-    color: white;
-    background: #66b8fb;
-    //font-family: Circe-Light, serif;
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    height: 100%;
+    background: #66b8fb;
+    color: white;
   }
 
   &__header {
-    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-left: 7%;
+    width: 100%;
     padding-top: 7%;
+    padding-left: 7%;
 
     &-title {
       display: flex;
       flex-direction: column;
-      max-width: 80px;
       height: 100%;
+      max-width: u.rem(80);
       color: #474747;
-      font-size: 30px;
+      font-size: u.rem(30);
       white-space: nowrap;
 
       p {
-        line-height: 1.5rem;
-        font-weight: 600;
         cursor: pointer;
+        font-weight: 600;
+        line-height: u.rem(24);
 
         &:hover {
           color: white;
@@ -203,8 +203,8 @@ export default class WeekWeather extends Vue {
       }
 
       span {
-        font-size: 24px;
         opacity: 0.6;
+        font-size: u.rem(24);
       }
 
       &-time {
@@ -212,74 +212,74 @@ export default class WeekWeather extends Vue {
         align-items: center;
 
         h3 {
-          font-size: 0.6rem;
+          font-size: u.rem(12);
         }
 
         i {
-          font-size: 0.8rem;
-          bottom: 1px;
-          margin-left: 2px;
+          bottom: u.rem(1);
+          margin-left: u.rem(2);
           cursor: pointer;
+          font-size: u.rem(12);
         }
       }
     }
 
     &-icon {
-      max-height: 120px;
-      max-width: 120px;
-      height: 100%;
       width: 100%;
+      height: 100%;
+      max-width: u.rem(120);
+      max-height: u.rem(120);
       animation: Orbita 15s linear infinite;
     }
   }
 
   &__bottom {
-    height: inherit;
     display: flex;
     flex-direction: row;
     align-items: center;
+    height: inherit;
 
     &-day {
-      cursor: pointer;
-      height: inherit;
-      width: 33%;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      width: 33%;
+      height: inherit;
+      cursor: pointer;
 
       &:hover * {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: u.rem(1);
+        height: 100%;
+        background: #3581e5;
+        opacity: 0.5;
         color: white;
         transition: all .3s
       }
 
       &:not(:last-child)::after {
         content: ' ';
-        bottom: 0;
-        right: 0;
-        position: absolute;
-        height: 100%;
-        width: 1px;
-        background: #3581e5;
-        opacity: 0.5;
       }
 
       img {
-        min-width: 30px;
-        min-height: 30px;
+        min-width: u.rem(30);
+        min-height: u.rem(30);
       }
 
       &-title {
-        padding-top: 5px;
-        font-weight: bold;
-        font-size: 0.65rem;
+        padding-top: u.rem(5);
+        font-size: u.rem(12);
+        font-weight: 600;
       }
 
       &-degrees {
-        font-size: 1rem;
+        font-size: u.rem(16);
 
         span:first-child {
-          font-family: Quicksand-Regular, sans-serif;
+          font-weight: 600;
         }
       }
     }
@@ -289,10 +289,10 @@ export default class WeekWeather extends Vue {
 
 @keyframes Orbita {
   from {
-    -webkit-transform: rotate(0deg) translateX(10px) rotate(0deg);
+    -webkit-transform: rotate(0deg) translateX(u.rem(10)) rotate(0deg);
   }
   to {
-    -webkit-transform: rotate(360deg) translateX(10px) rotate(-360deg);
+    -webkit-transform: rotate(360deg) translateX(u.rem(10)) rotate(-360deg);
   }
 }
 

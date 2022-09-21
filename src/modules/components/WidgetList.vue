@@ -109,37 +109,37 @@ export default class WidgetList extends Vue {
 
 
 <style lang="scss" scoped>
-
+@use './src/scss/util' as u;
 @import './src/scss/globals/variables';
 
 .widgets {
-  width: 100%;
   display: flex;
-  height: 50px;
+  width: 100%;
+  height: u.rem(50);
+  padding: 0 u.rem(5);
   transition: all .5s;
-  padding: 0 5px;
 
   p {
     color: white;
   }
 
   h3 {
-    margin-left: 10px;
+    margin-left: u.rem(10);
   }
 
   &__title {
-    margin-right: 20px;
+    margin-right: u.rem(20);
 
     .el-switch {
-      margin-left: 10px;
+      margin-left: u.rem(10);
     }
   }
 
   &__list {
-    width: 100%;
     display: flex;
     flex-direction: row;
-    margin-right: 10px;
+    width: 100%;
+    margin-right: u.rem(10);
     overflow: scroll;
     -ms-overflow-style: none; /* IE 11 */
     scrollbar-width: none; /* Firefox 64 */
@@ -149,12 +149,12 @@ export default class WidgetList extends Vue {
     }
 
     &-box {
-      min-width: 200px;
       width: 100%;
-      border: 1px solid lightgreen;
+      min-width: u.rem(200);
+      padding: u.rem(10) u.rem(5) u.rem(5) u.rem(5);
+      margin: 0 u.rem(10);
+      border: u.rem(1) solid lightgreen;
       border-radius: 10px;
-      margin: 0 10px;
-      padding: 10px 5px 5px 5px;
 
       &-item {
         height: $grid-content-height;

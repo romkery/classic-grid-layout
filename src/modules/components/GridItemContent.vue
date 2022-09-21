@@ -101,15 +101,16 @@ export default class GridItemContent extends Vue {
 
 
 <style lang="scss" scoped>
+@use './src/scss/util' as u;
 
 .container {
   height: inherit;
 
   .pin-icon-container {
-    padding: 0 2px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
+    padding: 0 u.rem(2);
 
     i {
       cursor: pointer;
@@ -119,9 +120,9 @@ export default class GridItemContent extends Vue {
 }
 
 .selection {
-  width: 100%;
-  border: 1px solid red;
   position: absolute;
+  width: 100%;
+  border: u.rem(1) solid red;
 }
 
 </style>

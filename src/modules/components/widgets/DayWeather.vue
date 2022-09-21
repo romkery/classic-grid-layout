@@ -83,6 +83,7 @@ export default class DayWeather extends Vue {
 
 
 <style lang="scss" scoped>
+@use './src/scss/util' as u;
 @import './src/scss/globals/variables';
 
 .container {
@@ -90,56 +91,55 @@ export default class DayWeather extends Vue {
   height: inherit;
 
   .day-info {
-    width: inherit;
-    height: $grid-content-height;
-    background: #66b8fb;
-    border-radius: 16px;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: inherit;
+    height: $grid-content-height;
+    background: #66b8fb;
+    border-radius: u.rem(16);
     cursor: pointer;
+    overflow: hidden;
 
     * {
-      font-family: Circe-Light, serif;
       color: #474747;
       line-height: 1.5;
     }
 
     #separator {
-      max-height: 60px;
       height: 100%;
+      max-height: u.rem(60);
     }
 
     &__header {
-      width: 100%;
-      padding-left: 7%;
-      padding-top: 7%;
       display: flex;
       justify-content: space-between;
+      width: 100%;
+      padding-top: 7%;
+      padding-left: 7%;
 
       &-icon {
-        max-height: 120px;
-        max-width: 120px;
-        height: 100%;
         width: 100%;
+        height: 100%;
+        max-width: u.rem(120);
+        max-height: u.rem(120);
         animation: Orbita 15s linear infinite;
       }
 
       &-info {
-        white-space: nowrap;
-        max-width: 70px;
-        height: 100%;
         z-index: 2;
+        height: 100%;
+        max-width: u.rem(70);
+        white-space: nowrap;
 
         p {
-          font-size: 30px;
           font-family: Quicksand-Regular, sans-serif;
+          font-size: u.rem(30);
           line-height: 1.5rem;
         }
 
         span {
-          font-size: 18px;
+          font-size: u.rem(18);
 
           &:not(:last-child) {
             font-family: Quicksand-Regular, sans-serif;
@@ -150,23 +150,23 @@ export default class DayWeather extends Vue {
     }
 
     &__bottom {
-      height: inherit;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 10px;
+      height: inherit;
+      margin-bottom: u.rem(10);
 
       div {
-        width: 33%;
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 33%;
 
         img {
-          min-width: 30px;
-          min-height: 30px;
-          height: 40%;
           width: 40%;
+          height: 40%;
+          min-width: u.rem(30);
+          min-height: u.rem(30);
         }
 
         p {
@@ -186,10 +186,10 @@ export default class DayWeather extends Vue {
 
 @keyframes Orbita {
   from {
-    -webkit-transform: rotate(0deg) translateX(10px) rotate(0deg);
+    -webkit-transform: rotate(0deg) translateX(u.rem(10)) rotate(0deg);
   }
   to {
-    -webkit-transform: rotate(360deg) translateX(10px) rotate(-360deg);
+    -webkit-transform: rotate(360deg) translateX(u.rem(10)) rotate(-360deg);
   }
 }
 

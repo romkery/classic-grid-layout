@@ -19,6 +19,7 @@ export default class DeleteAlert extends Vue {
 
 <style lang="scss" scoped>
 @import './src/scss/globals/variables';
+@use './src/scss/util' as u;
 
 .delete {
   width: 100%;
@@ -29,7 +30,7 @@ export default class DeleteAlert extends Vue {
 
   i {
     transition: 200ms;
-    font-size: 100px;
+    font-size: u.rem(200);
     color: #c0c0c0;
     margin-bottom: $grid-item-header-margin;
     animation: show 1s 1; /* Указываем название анимации, её время и количество повторов*/

@@ -82,25 +82,27 @@ export default class EditPopUp extends Vue {
 
 <style lang="scss" scoped>
 
+@use './src/scss/util' as u;
+
 .pop-up-mode {
 
   &_sidebar {
     position: fixed;
-    padding: 10px;
+    padding: u.rem(10);
 
     &-content {
-      padding: 20px;
+      padding: u.rem(20);
     }
   }
 
   &_item {
-    max-width: 400px;
-    max-height: 600px;
+    max-width: u.rem(400);
+    max-height: u.rem(600);
     height: 100%;
     width: 100%;
     position: fixed;
-    top: calc(50% - (300px));
-    left: calc(50% - (300px));
+    top: calc(50% - (u.rem(300)));
+    left: calc(50% - (u.rem(300)));
     z-index: 20000;
   }
 }

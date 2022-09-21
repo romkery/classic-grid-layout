@@ -44,6 +44,7 @@ export default class Green extends Vue {
         max: 100,
         step: 1,
         value: 1,
+        height: 100 %;
         color: '#b7ff7d'
       },
       {
@@ -75,17 +76,16 @@ export default class Green extends Vue {
 
 
 <style lang="scss" scoped>
-
+@use './src/scss/util' as u;
 
 .widget {
   &__content {
-    height: 100%;
 
     img {
+      right: u.rem(10);
       width: 100%;
       height: 50%;
       object-fit: contain;
-      right: 10px;
     }
   }
 }

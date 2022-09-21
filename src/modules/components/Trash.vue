@@ -28,13 +28,14 @@ export default class Trash extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@use './src/scss/util' as u;
 
 #trash {
-  width: 50px;
-  height: 50px;
+  width: u.rem(50);
+  height: u.rem(50);
 
   i {
-    font-size: 50px;
+    font-size: u.rem(50);
     color: #c0c0c0;
     cursor: pointer;
 
