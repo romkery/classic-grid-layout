@@ -15,7 +15,7 @@
             </div>
             <span>{{ cityData?.location?.country.length > 10 ? '' : cityData?.location?.country }}</span>
           </div>
-          <img class="widget__header-icon" :src="cityData?.current?.condition.icon"/>
+          <img class="widget__header-icon" :src="cityData?.current?.condition.icon" alt="icon"/>
         </div>
         <span id="separator"/>
         <div class="widget__bottom">
@@ -153,7 +153,6 @@ export default class WeekWeather extends Vue {
 .widget {
 
   * {
-    //font-family: Circe-Bold, serif;
     color: #474747;
     line-height: 1.5;
   }
@@ -198,7 +197,6 @@ export default class WeekWeather extends Vue {
 
         &:hover {
           color: white;
-          transition: .5s;
         }
       }
 
@@ -249,15 +247,8 @@ export default class WeekWeather extends Vue {
       cursor: pointer;
 
       &:hover * {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        width: u.rem(1);
-        height: 100%;
-        background: #3581e5;
-        opacity: 0.5;
         color: white;
-        transition: all .3s
+        transition: all .5s
       }
 
       &:not(:last-child)::after {

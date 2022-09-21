@@ -4,20 +4,14 @@
          :style="styles()"
          @click="setIsInfo">
       <div class="day-info__header">
-        <div class="day-info__header-info">
+        <div class="day-info__header-title">
           <p>{{ cityData?.location?.name }}</p>
-          <p>
-            <span>
-              {{ dayData.day.maxtemp_c.toFixed() }}°
-            </span>
-            <span>
-              {{ dayData.day.mintemp_c.toFixed() }}°
-            </span>
-            <br/>
-            <span>average {{ dayData.day.avgtemp_c }}°</span>
-            <br/>
-            <span>{{ days[new Date(dayData.date).getDay()] }}</span>
-          </p>
+          <span>{{ dayData.day.maxtemp_c.toFixed() }}°
+            {{ dayData.day.mintemp_c.toFixed() }}°
+            <i class="el-icon-refresh" @click="refreshCity"/>
+          </span>
+          <h3>average {{ dayData.day.avgtemp_c }}°</h3>
+          <span>{{ days[new Date(dayData.date).getDay()] }}</span>
         </div>
         <img class="day-info__header-icon" :src="dayData.day.condition.icon" alt="condition icon"/>
       </div>
@@ -114,9 +108,43 @@ export default class DayWeather extends Vue {
     &__header {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       width: 100%;
       padding-top: 7%;
       padding-left: 7%;
+
+      &-title {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        max-width: u.rem(80);
+        color: #474747;
+        font-size: u.rem(30);
+        white-space: nowrap;
+
+        p {
+          cursor: pointer;
+          font-weight: 600;
+          line-height: u.rem(24);
+
+          &:hover {
+            color: white;
+          }
+        }
+
+        h3 {
+          font-size: u.rem(12);
+        }
+
+        span {
+          opacity: 0.6;
+          font-size: u.rem(24);
+        }
+
+        i {
+          font-size: u.rem(20);
+        }
+      }
 
       &-icon {
         width: 100%;
@@ -125,28 +153,6 @@ export default class DayWeather extends Vue {
         max-height: u.rem(120);
         animation: Orbita 15s linear infinite;
       }
-
-      &-info {
-        z-index: 2;
-        height: 100%;
-        max-width: u.rem(70);
-        white-space: nowrap;
-
-        p {
-          font-family: Quicksand-Regular, sans-serif;
-          font-size: u.rem(30);
-          line-height: 1.5rem;
-        }
-
-        span {
-          font-size: u.rem(18);
-
-          &:not(:last-child) {
-            font-family: Quicksand-Regular, sans-serif;
-          }
-        }
-      }
-
     }
 
     &__bottom {

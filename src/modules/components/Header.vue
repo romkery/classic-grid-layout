@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="header__search">
-      <div>{{ weatherModule.city }}</div>
+      <p>{{ weatherModule.city }}</p>
       <el-autocomplete
         class="header__search-input"
         placeholder="Please input city"
@@ -64,6 +64,7 @@ export default class Header extends Vue {
 
 <style lang="scss" scoped>
 @use './src/scss/util' as u;
+@import './src/scss/globals';
 
 @supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
   .header {
@@ -83,25 +84,40 @@ export default class Header extends Vue {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
   padding-bottom: u.rem(20);
-  margin-bottom: u.rem(20);
+  margin: 0 u.rem(10);
 
   box-shadow: 0 u.rem(10) u.rem(15) rgb(0 0 0 / 20%);
-  background-color: #2121219D;
+  background-color: u.theme-var($--background-header);
   border-right: u.rem(1) solid black;
   border-bottom: u.rem(1) solid;
   border-left: u.rem(1) solid black;
   border-bottom-right-radius: u.rem(12);
   border-bottom-left-radius: u.rem(12);
-  color: white;
+  color: u.theme-var($--font-color);
+
+  p {
+    @include u.adaptive_font(30, 15)
+  }
 
   &__search {
     padding: 0 u.rem(5) u.rem(20) u.rem(5);
 
     &-input {
       width: 100%;
+
+      i {
+        color: black;
+      }
+
+      ::placeholder {
+        color: black;
+      }
+
+
     }
+
+
   }
 
   &__widget-list {

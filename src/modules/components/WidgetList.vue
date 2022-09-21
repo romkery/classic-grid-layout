@@ -1,23 +1,23 @@
 <template>
   <div class="widgets">
     <div class="widgets__title">
-      <h3>Widgets:</h3>
       <el-tooltip content="Disable preview" placement="top">
         <el-switch
           v-model="isDisablePreview"
-          active-color="#13ce66"
-          inactive-color="#4287f5">
+          active-color="#bdbdbd"
+          inactive-color="#3d3d3d">
         </el-switch>
       </el-tooltip>
       <el-tooltip content="Dark theme" placement="top">
         <el-switch
           v-model="isDark"
-          active-color="#13ce66"
-          inactive-color="#4287f5"
+          active-color="#bdbdbd"
+          inactive-color="#3d3d3d"
           @change="toggleTheme">
         </el-switch>
       </el-tooltip>
     </div>
+    <p>Widgets:</p>
     <div
       class="widgets__list"
       @mouseenter="showPreview(true)"
@@ -98,9 +98,9 @@ export default class WidgetList extends Vue {
     if (this.isDisablePreview) return
     this.isShowPreview = isShow
     if (isShow) {
-      document.querySelector<HTMLElement>('.widgets')!.style.height = '300px'
+      document.querySelector<HTMLElement>('.widgets')!.style.height = "500px"
     } else {
-      document.querySelector<HTMLElement>('.widgets')!.style.height = '50px'
+      document.querySelector<HTMLElement>('.widgets')!.style.height = "50px"
     }
   }
 }
@@ -110,28 +110,27 @@ export default class WidgetList extends Vue {
 
 <style lang="scss" scoped>
 @use './src/scss/util' as u;
-@import './src/scss/globals/variables';
+@import "./src/scss/globals";
 
 .widgets {
   display: flex;
   width: 100%;
   height: u.rem(50);
-  padding: 0 u.rem(5);
+  padding: 0 u.rem(20);
   transition: all .5s;
 
   p {
-    color: white;
-  }
-
-  h3 {
-    margin-left: u.rem(10);
+    color: u.theme-var($--font-color);
   }
 
   &__title {
+    display: flex;
+    gap: u.rem(10);
     margin-right: u.rem(20);
+    @include u.adaptive_font(25, 15);
 
     .el-switch {
-      margin-left: u.rem(10);
+      //margin-left: u.rem(10);
     }
   }
 
@@ -157,12 +156,14 @@ export default class WidgetList extends Vue {
       border-radius: 10px;
 
       &-item {
-        height: $grid-content-height;
+        height: initial;
         pointer-events: none;
       }
 
       p {
+        color: u.theme-var($--font-color);
         text-align: center;
+        @include u.adaptive_font(25, 15);
       }
     }
   }

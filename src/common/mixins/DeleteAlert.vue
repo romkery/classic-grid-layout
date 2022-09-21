@@ -18,8 +18,8 @@ export default class DeleteAlert extends Vue {
 
 
 <style lang="scss" scoped>
-@import './src/scss/globals/variables';
 @use './src/scss/util' as u;
+@import './src/scss/globals/variables';
 
 .delete {
   width: 100%;

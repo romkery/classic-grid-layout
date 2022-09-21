@@ -43,7 +43,6 @@ export default class Blue extends Vue {
         max: 100,
         step: 2,
         value: 3,
-        height: 100 %;
         color: '#1E90FFFF',
       },
       {
@@ -79,6 +78,7 @@ export default class Blue extends Vue {
 
 .widget {
   &__content {
+    height: 100%;
 
     img {
       width: 100%;

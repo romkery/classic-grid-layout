@@ -250,6 +250,7 @@ export default class Layout extends LayoutStorage {
 
 <style lang="scss">
 @use './src/scss/util' as u;
+@use './src/scss/globals' as g;
 
 .vue-grid-layout {
   margin-top: u.rem(20);
@@ -264,7 +265,7 @@ export default class Layout extends LayoutStorage {
   touch-action: none;
 
   .el-card {
-    height: calc(100% - u.rem(20));
+    height: g.$grid-content-height;
     overflow: hidden;
   }
 }

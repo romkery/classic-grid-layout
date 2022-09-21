@@ -34,8 +34,8 @@ export default class DefaultSkeleton extends Vue {
 
 
 <style lang="scss" scoped>
-@import './src/scss/globals/variables';
 @use './src/scss/util' as u;
+@import './src/scss/globals/variables';
 
 .widget-skeleton {
   height: 100%;

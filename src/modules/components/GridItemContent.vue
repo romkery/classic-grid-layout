@@ -103,6 +103,8 @@ export default class GridItemContent extends Vue {
 <style lang="scss" scoped>
 @use './src/scss/util' as u;
 
+@import './src/scss/globals';
+
 .container {
   height: inherit;
 
@@ -114,7 +116,7 @@ export default class GridItemContent extends Vue {
 
     i {
       cursor: pointer;
-      color: white;
+      color: u.theme-var($--font-color);
     }
   }
 }

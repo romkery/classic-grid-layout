@@ -44,7 +44,6 @@ export default class Green extends Vue {
         max: 100,
         step: 1,
         value: 1,
-        height: 100 %;
         color: '#b7ff7d'
       },
       {
@@ -80,6 +79,7 @@ export default class Green extends Vue {
 
 .widget {
   &__content {
+    height: 100%;
 
     img {
       right: u.rem(10);
