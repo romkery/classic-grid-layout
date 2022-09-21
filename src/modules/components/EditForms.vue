@@ -3,7 +3,30 @@
     <div v-for="(prop, index) in model.props.styleProps"
          :key="index">
       {{ prop.title }} - {{ prop.value }}
-
+      <el-slider
+        v-if="prop.el === 'slider'"
+        :max="prop.params.max"
+        :min="prop.params.min"
+        :step="prop.params.step"
+        :disabled="model.props.isLoading"
+        :format-tooltip="formatTooltip"
+        :value="prop.value"
+        @input="store.setStyleValues($event, prop, +model.i, 'value', layout, changeEvent)"
+      />
+      <el-color-picker
+        v-if="prop.el === 'colorPicker'"
+        :style="{top: '12px'}"
+        :disabled="model.props.isLoading"
+        :value="prop.color"
+        @input="store.setStyleValues($event, prop, +model.i, 'color', layout, changeEvent)"
+      />
+      <el-color-picker
+        v-if="prop.el === 'borderColorPicker'"
+        :style="{top: '12px'}"
+        :disabled="model.props.isLoading"
+        :value="prop.color"
+        @input="store.setStyleValues($event, prop, +model.i, 'color', layout, changeEvent)"
+      />
     </div>
   </div>
 </template>

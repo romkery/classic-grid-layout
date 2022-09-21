@@ -5,7 +5,6 @@
 </template>
 
 <script lang="ts">
-import './scss/styles.scss';
 import Vue from 'vue';
 
 export default Vue.component('App', {
@@ -25,7 +24,7 @@ export default Vue.component('App', {
 
 
 <style lang="scss">
-@import './assets/fonts/fonts.css';
+@use './scss/util/fonts';
 
 .el-skeleton {
   height: 100%;
