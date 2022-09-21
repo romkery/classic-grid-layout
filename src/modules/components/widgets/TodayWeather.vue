@@ -104,13 +104,16 @@ export default class TodayWeather extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@use './src/scss/util/fonts' as ft;
 
 .widget {
 
   &__content {
     color: white;
     background: #66b8fb;
-    font-family: Circe-Light, serif;
+    //font-family: ft.$font-regular;
+    font-weight: 400;
+    font-style: normal;
     height: 100%;
     display: flex;
     flex-direction: column;

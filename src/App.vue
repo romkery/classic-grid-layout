@@ -6,6 +6,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import './scss/styles.scss'
 
 export default Vue.component('App', {
 
@@ -24,18 +25,10 @@ export default Vue.component('App', {
 
 
 <style lang="scss">
-@use './scss/util/fonts';
 
 .el-skeleton {
   height: 100%;
 }
 
-img {
-  -webkit-user-drag: none;
-  -khtml-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
-  user-drag: none;
-}
 
 </style>

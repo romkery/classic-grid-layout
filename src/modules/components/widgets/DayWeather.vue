@@ -134,7 +134,7 @@ export default class DayWeather extends Vue {
 
         p {
           font-size: 30px;
-          font-family: Circe-Regular, serif;
+          font-family: Quicksand-Regular, sans-serif;
           line-height: 1.5rem;
         }
 
@@ -142,7 +142,7 @@ export default class DayWeather extends Vue {
           font-size: 18px;
 
           &:not(:last-child) {
-            font-family: Circe-Regular, serif;
+            font-family: Quicksand-Regular, sans-serif;
           }
         }
       }

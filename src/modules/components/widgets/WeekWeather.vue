@@ -152,7 +152,7 @@ export default class WeekWeather extends Vue {
 .widget {
 
   * {
-    font-family: Circe-Light, serif;
+    //font-family: Circe-Bold, serif;
     color: #474747;
     line-height: 1.5;
   }
@@ -167,7 +167,7 @@ export default class WeekWeather extends Vue {
   &__content {
     color: white;
     background: #66b8fb;
-    font-family: Circe-Light, serif;
+    //font-family: Circe-Light, serif;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -188,13 +188,12 @@ export default class WeekWeather extends Vue {
       max-width: 80px;
       height: 100%;
       color: #474747;
-      font-weight: bold;
       font-size: 30px;
       white-space: nowrap;
 
       p {
         line-height: 1.5rem;
-        font-weight: bold;
+        font-weight: 600;
         cursor: pointer;
 
         &:hover {
@@ -280,7 +279,7 @@ export default class WeekWeather extends Vue {
         font-size: 1rem;
 
         span:first-child {
-          font-family: Circe-Regular, serif;
+          font-family: Quicksand-Regular, sans-serif;
         }
       }
     }
