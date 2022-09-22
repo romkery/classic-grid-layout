@@ -1,7 +1,6 @@
 <template>
   <div class="header">
     <div class="header__search">
-      <p>{{ weatherModule.city }}</p>
       <el-autocomplete
         class="header__search-input"
         placeholder="Please input city"
@@ -16,11 +15,32 @@
         </i>
       </el-autocomplete>
     </div>
+    <div class="header__title">
+      <p>{{ weatherModule.city }}</p>
+      <div class="header__title-switch">
+        <el-tooltip content="Disable preview" placement="bottom">
+          <el-switch
+            v-model="isDisablePreview"
+            active-color="#bdbdbd"
+            inactive-color="#3d3d3d">
+          </el-switch>
+        </el-tooltip>
+        <el-tooltip content="Dark theme" placement="bottom">
+          <el-switch
+            v-model="isDark"
+            active-color="#bdbdbd"
+            inactive-color="#3d3d3d"
+            @change="toggleTheme">
+          </el-switch>
+        </el-tooltip>
+      </div>
+    </div>
     <div class="header__widget-list">
       <widget-list
         :drag="drag"
         :dragend="dragend"
         :deleteSelectedItems="deleteSelectedItems"
+        :isDisablePreview="isDisablePreview"
       />
     </div>
   </div>
@@ -57,6 +77,26 @@ export default class Header extends Vue {
   protected async querySearch(query: string, callback: any) {
     callback(await this.weatherModule?.getAutocompleteCities(query));
   }
+
+  protected isDisablePreview = false;
+
+  protected isDark: boolean = true;
+
+  protected toggleTheme() {
+    this.isDark = !this.isDark;
+    if (this.isDark) {
+      document.getElementsByTagName('html')[0].classList.remove('dark');
+      document.getElementsByTagName('html')[0].setAttribute('class', 'light');
+    } else {
+      document.getElementsByTagName('html')[0].classList.remove('light');
+      document.getElementsByTagName('html')[0].setAttribute('class', 'dark');
+    }
+    this.isDark = !this.isDark;
+  }
+
+  created() {
+    document.getElementsByTagName('html')[0].setAttribute('class', 'dark');
+  }
 }
 
 </script>
@@ -76,6 +116,7 @@ export default class Header extends Vue {
   }
 }
 
+
 .header {
   position: sticky;
   top: 0;
@@ -84,8 +125,8 @@ export default class Header extends Vue {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: u.rem(20);
-  margin: 0 u.rem(10);
+  padding-bottom: u.rem(10);
+  //margin: 0 u.rem(10);
 
   box-shadow: 0 u.rem(10) u.rem(15) rgb(0 0 0 / 20%);
   background-color: u.theme-var($--background-header);
@@ -96,37 +137,31 @@ export default class Header extends Vue {
   border-bottom-left-radius: u.rem(12);
   color: u.theme-var($--font-color);
 
-  p {
-    @include u.adaptive_font(30, 15)
-  }
-
   &__search {
-    padding: 0 u.rem(5) u.rem(20) u.rem(5);
+    padding: 0 u.rem(5);
 
     &-input {
       width: 100%;
+    }
+  }
 
-      i {
-        color: black;
-      }
+  &__title {
+    display: flex;
+    gap: u.rem(10);
+    padding: u.rem(5) u.rem(5);
+    justify-content: space-between;
 
-      ::placeholder {
-        color: black;
-      }
-
-
+    p {
+      padding: 0;
+      line-height: 1;
+      @include u.adaptive_font(20, 15)
     }
 
-
-  }
-
-  &__widget-list {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
+    &-switch {
+      display: flex;
+      gap: u.rem(10);
+    }
   }
 }
-
 
 </style>

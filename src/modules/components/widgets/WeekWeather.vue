@@ -165,6 +165,11 @@ export default class WeekWeather extends Vue {
     height: 100%;
     background: #66b8fb;
     color: #222222;
+
+    * {
+      color: #474747;
+      line-height: 1.5;
+    }
   }
 
 

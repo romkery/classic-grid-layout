@@ -1,27 +1,7 @@
 <template>
   <div class="widgets">
-    <div class="widgets__title">
-      <el-tooltip content="Disable preview" placement="bottom">
-        <el-switch
-          v-model="isDisablePreview"
-          active-color="#bdbdbd"
-          inactive-color="#3d3d3d">
-        </el-switch>
-      </el-tooltip>
-      <el-tooltip content="Dark theme" placement="bottom">
-        <el-switch
-          v-model="isDark"
-          active-color="#bdbdbd"
-          inactive-color="#3d3d3d"
-          @change="toggleTheme">
-        </el-switch>
-      </el-tooltip>
-    </div>
-    <p>Widgets:</p>
     <div
       class="widgets__list"
-      @mouseenter="showPreview(true)"
-      @mouseleave="showPreview(false)"
     >
       <div
         class="widgets__list-box"
@@ -30,6 +10,8 @@
         draggable="true"
         @drag="drag($event)"
         @dragend="dragend"
+        @mouseenter="showPreview(true)"
+        @mouseleave="showPreview(false)"
       >
         <p>{{ widget }}</p>
         <component
@@ -75,24 +57,10 @@ export default class WidgetList extends Vue {
   @Prop({}) protected dragend!: any
   @Prop({}) protected drag!: any
   @Prop({}) protected deleteSelectedItems!: (state: string) => void;
-
-  protected isDark: boolean = true;
-
-  protected toggleTheme() {
-    this.isDark = !this.isDark;
-    if (this.isDark) {
-      document.getElementsByTagName('html')[0].classList.remove('dark');
-      document.getElementsByTagName('html')[0].setAttribute('class', 'light');
-    } else {
-      document.getElementsByTagName('html')[0].classList.remove('light');
-      document.getElementsByTagName('html')[0].setAttribute('class', 'dark');
-    }
-    this.isDark = !this.isDark;
-  }
+  @Prop({}) protected isDisablePreview!: boolean;
 
   protected store = new LayoutStorage()
   protected isShowPreview = false;
-  protected isDisablePreview = false;
 
   protected showPreview(isShow: boolean) {
     if (this.isDisablePreview) return
@@ -102,10 +70,6 @@ export default class WidgetList extends Vue {
     } else {
       document.querySelector<HTMLElement>('.widgets')!.style.height = "50px"
     }
-  }
-
-  created() {
-    document.getElementsByTagName('html')[0].setAttribute('class', 'dark');
   }
 }
 
@@ -119,43 +83,44 @@ export default class WidgetList extends Vue {
 .widgets {
   display: flex;
   width: 100%;
-  height: u.rem(50);
-  padding: 0 u.rem(20);
-  transition: all .5s;
-
-  p {
-    color: u.theme-var($--font-color);
-  }
-
-  &__title {
-    display: flex;
-    gap: u.rem(10);
-    margin-right: u.rem(20);
-    @include u.adaptive_font(25, 15);
-
-    .el-switch {
-      //margin-left: u.rem(10);
-    }
-  }
+  height: u.rem(60);
+  transition: all .8s ease-in-out;
 
   &__list {
+    padding-bottom: u.rem(5);
     display: flex;
     flex-direction: row;
     width: 100%;
-    margin-right: u.rem(10);
-    overflow: scroll;
-    -ms-overflow-style: none; /* IE 11 */
-    scrollbar-width: none; /* Firefox 64 */
+    min-height: u.rem(55);
+    gap: u.rem(10);
+    margin: 0 u.rem(10);
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scrollbar-color: u.theme-var($--scrollbar-thumb-color) u.theme-var($--scrollbar-background-color);
+    scrollbar-width: auto;
 
     &::-webkit-scrollbar {
-      display: none;
+      width: 10px;
+      height: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: u.theme-var($--scrollbar-background-color);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: u.theme-var($--scrollbar-thumb-color);
+      border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      color: u.theme-var($--scrollbar-thumb-color);
     }
 
     &-box {
       width: 100%;
       min-width: u.rem(200);
-      padding: u.rem(10) u.rem(5) u.rem(5) u.rem(5);
-      margin: 0 u.rem(10);
+      padding: u.rem(5);
       border: u.rem(1) solid lightgreen;
       border-radius: 10px;
 
@@ -165,6 +130,7 @@ export default class WidgetList extends Vue {
       }
 
       p {
+        line-height: 1;
         color: u.theme-var($--font-color);
         text-align: center;
         @include u.adaptive_font(25, 15);

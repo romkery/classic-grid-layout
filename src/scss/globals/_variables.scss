@@ -9,6 +9,8 @@ $--background-primary: --background-color;
 $--background-secondary: --background-secondary;
 $--background-header: --background-header;
 $--font-color: --font-color;
+$--scrollbar-background-color: --scrollbar-background-color;
+$--scrollbar-thumb-color: --scrollbar-thumb-color;
 
 $--background-btn: --background-btn;
 $--hover-btn: --hover-btn;
@@ -19,14 +21,16 @@ $--hover-input-bg: --hover-input-bg;
 
 $theme-map-light: (
         $--background-primary: hsl(0, 7%, 94%, 0.99),
-        $--background-secondary: hsla(0, 0%, 0%, 0.08),
+        $--background-secondary: hsla(0, 0%, 0%, 0.3),
         $--background-header: hsl(0, 0%, 100%, 0.6),
         $--font-color: hsl(0, 0%, 7%),
         $--background-btn: hsl(0, 0%, 7%),
         $--hover-btn: hsl(0, 0%, 8%),
-        $--color-btn: hsl(0, 7%, 94%, 0.99),
+        $--color-btn: hsla(0, 0%, 100%, 0.99),
         $--accent-color: $accent-color,
-        $--hover-input-bg: hsla(0, 0%, 0%, 0.13)
+        $--hover-input-bg: hsla(0, 0%, 0%, 0.13),
+        $--scrollbar-background-color: hsl(0 0% 100% / 0%),
+        $--scrollbar-thumb-color: hsl(0 0% 0% / 30%)
 );
 // Override the default light theme
 $theme-map-dark: (
@@ -36,7 +40,9 @@ $theme-map-dark: (
         $--font-color: hsl(0, 7%, 94%, 0.99),
         $--background-btn: hsl(0 0% 100% / 0.8),
         $--hover-btn: hsl(0 0% 100% / 1),
-        $--color-btn: hsl(0, 0%, 7%),
+        $--color-btn: hsl(0, 0%, 100%),
         $--accent-color: $accent-color,
-        $--hover-input-bg: hsl(0 0% 100% / 0.20)
+        $--hover-input-bg: hsl(0 0% 100% / 0.20),
+        $--scrollbar-background-color: hsl(0 0% 0% / 0%),
+        $--scrollbar-thumb-color: hsl(255 0% 100% / 30%)
 );
