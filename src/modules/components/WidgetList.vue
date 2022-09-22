@@ -160,8 +160,7 @@ export default class WidgetList extends Vue {
       border-radius: 10px;
 
       &-item {
-        height: 90%;
-        width: 100%;
+        height: $grid-content-height;
         pointer-events: none;
       }
 

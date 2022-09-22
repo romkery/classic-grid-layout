@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <fragment>
     <div class="day-info"
          :style="styles()"
          @click="setIsInfo">
@@ -8,7 +8,6 @@
           <p>{{ cityData?.location?.name }}</p>
           <span>{{ dayData.day.maxtemp_c.toFixed() }}°
             {{ dayData.day.mintemp_c.toFixed() }}°
-            <i class="el-icon-refresh" @click="refreshCity"/>
           </span>
           <h3>average {{ dayData.day.avgtemp_c }}°</h3>
           <span>{{ days[new Date(dayData.date).getDay()] }}</span>
@@ -34,7 +33,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </fragment>
 </template>
 
 
@@ -61,7 +60,6 @@ export default class DayWeather extends Vue {
   @Prop({}) protected cityData: ForecastResponseType
   @Prop({}) protected selectedDay: number
   @Prop({}) protected days: number
-  @Prop({}) protected refreshCity: number
 
   public dayData!: ForecastDayType
 
@@ -81,116 +79,110 @@ export default class DayWeather extends Vue {
 @use './src/scss/util' as u;
 @import './src/scss/globals/variables';
 
-.container {
 
-  height: inherit;
+.day-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: inherit;
+  height: $grid-content-height;
+  background: #66b8fb;
+  border-radius: u.rem(16);
+  cursor: pointer;
+  overflow: hidden;
 
-  .day-info {
+  * {
+    color: #474747;
+    line-height: 1.5;
+  }
+
+  #separator {
+    height: 100%;
+    max-height: u.rem(60);
+  }
+
+  &__header {
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
-    width: inherit;
-    height: $grid-content-height;
-    background: #66b8fb;
-    border-radius: u.rem(16);
-    cursor: pointer;
-    overflow: hidden;
+    align-items: center;
+    width: 100%;
+    padding-top: 7%;
+    padding-left: 7%;
 
-    * {
-      color: #474747;
-      line-height: 1.5;
-    }
-
-    #separator {
+    &-title {
+      display: flex;
+      flex-direction: column;
       height: 100%;
-      max-height: u.rem(60);
-    }
-
-    &__header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      padding-top: 7%;
-      padding-left: 7%;
-
-      &-title {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        max-width: u.rem(80);
-        color: #474747;
-        font-size: u.rem(30);
-        white-space: nowrap;
-
-        p {
-          cursor: pointer;
-          font-weight: 600;
-          line-height: u.rem(24);
-
-          &:hover {
-            color: white;
-          }
-        }
-
-        h3 {
-          font-size: u.rem(12);
-        }
-
-        span {
-          opacity: 0.6;
-          font-size: u.rem(24);
-        }
-
-        i {
-          font-size: u.rem(20);
-        }
-      }
-
-      &-icon {
-        width: 100%;
-        height: 100%;
-        max-width: u.rem(120);
-        max-height: u.rem(120);
-        animation: Orbita 15s linear infinite;
-      }
-    }
-
-    &__bottom {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: inherit;
-      margin-bottom: u.rem(10);
-
-      div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 33%;
-        white-space: nowrap;
-
-        img {
-          width: 40%;
-          height: 40%;
-          min-width: u.rem(30);
-          min-height: u.rem(30);
-        }
-
-        p {
-          font-family: Circe-Bold, serif;
-        }
-      }
+      max-width: u.rem(80);
+      color: #474747;
+      font-size: u.rem(30);
+      white-space: nowrap;
 
       p {
-        padding: 0;
+        cursor: pointer;
+        font-weight: 600;
+        line-height: u.rem(24);
 
+        &:hover {
+          color: white;
+        }
       }
+
+      h3 {
+        font-size: u.rem(12);
+      }
+
+      span {
+        opacity: 0.6;
+        font-size: u.rem(24);
+      }
+
+      i {
+        font-size: u.rem(20);
+      }
+    }
+
+    &-icon {
+      width: 100%;
+      height: 100%;
+      max-width: u.rem(120);
+      max-height: u.rem(120);
+      animation: Orbita 15s linear infinite;
     }
   }
 
-}
+  &__bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: inherit;
+    margin-bottom: u.rem(10);
 
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 33%;
+      white-space: nowrap;
+
+      img {
+        width: 40%;
+        height: 40%;
+        min-width: u.rem(30);
+        min-height: u.rem(30);
+      }
+
+      p {
+        font-family: Circe-Bold, serif;
+      }
+    }
+
+    p {
+      padding: 0;
+
+    }
+  }
+}
 
 @keyframes Orbita {
   from {

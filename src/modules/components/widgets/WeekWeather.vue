@@ -1,5 +1,5 @@
 <template>
-  <div style="height: inherit">
+  <fragment>
     <WidgetBasis :model="model" v-if="!isInfo">
       <div class="widget__content"
            v-if="!model?.props.isLoading"
@@ -17,6 +17,7 @@
           </div>
           <img class="widget__header-icon" :src="cityData?.current?.condition.icon" alt="icon"/>
         </div>
+        <span id="separator"/>
         <div class="widget__bottom">
           <div class="widget__bottom-day"
                @click="getMoreDayWeather(day)"
@@ -46,9 +47,8 @@
                 :city-data="cityData"
                 :selected-day="selectedDay"
                 :days="days"
-                :refreshCity="refreshCity"
     />
-  </div>
+  </fragment>
 </template>
 
 
@@ -150,19 +150,13 @@ export default class WeekWeather extends Vue {
 @use './src/scss/util' as u;
 @import './src/scss/globals/variables';
 
+
+#separator {
+  height: 100%;
+  max-height: u.rem(60);
+}
+
 .widget {
-
-  * {
-    color: #474747;
-    line-height: 1.5;
-  }
-
-  #separator {
-    width: 100%;
-    height: 100%;
-    max-width: u.rem(50);
-    max-height: u.rem(50);
-  }
 
   &__content {
     display: flex;
@@ -170,8 +164,9 @@ export default class WeekWeather extends Vue {
     justify-content: space-between;
     height: 100%;
     background: #66b8fb;
-    color: white;
+    color: #222222;
   }
+
 
   &__header {
     display: flex;
@@ -231,11 +226,13 @@ export default class WeekWeather extends Vue {
     }
   }
 
+
   &__bottom {
     display: flex;
     flex-direction: row;
     align-items: center;
     height: inherit;
+    margin-bottom: u.rem(10);
 
     &-day {
       display: flex;
