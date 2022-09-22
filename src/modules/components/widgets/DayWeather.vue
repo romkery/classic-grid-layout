@@ -18,17 +18,17 @@
       <span id="separator"/>
       <div class="day-info__bottom">
         <div class="day-info__bottom-uv-index">
-          <img src="/src/assets/img/sun.png" alt="humidity">
+          <img src="../../../assets/img/sun.png" alt="uv-index">
           <h3>UV</h3>
           <p>{{ dayData.day.uv }}/11</p>
         </div>
         <div class="day-info__bottom-wind">
-          <img src="/src/assets/img/wind.png" alt="humidity">
+          <img src="../../../assets/img/wind.png" alt="wind">
           <h3>Wind</h3>
           <p>{{ dayData.day.maxwind_kph }} km/h</p>
         </div>
         <div class="day-info__bottom-humidity">
-          <img src="/src/assets/img/humidity.png" alt="humidity">
+          <img src="../../../assets/img/humidity.png" alt="humidity">
           <h3>RH</h3>
           <p>{{ dayData.day.avghumidity }}%</p>
         </div>
@@ -61,6 +61,7 @@ export default class DayWeather extends Vue {
   @Prop({}) protected cityData: ForecastResponseType
   @Prop({}) protected selectedDay: number
   @Prop({}) protected days: number
+  @Prop({}) protected refreshCity: number
 
   public dayData!: ForecastDayType
 
@@ -167,6 +168,7 @@ export default class DayWeather extends Vue {
         flex-direction: column;
         align-items: center;
         width: 33%;
+        white-space: nowrap;
 
         img {
           width: 40%;

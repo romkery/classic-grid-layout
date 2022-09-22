@@ -17,7 +17,6 @@
           </div>
           <img class="widget__header-icon" :src="cityData?.current?.condition.icon" alt="icon"/>
         </div>
-        <span id="separator"/>
         <div class="widget__bottom">
           <div class="widget__bottom-day"
                @click="getMoreDayWeather(day)"
@@ -47,6 +46,7 @@
                 :city-data="cityData"
                 :selected-day="selectedDay"
                 :days="days"
+                :refreshCity="refreshCity"
     />
   </div>
 </template>

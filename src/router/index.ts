@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import GridLayout from '../views/GridLayout.vue'
+import MainLayout from '../views/MainLayout.vue'
 
 Vue.use(VueRouter)
 
@@ -12,8 +12,8 @@ const router = new VueRouter({
             path: '/layout',
             alias: '/',
             name: 'layout',
-            component: GridLayout
-        }
+            component: MainLayout
+        },
     ]
 })
 

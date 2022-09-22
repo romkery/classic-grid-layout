@@ -84,7 +84,7 @@ let itemMouseXY: any = {"x": null, "y": null};
     WidgetHeader
   },
 })
-export default class Layout extends LayoutStorage {
+export default class MainLayout extends LayoutStorage {
 
   protected weatherModule?: WeatherModule = useModule(this.$store, ['weatherModule']);
 
@@ -183,6 +183,7 @@ export default class Layout extends LayoutStorage {
   }
 
   protected drag(event: any) {
+    console.log(event)
     if (event.target.children[1].__vue__.ownProperty !== this.dragItem) {
       this.setDragItem(event.target.children[1].__vue__.ownProperty) // Смена перетаскиваемого элемента
     }
@@ -231,8 +232,8 @@ export default class Layout extends LayoutStorage {
       const item = JSON.parse(JSON.stringify(this.dragItem)) // deep clone object
 
       this.layout.push({
-        x: DragPos.x,
-        y: DragPos.y,
+        x: DragPos.x || 1,
+        y: DragPos.y || 1,
         w: item.w || 2,
         h: item.h || 20,
         i: newKey + 1,

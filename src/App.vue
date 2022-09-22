@@ -1,16 +1,19 @@
 <template>
   <div id="app">
-    <router-view/>
+    <MainLayout/>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import './scss/styles.scss'
+import MainLayout from './views/MainLayout.vue';
 
 export default Vue.component('App', {
 
-  components: {},
+  components: {
+    MainLayout
+  },
 
   data() {
     return {};

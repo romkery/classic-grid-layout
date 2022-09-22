@@ -27,6 +27,9 @@ ____
   <img src="src/assets/readme-content/Preview_1.gif" alt="Preview">
 </h1>
 
+* Perhaps the request to the api will be blocked by the browser, in order for the request to reach, you should disable
+  security on the tab.
+
 ## About The Project
 
 The Classic Grid Layout is a simple and convenient grid in which you can place any widgets and make them custom. This is

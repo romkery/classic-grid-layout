@@ -1,14 +1,14 @@
 <template>
   <div class="widgets">
     <div class="widgets__title">
-      <el-tooltip content="Disable preview" placement="top">
+      <el-tooltip content="Disable preview" placement="bottom">
         <el-switch
           v-model="isDisablePreview"
           active-color="#bdbdbd"
           inactive-color="#3d3d3d">
         </el-switch>
       </el-tooltip>
-      <el-tooltip content="Dark theme" placement="top">
+      <el-tooltip content="Dark theme" placement="bottom">
         <el-switch
           v-model="isDark"
           active-color="#bdbdbd"
@@ -76,7 +76,7 @@ export default class WidgetList extends Vue {
   @Prop({}) protected drag!: any
   @Prop({}) protected deleteSelectedItems!: (state: string) => void;
 
-  protected isDark: boolean = false;
+  protected isDark: boolean = true;
 
   protected toggleTheme() {
     this.isDark = !this.isDark;
@@ -98,10 +98,14 @@ export default class WidgetList extends Vue {
     if (this.isDisablePreview) return
     this.isShowPreview = isShow
     if (isShow) {
-      document.querySelector<HTMLElement>('.widgets')!.style.height = "500px"
+      document.querySelector<HTMLElement>('.widgets')!.style.height = "300px"
     } else {
       document.querySelector<HTMLElement>('.widgets')!.style.height = "50px"
     }
+  }
+
+  created() {
+    document.getElementsByTagName('html')[0].setAttribute('class', 'dark');
   }
 }
 
@@ -156,7 +160,8 @@ export default class WidgetList extends Vue {
       border-radius: 10px;
 
       &-item {
-        height: initial;
+        height: 90%;
+        width: 100%;
         pointer-events: none;
       }
 
