@@ -35,7 +35,7 @@ export default class Trash extends Vue {
   height: u.rem(50);
 
   i {
-    font-size: u.rem(50);
+    font-size: u.rem(38);
     color: #c0c0c0;
     cursor: pointer;
 

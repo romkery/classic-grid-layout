@@ -68,7 +68,7 @@ export default class WidgetList extends Vue {
     if (isShow) {
       document.querySelector<HTMLElement>('.widgets')!.style.height = "300px"
     } else {
-      document.querySelector<HTMLElement>('.widgets')!.style.height = "50px"
+      document.querySelector<HTMLElement>('.widgets')!.style.height = "45px"
     }
   }
 }
@@ -87,13 +87,12 @@ export default class WidgetList extends Vue {
   transition: all .8s ease-in-out;
 
   &__list {
-    padding-bottom: u.rem(5);
     display: flex;
     flex-direction: row;
     width: 100%;
-    min-height: u.rem(55);
+    min-height: u.rem(45);
     gap: u.rem(10);
-    margin: 0 u.rem(10);
+    margin: 0 u.rem(5);
     overflow-x: scroll;
     overflow-y: hidden;
     scrollbar-color: u.theme-var($--scrollbar-thumb-color) u.theme-var($--scrollbar-background-color);

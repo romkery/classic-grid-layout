@@ -125,7 +125,6 @@ export default class Header extends Vue {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: u.rem(10);
   //margin: 0 u.rem(10);
 
   box-shadow: 0 u.rem(10) u.rem(15) rgb(0 0 0 / 20%);
