@@ -3,7 +3,7 @@
     <div class="widget__content"
          :style="getStyles()"
          v-if="!model?.props.isLoading">
-      <img src="https://i.gifer.com/6vw5.gif"
+      <img src="https://trashbox.ru/ifiles/1149247_adc17f_screenshot_02.png-orig/samsung-notes-android-10.jpg"
            alt="pikachu">
       <div class="widget__text"
            @dblclick="isShowEdit = true">
@@ -68,6 +68,7 @@ export default class Orange extends Vue {
         step: 1,
         value: 20,
       }], 2, 50, 2, 40)
+
   protected isShowEdit: boolean = false;
   protected inputText: string = 'Double tap to change';
 

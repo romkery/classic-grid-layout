@@ -3,7 +3,7 @@
     <div class="widget__content"
          :style="getStyles()"
          v-if="!model?.props.isLoading">
-      <img src="https://i.gifer.com/1Pzk.gif"
+      <img src="https://stat2.moneycontrol.com/assets/images/ms/wazirx/wazir_article_img_eight.jpg"
            alt="squid">
     </div>
   </WidgetBasis>
