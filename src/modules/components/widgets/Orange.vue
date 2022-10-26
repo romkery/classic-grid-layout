@@ -3,7 +3,7 @@
     <div class="widget__content"
          :style="getStyles()"
          v-if="!model?.props.isLoading">
-      <img src="https://i.gifer.com/6vw5.gif"
+      <img src="https://trashbox.ru/ifiles/1149247_adc17f_screenshot_02.png-orig/samsung-notes-android-10.jpg"
            alt="pikachu">
       <div class="widget__text"
            @dblclick="isShowEdit = true">
@@ -68,6 +68,7 @@ export default class Orange extends Vue {
         step: 1,
         value: 20,
       }], 2, 50, 2, 40)
+
   protected isShowEdit: boolean = false;
   protected inputText: string = 'Double tap to change';
 
@@ -76,17 +77,14 @@ export default class Orange extends Vue {
 
 </script>
 
-<style lang="less" scoped>
-@import '../../../assets/styles/_variables';
-
-h1 {
-}
+<style lang="scss" scoped>
+@use './src/scss/util' as u;
 
 .widget {
   &__content {
-    height: 100%;
     display: flex;
     flex-direction: column;
+    height: 100%;
 
     img {
       width: 100%;
@@ -97,10 +95,10 @@ h1 {
 
   &__text {
     align-items: center;
+    margin: u.rem(10);
+    cursor: pointer;
     font-size: 0.7rem;
     word-break: break-word;
-    cursor: pointer;
-    margin: 10px;
 
     .el-textarea {
       position: absolute;

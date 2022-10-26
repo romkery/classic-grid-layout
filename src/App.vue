@@ -1,35 +1,37 @@
-<script setup lang="ts">
-
-</script>
-
 <template>
   <div id="app">
-    <router-view/>
+    <MainLayout/>
   </div>
 </template>
 
-<style>
-@import './assets/fonts/fonts.css';
-@import './assets/base.css';
-@import url("//unpkg.com/element-ui@2.15.7/lib/theme-chalk/index.css");
+<script lang="ts">
+import Vue from 'vue';
+import './scss/styles.scss'
+import MainLayout from './views/MainLayout.vue';
+
+export default Vue.component('App', {
+
+  components: {
+    MainLayout
+  },
+
+  data() {
+    return {};
+  },
+
+  computed: {},
+  mounted() {
+  },
+  methods: {}
+});
+</script>
+
+
+<style lang="scss">
 
 .el-skeleton {
   height: 100%;
 }
 
-#app {
-  margin: 0 auto;
-  padding: 2rem;
-  font-size: 100%;
-  font-weight: normal;
-}
-
-img {
-  -webkit-user-drag: none;
-  -khtml-user-drag: none;
-  -moz-user-drag: none;
-  -o-user-drag: none;
-  user-drag: none;
-}
 
 </style>

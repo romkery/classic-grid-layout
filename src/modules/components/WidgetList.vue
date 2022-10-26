@@ -1,19 +1,7 @@
 <template>
   <div class="widgets">
-    <div class="widgets__title">
-      <h3>Widgets:</h3>
-      <el-tooltip content="Disable preview" placement="top">
-        <el-switch
-          v-model="isDisablePreview"
-          active-color="#13ce66"
-          inactive-color="#4287f5">
-        </el-switch>
-      </el-tooltip>
-    </div>
     <div
       class="widgets__list"
-      @mouseenter="showPreview(true)"
-      @mouseleave="showPreview(false)"
     >
       <div
         class="widgets__list-box"
@@ -22,6 +10,8 @@
         draggable="true"
         @drag="drag($event)"
         @dragend="dragend"
+        @mouseenter="showPreview(true)"
+        @mouseleave="showPreview(false)"
       >
         <p>{{ widget }}</p>
         <component
@@ -67,18 +57,18 @@ export default class WidgetList extends Vue {
   @Prop({}) protected dragend!: any
   @Prop({}) protected drag!: any
   @Prop({}) protected deleteSelectedItems!: (state: string) => void;
+  @Prop({}) protected isDisablePreview!: boolean;
 
   protected store = new LayoutStorage()
   protected isShowPreview = false;
-  protected isDisablePreview = false;
 
   protected showPreview(isShow: boolean) {
     if (this.isDisablePreview) return
     this.isShowPreview = isShow
     if (isShow) {
-      document.querySelector<HTMLElement>('.widgets')!.style.height = '300px'
+      document.querySelector<HTMLElement>('.widgets')!.style.height = "300px"
     } else {
-      document.querySelector<HTMLElement>('.widgets')!.style.height = '50px'
+      document.querySelector<HTMLElement>('.widgets')!.style.height = "45px"
     }
   }
 }
@@ -86,61 +76,63 @@ export default class WidgetList extends Vue {
 </script>
 
 
-<style lang="less" scoped>
-
-@import '../../assets/styles/_variables';
+<style lang="scss" scoped>
+@use './src/scss/util' as u;
+@import "./src/scss/globals";
 
 .widgets {
-  width: 100%;
   display: flex;
-  height: 50px;
-  transition: all .5s;
-  padding: 0 5px;
-
-  p {
-    color: white;
-  }
-
-  h3 {
-    margin-left: 10px;
-  }
-
-  &__title {
-    margin-right: 20px;
-
-    .el-switch {
-      margin-left: 10px;
-    }
-  }
+  width: 100%;
+  height: u.rem(60);
+  transition: all .8s ease-in-out;
 
   &__list {
-    width: 100%;
     display: flex;
     flex-direction: row;
-    margin-right: 10px;
-    overflow: scroll;
-    -ms-overflow-style: none; /* IE 11 */
-    scrollbar-width: none; /* Firefox 64 */
+    width: 100%;
+    min-height: u.rem(45);
+    gap: u.rem(10);
+    margin: 0 u.rem(5);
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scrollbar-color: u.theme-var($--scrollbar-thumb-color) u.theme-var($--scrollbar-background-color);
+    scrollbar-width: auto;
 
     &::-webkit-scrollbar {
-      display: none;
+      width: 10px;
+      height: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: u.theme-var($--scrollbar-background-color);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: u.theme-var($--scrollbar-thumb-color);
+      border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      color: u.theme-var($--scrollbar-thumb-color);
     }
 
     &-box {
-      min-width: 200px;
       width: 100%;
-      border: 1px solid lightgreen;
+      min-width: u.rem(200);
+      padding: u.rem(5);
+      border: u.rem(1) solid lightgreen;
       border-radius: 10px;
-      margin: 0 10px;
-      padding: 10px 5px 5px 5px;
 
       &-item {
-        height: @grid-content-height;
+        height: $grid-content-height;
         pointer-events: none;
       }
 
       p {
+        line-height: 1;
+        color: u.theme-var($--font-color);
         text-align: center;
+        @include u.adaptive_font(25, 15);
       }
     }
   }

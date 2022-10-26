@@ -23,6 +23,10 @@
            v-if="!model.isStatic"
            @click="setIsStatic(true)"
         />
+        <i class="el-icon-star-on"
+           v-if="model.isStatic"
+           @click="setIsStatic(false)"
+        />
       </div>
       <i class="el-icon-delete"
          @click="deleteOneItem('delete')"
@@ -96,28 +100,31 @@ export default class GridItemContent extends Vue {
 </script>
 
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
+@use './src/scss/util' as u;
+
+@import './src/scss/globals';
 
 .container {
   height: inherit;
 
   .pin-icon-container {
-    padding: 0 2px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
+    padding: 0 u.rem(2);
 
     i {
       cursor: pointer;
-      color: white;
+      color: u.theme-var($--font-color);
     }
   }
 }
 
 .selection {
-  width: 100%;
-  border: 1px solid red;
   position: absolute;
+  width: 100%;
+  border: u.rem(1) solid red;
 }
 
 </style>

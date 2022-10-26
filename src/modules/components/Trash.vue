@@ -22,19 +22,20 @@ import Component from 'vue-class-component';
 export default class Trash extends Vue {
 
   @Prop({}) protected deleteSelectedItems: (state: string) => void;
-  
+
 }
 
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
+@use './src/scss/util' as u;
 
 #trash {
-  width: 50px;
-  height: 50px;
+  width: u.rem(50);
+  height: u.rem(50);
 
   i {
-    font-size: 50px;
+    font-size: u.rem(38);
     color: #c0c0c0;
     cursor: pointer;
 

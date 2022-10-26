@@ -29,11 +29,11 @@ export default class TodayWeather extends Vue {
 </script>
 
 
-<style lang="less" scoped>
-@import '../../assets/styles/_variables';
+<style lang="scss" scoped>
+@import './src/scss/globals/variables';
 
 .widget {
-  height: @grid-content-height;
+  height: $grid-content-height;
 }
 
 </style>

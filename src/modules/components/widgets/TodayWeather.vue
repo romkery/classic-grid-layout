@@ -13,8 +13,6 @@
              alt="condition-icon"/>
         <div class="widget__bottom-info">
           <i class="el-icon-location"/>
-          <!--                    <el-tooltip content="Change to current" placement="top">-->
-          <!--                    </el-tooltip>-->
           <h3 @click="changeCity">{{ cityData?.location?.name }}</h3>
         </div>
         <div class="widget__bottom-info">
@@ -103,61 +101,63 @@ export default class TodayWeather extends Vue {
 
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
+@use './src/scss/util/fonts' as ft;
+@use './src/scss/util' as u;
 
 .widget {
 
   &__content {
-    color: white;
-    background: #66b8fb;
-    font-family: Circe-Light, serif;
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 10px;
+    height: 100%;
+    padding: u.rem(10);
+    background: #66b8fb;
+    color: white;
+    font-style: normal;
+    font-weight: 400;
   }
 
   &__header {
-    margin-left: 10px;
     display: flex;
     justify-content: space-between;
+    margin-left: u.rem(10);
 
     p {
       position: absolute;
-      font-size: 2.5rem;
+      font-size: u.rem(40);
     }
   }
 
   #separator {
-    max-width: 100px;
-    max-height: 100px;
-    height: 100%;
     width: 100%;
+    height: 100%;
+    max-height: u.rem(100);
   }
 
   &__bottom {
     display: flex;
     flex-direction: column;
-    align-items: end;
     justify-content: end;
+    align-items: end;
 
     img {
-      max-height: 90px;
-      max-width: 90px;
-      height: 100%;
       width: 100%;
+      height: 100%;
+      max-width: u.rem(90);
+      max-height: u.rem(90);
     }
 
     &-info {
-      max-height: 100%;
       display: flex;
-      align-items: center;
       justify-content: end;
+      align-items: center;
+      max-height: 100%;
 
       h3 {
-        line-height: 1.4rem;
-        font-size: 1.2rem;
+        font-size: u.rem(17);
+        line-height: u.rem(19);
 
         &:last-child {
           cursor: pointer;
@@ -170,16 +170,16 @@ export default class TodayWeather extends Vue {
       }
 
       .el-icon-location {
-        margin-right: 2px;
-        font-size: 18px;
-        bottom: 2px;
+        bottom: u.rem(2);
+        margin-right: u.rem(2);
+        font-size: u.rem(18);
       }
 
       .el-icon-refresh {
-        font-size: 18px;
-        bottom: 1px;
-        margin-left: 2px;
+        bottom: u.rem(1);
+        margin-left: u.rem(2);
         cursor: pointer;
+        font-size: u.rem(18);
       }
     }
   }

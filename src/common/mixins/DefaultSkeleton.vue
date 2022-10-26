@@ -33,16 +33,17 @@ export default class DefaultSkeleton extends Vue {
 </script>
 
 
-<style lang="less" scoped>
-@import '../../assets/styles/_variables';
+<style lang="scss" scoped>
+@use './src/scss/util' as u;
+@import './src/scss/globals/variables';
 
 .widget-skeleton {
   height: 100%;
-  border: 1px solid black;
-  border-radius: 10px;
+  border: u.rem(1) solid black;
+  border-radius: u.rem(10);
   background: white;
   overflow: hidden;
-  padding: 10px;
+  padding: u.rem(10);
 
   .item-skeleton {
     height: 100%;
@@ -51,7 +52,7 @@ export default class DefaultSkeleton extends Vue {
   &-img {
     width: 100%;
     height: 50%;
-    margin-bottom: 10px;
+    margin-bottom: u.rem(10);
   }
 }
 

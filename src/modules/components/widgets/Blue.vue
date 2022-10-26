@@ -3,7 +3,7 @@
     <div class="widget__content"
          :style="getStyles()"
          v-if="!model?.props.isLoading">
-      <img src="https://i.gifer.com/1Pzk.gif"
+      <img src="https://stat2.moneycontrol.com/assets/images/ms/wazirx/wazir_article_img_eight.jpg"
            alt="squid">
     </div>
   </WidgetBasis>
@@ -39,19 +39,26 @@ export default class Blue extends Vue {
         name: 'border',
         title: 'Рамка',
         el: 'slider',
-        min: 10,
+        min: 1,
         max: 100,
-        step: 4,
+        step: 2,
         value: 3,
+        color: '#1E90FFFF',
       },
       {
         name: 'borderRadius',
         title: 'Скругление углов',
         el: 'slider',
-        min: 10,
+        min: 1,
         max: 100,
-        step: 1,
+        step: 2,
         value: 20,
+      },
+      {
+        name: 'background',
+        title: 'Фон',
+        el: 'colorPicker',
+        color: '#212121',
       },
       {
         name: 'borderColor',
@@ -66,8 +73,8 @@ export default class Blue extends Vue {
 </script>
 
 
-<style lang="less" scoped>
-@import '../../../assets/styles/_variables';
+<style lang="scss" scoped>
+
 
 .widget {
   &__content {

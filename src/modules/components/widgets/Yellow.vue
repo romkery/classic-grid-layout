@@ -4,7 +4,7 @@
          v-if="!model?.props.isLoading"
          :style="getStyles()">
       <img
-        src="https://i.gifer.com/5Jy1.gif"
+        src="https://developer.apple.com/design/human-interface-guidelines/components/system-experiences/widgets/images/multiple-tap-targets_2x.png"
         alt="chick">
     </div>
   </WidgetBasis>
@@ -44,7 +44,7 @@ export default class Yellow extends Vue {
         max: 100,
         step: 2,
         value: 3,
-        color: '#ff7d7d',
+        color: '#ffe21c',
       },
       {
         name: 'borderRadius',
@@ -74,8 +74,8 @@ export default class Yellow extends Vue {
 }
 </script>
 
-<style lang="less" scoped>
-@import '../../../assets/styles/_variables';
+<style lang="scss" scoped>
+
 
 .widget {
   &__content {

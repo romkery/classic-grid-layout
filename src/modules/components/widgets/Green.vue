@@ -4,7 +4,7 @@
          :style="getStyles()"
          v-if="!model?.props.isLoading & !model?.props.isDeleteMode">
       <img
-        src="https://i.gifer.com/XHXk.gif"
+        src="https://www.psdgraphics.com/file/forward-one-hour.jpg"
         alt="cola">
     </div>
   </WidgetBasis>
@@ -74,18 +74,18 @@ export default class Green extends Vue {
 </script>
 
 
-<style lang="less" scoped>
-@import '../../../assets/styles/_variables';
+<style lang="scss" scoped>
+@use './src/scss/util' as u;
 
 .widget {
   &__content {
     height: 100%;
 
     img {
+      right: u.rem(10);
       width: 100%;
       height: 50%;
       object-fit: contain;
-      right: 10px;
     }
   }
 }
